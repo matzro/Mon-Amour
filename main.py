@@ -2,16 +2,19 @@ import hashlib
 import time
 # https://www.pycryptodome.org/
 from Crypto.Cipher import AES
-from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
+
+# GLOBAL VARIABLES
+__BLOCK_SIZE__ = 16  # 128 bits
 
 
 def main():
     print("Welcome to Mon-Amour <3")
     question = "Qual é a minha flor favorita?"
-    iter_counter, salt, ciphertext = encryptMessage("HELLLOOOOOO")
+    iter_counter, salt, ciphertext, iv = encryptMessage("HELLLOOOOOO")
     writeFile(iter_counter, question, salt, ciphertext)
+    decryptMessage()
 
 
 def getQuestion():
@@ -56,19 +59,31 @@ def generateHash(password):
 # https://onboardbase.com/blog/aes-encryption-decryption/
 def encryptMessage(message):
     iter_counter, salt, key = generateHash("password")
-    cipher = AES.new(key, AES.MODE_CBC)  # Cria um objeto AES com a chave
-    ciphertext = cipher.encrypt(pad(message.encode('utf-8'), 16))  # Cifra a mensagem
+    iv = get_random_bytes(16)
+    cipher = AES.new(key, AES.MODE_CBC, iv)  # Cria um objeto AES com a chave
+    ciphertext = cipher.encrypt(pad(message.encode('utf-8'), __BLOCK_SIZE__))  # Cifra a mensagem
 
-    return iter_counter, salt, ciphertext
+    return iter_counter, salt, ciphertext, iv
+
+
+def decryptMessage():
+    with open("ciphertext.txt", 'r') as file:
+        input = file.read().split(' | ')
+        
 
 
 # Writes the ciphertext to a file
 # Format: no. hash iterations | question | random number | ciphertext
 def writeFile(iter_counter, question, random_num, ciphertext):
+    creation_time = time.time()
     output = f"{iter_counter} | {question} | {random_num} | {ciphertext}"
-    with open("ciphertext.txt", "w") as file:
+    with open(f"ciphertext_{creation_time}.txt", "w") as file:
         file.write(output)
         file.close
+
+
+
+
 
 
 if __name__ == "__main__":
