@@ -1,5 +1,6 @@
 import hashlib
 import time
+# https://www.pycryptodome.org/
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
@@ -10,6 +11,7 @@ def main():
     print("Welcome to Mon-Amour <3")
     # generateHash("password")
     print(encryptMessage("HELLLOOOOOO"))
+    writeFile(encryptMessage("HELLLOOOOOO"))
 
 
 def getQuestion():
@@ -22,13 +24,13 @@ def getAnswer():
     return answer
 
 
-def generateSalt128():
-    return get_random_bytes(128)
-
-
 def getMessage():
     message = input("Digite a mensagem a ser cifrada: ")
     return message
+
+
+def generateSalt128():
+    return get_random_bytes(128)
 
 
 # https://stackoverflow.com/questions/3566176/salting-passwords-101
@@ -36,17 +38,18 @@ def generateHash(password):
     passwordBytes = password.encode('utf-8')
     salt = generateSalt128()
     key = b''.join([passwordBytes, salt])
-    start_time = time.time()
-    num_iteracoes = 0
     hash_value = b''
+
+    start_time = time.time()
+    iter_counter = 0
 
     # Calculate SHA256 value
     while time.time() - start_time <= 1:
-        if num_iteracoes == 0:
+        if iter_counter == 0:
             hash_value = hashlib.sha256(key).digest()
-            num_iteracoes += 1
+            iter_counter += 1
         hash_value = hashlib.sha256(hash_value).digest()
-        num_iteracoes += 1
+        iter_counter += 1
     return hash_value
 
 
@@ -57,6 +60,12 @@ def encryptMessage(message):
     ciphertext = cipher.encrypt(pad(message.encode('utf-8'), 16))  # Cifra a mensagem
 
     return ciphertext
+
+
+# Writes the ciphertext to a file
+def writeFile(ciphertext):
+    with open("ciphertext.txt", "wb") as file:
+        file.write(ciphertext)
 
 
 if __name__ == "__main__":
