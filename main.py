@@ -9,9 +9,9 @@ from Crypto.Util.Padding import pad
 
 def main():
     print("Welcome to Mon-Amour <3")
-    # generateHash("password")
-    print(encryptMessage("HELLLOOOOOO"))
-    writeFile(encryptMessage("HELLLOOOOOO"))
+    question = "Qual é a minha flor favorita?"
+    iter_counter, salt, ciphertext = encryptMessage("HELLLOOOOOO")
+    writeFile(iter_counter, question, salt, ciphertext)
 
 
 def getQuestion():
@@ -50,22 +50,25 @@ def generateHash(password):
             iter_counter += 1
         hash_value = hashlib.sha256(hash_value).digest()
         iter_counter += 1
-    return hash_value
+    return iter_counter, salt, hash_value
 
 
 # https://onboardbase.com/blog/aes-encryption-decryption/
 def encryptMessage(message):
-    key = generateHash("password")
+    iter_counter, salt, key = generateHash("password")
     cipher = AES.new(key, AES.MODE_CBC)  # Cria um objeto AES com a chave
     ciphertext = cipher.encrypt(pad(message.encode('utf-8'), 16))  # Cifra a mensagem
 
-    return ciphertext
+    return iter_counter, salt, ciphertext
 
 
 # Writes the ciphertext to a file
-def writeFile(ciphertext):
-    with open("ciphertext.txt", "wb") as file:
-        file.write(ciphertext)
+# Format: no. hash iterations | question | random number | ciphertext
+def writeFile(iter_counter, question, random_num, ciphertext):
+    output = f"{iter_counter} | {question} | {random_num} | {ciphertext}"
+    with open("ciphertext.txt", "w") as file:
+        file.write(output)
+        file.close
 
 
 if __name__ == "__main__":
