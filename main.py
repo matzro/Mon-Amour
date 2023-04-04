@@ -1,14 +1,15 @@
-import secrets
 import hashlib
 import time
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import pad
 
 
 def main():
     print("Welcome to Mon-Amour <3")
-    #generateHash("password")
-    encryptMessage("Hello World!")
+    # generateHash("password")
+    print(encryptMessage("HELLLOOOOOO"))
 
 
 def getQuestion():
@@ -21,36 +22,41 @@ def getAnswer():
     return answer
 
 
-def randomNum():
-    return secrets.randbits(128)
+def generateSalt128():
+    return get_random_bytes(128)
+
 
 def getMessage():
     message = input("Digite a mensagem a ser cifrada: ")
     return message
 
+
+# https://stackoverflow.com/questions/3566176/salting-passwords-101
 def generateHash(password):
-    key = ''.join([password, str(randomNum())])
+    passwordBytes = password.encode('utf-8')
+    salt = generateSalt128()
+    key = b''.join([passwordBytes, salt])
     start_time = time.time()
     num_iteracoes = 0
-    hash = 0
+    hash_value = b''
 
     # Calculate SHA256 value
     while time.time() - start_time <= 1:
         if num_iteracoes == 0:
-            hash = hashlib.sha256(key.encode('utf-8')).hexdigest()
+            hash_value = hashlib.sha256(key).digest()
             num_iteracoes += 1
-        hash = hashlib.sha256(hash.encode('utf-8')).hexdigest()
+        hash_value = hashlib.sha256(hash_value).digest()
         num_iteracoes += 1
-    return hash
+    return hash_value
+
 
 # https://onboardbase.com/blog/aes-encryption-decryption/
 def encryptMessage(message):
     key = generateHash("password")
-    cipher = AES.new(key, AES.MODE_EAX) # Criar um objeto AES com a chave
-    ciphertext, tag = cipher.encrypt_and_digest(message) # Cifra a mensagem e gera uma tag de autenticação
-    # nonce = cipher.nonce
-    return ciphertext
+    cipher = AES.new(key, AES.MODE_CBC)  # Cria um objeto AES com a chave
+    ciphertext = cipher.encrypt(pad(message.encode('utf-8'), 16))  # Cifra a mensagem
 
+    return ciphertext
 
 
 if __name__ == "__main__":
