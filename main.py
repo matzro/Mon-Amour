@@ -1,5 +1,3 @@
-import ast
-import base64
 import hashlib
 import time
 # https://www.pycryptodome.org/
@@ -9,25 +7,25 @@ from Crypto.Util.Padding import pad
 from Crypto.Util.Padding import unpad
 
 # GLOBAL VARIABLES
-__BLOCK_SIZE__ = 16  # 128 bits
+BLOCK_SIZE = 16  # 128 bits
 
 def main():
-    print("Welcome to Mon-Amour <3")
+    print("Welcome to Mon-Amour messaging app")
     question = "A resposta e password"
-    iter_counter, salt, ciphertext_iv = encryptMessage("Adoro as tuas batatas fritas")
-    writeFile(iter_counter, question, salt, ciphertext_iv)
-    decryptMessage("password")
+    iter_counter, salt, ciphertext_iv = encrypt_message("Adoro as tuas batatas fritas")
+    write_file(iter_counter, question, salt, ciphertext_iv)
+    decrypt_message("password")
 
 
-def generateSalt128():
-    return get_random_bytes(__BLOCK_SIZE__)
+def generate_salt():
+    return get_random_bytes(BLOCK_SIZE)
 
 
 # https://stackoverflow.com/questions/3566176/salting-passwords-101
-def generateHash(password):
-    passwordBytes = password.encode('utf-8')
-    salt = generateSalt128()
-    key = b''.join([passwordBytes, salt])
+def generate_hash(password):
+    password_bytes = password.encode('utf-8')
+    salt = generate_salt()
+    key = b''.join([password_bytes, salt])
     hash_value = b''
 
     start_time = time.time()
@@ -43,7 +41,7 @@ def generateHash(password):
     return iter_counter, salt, hash_value
 
 
-def findHash(iter_counter, salt, password):
+def find_hash(iter_counter, salt, password):
     i = 0
     key = b''.join([password.encode('utf-8'), salt])
     hash_value = b''
@@ -58,55 +56,42 @@ def findHash(iter_counter, salt, password):
 
 
 # https://onboardbase.com/blog/aes-encryption-decryption/
-def encryptMessage(message):
-    iter_counter, salt, key = generateHash("password")
-    iv = get_random_bytes(__BLOCK_SIZE__)
+def encrypt_message(message):
+    iter_counter, salt, key = generate_hash("password")
+    iv = get_random_bytes(BLOCK_SIZE)
     cipher = AES.new(key, AES.MODE_CBC, iv)  # Cria um objeto AES com a chave
-    ciphertext = cipher.encrypt(pad(message.encode(), __BLOCK_SIZE__))  # Cifra a mensagem
+    ciphertext = cipher.encrypt(pad(message.encode(), BLOCK_SIZE))  # Cifra a mensagem
     ciphertext_iv = iv + ciphertext
-    print("cipher:")
-    print(ciphertext_iv)
+    print("--- Ciphertext ---")
+    print(f"Value: {ciphertext_iv}")
+    print(f"-----------------")
     return iter_counter, salt, ciphertext_iv
 
 
-def decryptMessage(password):
+def decrypt_message(password):
     with open("ciphertext.txt", 'r') as file:
         input = file.read().split(' | ')
-        key = findHash(int(input[0]), bytes.fromhex(input[2]), password)
-        iv = bytes.fromhex(input[3])[:__BLOCK_SIZE__]
-        print("decrypted:")
-        print(type(iv))
-        print(len(iv))
-        print(iv)
-        ciphertext = bytes.fromhex(input[3])[__BLOCK_SIZE__:]
+        key = find_hash(int(input[0]), bytes.fromhex(input[2]), password)
+        iv = bytes.fromhex(input[3])[:BLOCK_SIZE]
+        print(f"--- Decrypted properties ---")
+        print(f"Type: {type(iv)}\nLength: {len(iv)}\nValue: {iv}")
+        print(f"----------------------------")
+        ciphertext = bytes.fromhex(input[3])[BLOCK_SIZE:]
         cipher = AES.new(key, AES.MODE_CBC, iv) 
-        decrypted_msg = unpad(cipher.decrypt(ciphertext), __BLOCK_SIZE__)
-        print(decrypted_msg.decode('utf-8'))
+        decrypted_msg = unpad(cipher.decrypt(ciphertext), BLOCK_SIZE)
+        print(f"--- Decrypted message ---")
+        print(f"Value: {decrypted_msg.decode('utf-8')}")
 
 
 # Writes the ciphertext to a file
 # Format: no. hash iterations | question | random number | ciphertext
-def writeFile(iter_counter, question, salt, ciphertext):
+def write_file(iter_counter, question, salt, ciphertext):
     creation_time = time.time()
     output = f"{iter_counter} | {question} | {salt.hex()} | {ciphertext.hex()}"
     with open(f"ciphertext.txt", "w") as file:
         file.write(output)
         file.close()
 
-
-def getQuestion():
-    question = input("Insira a pergunta:")
-    return question
-
-
-def getAnswer():
-    answer = input("Qual é a resposta à pergunta? ").lower()
-    return answer
-
-
-def getMessage():
-    message = input("Digite a mensagem a ser cifrada: ")
-    return message
 
 if __name__ == "__main__":
     main()
