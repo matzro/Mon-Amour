@@ -92,19 +92,6 @@ def encrypt_message(message):
     return iter_counter, salt, ciphertext_iv
 
 
-def decrypt_message(password):
-    with open("ciphertext.txt", 'r') as file:
-        input = file.read().split(' | ')
-        key = find_hash(int(input[0]), bytes.fromhex(input[2]), password)
-        iv = bytes.fromhex(input[3])[:BLOCK_SIZE]
-        print(f"--- Decrypted properties ---")
-        print(f"Type: {type(iv)}\nLength: {len(iv)}\nValue: {iv}")
-        print(f"----------------------------")
-        ciphertext = bytes.fromhex(input[3])[BLOCK_SIZE:]
-        cipher = AES.new(key, AES.MODE_CBC, iv) 
-        decrypted_msg = unpad(cipher.decrypt(ciphertext), BLOCK_SIZE)
-        print(f"--- Decrypted message ---")
-        print(f"Value: {decrypted_msg.decode('utf-8')}")
 def decrypt_message(password, filename):
     input = read_file(filename)
     print(f"--- File properties ---")
