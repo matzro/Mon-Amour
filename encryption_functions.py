@@ -30,7 +30,12 @@ def decrypt_message(password, input):
 
     key = hf.find_hash(iter_counter, salt, password)
     cipher = AES.new(key, AES.MODE_CBC, iv)
-    decrypted_msg = unpad(cipher.decrypt(ciphertext), BLOCK_SIZE)
+    
+    # Exception handling
+    try:
+        decrypted_msg = unpad(cipher.decrypt(ciphertext), BLOCK_SIZE)
+    except ValueError:
+        return None, None
 
     pi.print_properties(input, hmac_received, iv, ciphertext, decrypted_msg)
     

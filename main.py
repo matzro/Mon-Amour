@@ -34,6 +34,10 @@ def main():
             
             decrypted_message, hmac_received = ef.decrypt_message(secret_key, ciphertext)
 
+            if decrypted_message is None:
+                print("Wrong password. Try again!")
+                continue
+
             if mf.hmac_receiver(decrypted_message, secret_key.encode("utf-8"), hmac_received):
                 print("HMAC is valid")
             else:
