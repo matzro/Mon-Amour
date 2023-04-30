@@ -12,8 +12,8 @@ HMAC_SIZE = 32  # 256 bits
 
 
 # https://onboardbase.com/blog/aes-encryption-decryption/
-def encrypt_message(message):
-    iter_counter, salt, key = hf.generate_hash("password")
+def encrypt_message(message, secret_key):
+    iter_counter, salt, key = hf.generate_hash(secret_key)
     iv = get_random_bytes(BLOCK_SIZE)
     cipher = AES.new(key, AES.MODE_CBC, iv)  # Cria um objeto AES com a chave
     ciphertext = cipher.encrypt(pad(message.encode(), BLOCK_SIZE))  # Cifra a mensagem
@@ -21,9 +21,7 @@ def encrypt_message(message):
     return iter_counter, salt, ciphertext_iv
 
 
-def decrypt_message(password, filename):
-    input = fm.read_file(filename)
-
+def decrypt_message(password, input):
     iter_counter = int(input[0])
     salt = bytes.fromhex(input[2])
     hmac_received = bytes.fromhex(input[3])[:HMAC_SIZE]
