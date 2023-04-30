@@ -1,17 +1,6 @@
-import hashlib
-import hmac
-
-# https://www.pycryptodome.org/
-from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
-from Crypto.Util.Padding import pad
-from Crypto.Util.Padding import unpad
-
 import encryption_functions as ef
 import file_management as fm
-import hash_functions as hf
 import mac_functions as mf
-import print_info as pi
 
 
 # GLOBAL VARIABLES
