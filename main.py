@@ -10,17 +10,19 @@ FILE_NAME = "ciphertext.txt"
 HMAC_SIZE = 32  # 256 bits
 
 
-
 def main():
     while True:
         pi.print_menu()
         option = input("Option: ")
-        
+
         if option == "1":
             question = input("Question: ")
             secret_key = input("Password: ").lower()
             message = input("Message: ")
 
+            # TODO: hmac needs to be changed, as it receives the ciphertext and not the plaintext message
+            # Attention to the fact that it is more secure to encrypt the message first and then calculate the hmac,
+            # lastly concatenate the hmac with the ciphertext
             hmac_value = mf.hmac_sender(message, secret_key.encode("utf-8"))
             iter_counter, salt, ciphertext_iv = ef.encrypt_message(message, secret_key)
             fm.write_file(iter_counter, question, salt, ciphertext_iv, hmac_value)
