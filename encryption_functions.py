@@ -20,6 +20,13 @@ def encrypt_message(message, secret_key):
     ciphertext_iv = iv + ciphertext
     return iter_counter, salt, ciphertext_iv
 
+def encrypt_message(cipherobject):
+    iter_counter, salt, key = hf.generate_hash(cipherobject.secret_key)
+    iv = get_random_bytes(BLOCK_SIZE)
+    cipher = AES.new(key, AES.MODE_CBC, iv)  # Cria um objeto AES com a chave
+    ciphertext = cipher.encrypt(pad(message.encode(), BLOCK_SIZE))  # Cifra a mensagem
+    ciphertext_iv = iv + ciphertext
+    return iter_counter, salt, ciphertext_iv
 
 def decrypt_message(password, input):
     iter_counter = int(input[0])
