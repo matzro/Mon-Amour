@@ -38,7 +38,11 @@ def decrypt_message(password, input):
     hmac_validity = hmac_received.hex() == hmac_value
 
     decrypted_msg = cipher.decrypt(ciphertext)
-    # print(f"Decrypted message: {decrypted_msg.decode()}")
+
+    try: 
+        print(f"Decrypted message: {decrypted_msg.decode()}")
+    except:
+        print("Decryption failed. Wrong password.")
 
     # pi.print_properties(input, hmac_received, ciphertext, decrypted_msg)
     
