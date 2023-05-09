@@ -19,6 +19,7 @@ def main():
         option = input("Option: ")
 
         if option == "1":
+            print("\n")
             question = input("Question: ")
             secret_key = input("Password: ").lower()
             message = input("Message: ")
@@ -32,6 +33,7 @@ def main():
             ciphertext = fm.read_file(FILE_NAME)
             question = ciphertext[1]
 
+            print("\n")
             print(f"Question: {question}")
             secret_key = input("Password: ").lower()
             

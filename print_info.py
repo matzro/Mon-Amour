@@ -1,10 +1,12 @@
 def print_menu():
+    print("\n")
     print("Welcome to Mon-Amour messaging app")
     print("1. Send message")
     print("2. Receive message")
     print("------------------")
     print("9. Help")
     print("0. Exit")
+    print("\n")
 
 
 def print_properties(input, hmac_received, ciphertext, decrypted_msg):
