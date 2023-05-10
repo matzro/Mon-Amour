@@ -1,3 +1,4 @@
+import digital_signature as ds
 import encryption_functions as ef
 import file_management as fm
 import mac_functions as mf
@@ -20,25 +21,35 @@ def main():
         pi.print_menu()
         option = input("Option: ")
 
+        # ---- ENCRYPT ----
         if option == "1":
             question = input("Question: ")
             secret_key = input("Password: ").lower()
 
-
-            # User 1 encrypts the secret key with user's 2 public key
+            # ------------ RSA (encrypt) --------------
+            # ---- USER1 encrypts the secret key with USER2 public key
             encrypted_secret_key = rf.encrypt_secret_key(secret_key.encode(), USER2)
             fm.write_rsa_cipher(encrypted_secret_key, USER1)
 
             message = input("Message: ")
 
-            # TODO: hmac needs to be changed, as it receives the ciphertext and not the plaintext message
-            # Attention to the fact that it is more secure to encrypt the message first and then calculate the hmac,
-            # lastly concatenate the hmac with the ciphertext
+            # ------------ DIGITAL SIGNATURE --------------
+            # ---- USER1 signs the message with USER1 private key
+            signature = ds.generate_signature(message, USER1)
+            fm.write_signature(signature)
 
+            # -------------- AES (encrypt) --------------
             iter_counter, salt, ciphertext_iv = ef.encrypt_message(message, secret_key)
+
+            # ------------ HMAC -------------
+            # ---- It is more secure to encrypt the message first and then calculate the hmac,
+            # ---- lastly concatenate the hmac with the ciphertext
             hmac_value = mf.hmac_sender(ciphertext_iv[BLOCK_SIZE:], secret_key.encode("utf-8"))
+
+            # ---- Write the ciphertext, salt, iv and hmac to a file
             fm.write_file(iter_counter, question, salt, ciphertext_iv, hmac_value)
 
+        # ---- DECRYPT ----
         elif option == "2":
             ciphertext = fm.read_file(FILE_NAME)
             question = ciphertext[1]
@@ -46,15 +57,28 @@ def main():
             print(f"Question: {question}")
             secret_key = input("Password: ")
 
-            # Reads the ciphertext of the secret key that user 1 sent to user 2
+            # ------------ RSA (decrypt) --------------
+            # --- Reads the ciphertext of the secret key that USER1 sent to USER2
             cipher_secretkey = fm.read_rsa_cipher(USER1)
-
-            # Decrypts the secret key with user 2 private key
+            # --- USER2 decrypts the secret key with USER2 private key
             decrypted_secret_key = rf.decrypt_secret_key(cipher_secretkey, USER2)
+            # --- Writes the decrypted secret key to a file (only for testing purposes!!!!!!!)
             fm.write_rsa_decipher(decrypted_secret_key, USER2)
 
+            # ------------ DIGITAL SIGNATURE --------------
+            # ---- Reads the signature from the file
+            signature = fm.read_signature()
+            # ---- USER2 verifies the signature with USER2 public key
+            verification = ds.verify_signature(question, signature, USER2)
+            if verification:
+                print("Signature verified")
+            else:
+                print("Signature not verified")
+
+            # ------------ AES (decrypt) -------------
             error, decrypted_message = ef.decrypt_message(secret_key, ciphertext)
 
+            # ---- Handle errors
             if error is None:
                 print(f"Message: {decrypted_message}")
             else:

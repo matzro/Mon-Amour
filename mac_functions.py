@@ -3,8 +3,7 @@ import hmac
 
 
 def hmac_sender(message, secret_key):
-    hmac_value = hmac.new(secret_key, message.encode("utf-8"), hashlib.sha256).hexdigest()
-
+    hmac_value = hmac.new(secret_key, message, hashlib.sha256).hexdigest()
     return hmac_value
 
 
