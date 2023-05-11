@@ -1,8 +1,12 @@
+from sys import exit
+
 import digital_signature as ds
 import encryption_functions as ef
 import file_management as fm
 import mac_functions as mf
 import print_info as pi
+import hash_functions as hf
+
 import rsa_functions as rf
 
 # GLOBAL VARIABLES
@@ -23,6 +27,7 @@ def main():
 
         # ---- ENCRYPT ----
         if option == "1":
+            print("\n")
             question = input("Question: ")
             secret_key = input("Password: ").lower()
 
@@ -33,28 +38,44 @@ def main():
 
             message = input("Message: ")
 
+            iter_counter, salt, ciphertext = ef.encrypt_message(message, secret_key)
+            hmac_value = mf.calculate_hmac(ciphertext, secret_key)
+            print(f"HMAC: {hmac_value}")
+            fm.write_file(iter_counter, question, salt, ciphertext, hmac_value)
+
             # ------------ DIGITAL SIGNATURE --------------
             # ---- USER1 signs the message with USER1 private key
             signature = ds.generate_signature(message, USER1)
             fm.write_signature(signature)
 
             # -------------- AES (encrypt) --------------
-            iter_counter, salt, ciphertext_iv = ef.encrypt_message(message, secret_key)
+            iter_counter, salt, ciphertext = ef.encrypt_message(message, secret_key)
 
             # ------------ HMAC -------------
             # ---- It is more secure to encrypt the message first and then calculate the hmac,
             # ---- lastly concatenate the hmac with the ciphertext
-            hmac_value = mf.hmac_sender(ciphertext_iv[BLOCK_SIZE:], secret_key.encode("utf-8"))
+            hmac_value = mf.calculate_hmac(ciphertext[BLOCK_SIZE:], secret_key)
 
             # ---- Write the ciphertext, salt, iv and hmac to a file
-            fm.write_file(iter_counter, question, salt, ciphertext_iv, hmac_value)
+            fm.write_file(iter_counter, question, salt, ciphertext, hmac_value)
 
         # ---- DECRYPT ----
         elif option == "2":
             ciphertext = fm.read_file(FILE_NAME)
             question = ciphertext[1]
 
+            print("\n")
             print(f"Question: {question}")
+
+            secret_key = input("Password: ").lower()
+            
+            decrypted_message, hmac_validity = ef.decrypt_message(secret_key, ciphertext)
+
+            print(f"hmac: {hmac_validity}")
+
+        elif option == "0":
+            exit(0)
+
             secret_key = input("Password: ")
 
             # ------------ RSA (decrypt) --------------
@@ -83,6 +104,7 @@ def main():
                 print(f"Message: {decrypted_message}")
             else:
                 print(f"Error: {error}")
+
 
 
 if __name__ == "__main__":
