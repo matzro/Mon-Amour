@@ -13,13 +13,13 @@ import rsa_functions as rf
 BLOCK_SIZE = 16  # 128 bits
 FILE_NAME = "ciphertext.txt"
 HMAC_SIZE = 32  # 256 bits
-USER1 = "user1"
-USER2 = "user2"
+BOB = "bob"
+ALICE = "alice"
 
 
 def main():
-    rf.generate_key_pair(USER1)
-    rf.generate_key_pair(USER2)
+    rf.generate_key_pair(BOB)
+    rf.generate_key_pair(ALICE)
 
     while True:
         pi.print_menu()
@@ -32,9 +32,9 @@ def main():
             secret_key = input("Password: ").lower()
 
             # ------------ RSA (encrypt) --------------
-            # ---- USER1 encrypts the secret key with USER2 public key
-            encrypted_secret_key = rf.encrypt_secret_key(secret_key.encode(), USER2)
-            fm.write_rsa_cipher(encrypted_secret_key, USER1)
+            # ---- Bob encrypts the secret key with ALICE public key
+            encrypted_secret_key = rf.encrypt_secret_key(secret_key.encode(), ALICE)
+            fm.write_rsa_cipher(encrypted_secret_key, BOB)
 
             message = input("Message: ")
 
@@ -44,8 +44,8 @@ def main():
             fm.write_file(iter_counter, question, salt, ciphertext, hmac_value)
 
             # ------------ DIGITAL SIGNATURE --------------
-            # ---- USER1 signs the message with USER1 private key
-            signature = ds.generate_signature(message, USER1)
+            # ---- Bob signs the message with his private key
+            signature = ds.generate_signature(message, BOB)
             fm.write_signature(signature)
 
             # -------------- AES (encrypt) --------------
@@ -70,20 +70,21 @@ def main():
             secret_key = input("Password: ").lower()
 
             # ------------ RSA (decrypt) --------------
-            # --- Reads the ciphertext of the secret key that USER1 sent to USER2
-            cipher_secretkey = fm.read_rsa_cipher(USER1)
-            # --- USER2 decrypts the secret key with USER2 private key
-            decrypted_secret_key = rf.decrypt_secret_key(cipher_secretkey, USER2)
+            # --- Reads the ciphered secret key from the file
+            cipher_secretkey = fm.read_rsa_cipher(BOB)
+            # --- Alice decrypts the secret key with her private key
+            decrypted_secret_key = rf.decrypt_secret_key(cipher_secretkey, ALICE)
+            print(decrypted_secret_key)
             # --- Writes the decrypted secret key to a file (only for testing purposes!!!!!!!)
-            fm.write_rsa_decipher(decrypted_secret_key, USER2)
+            fm.write_rsa_decipher(decrypted_secret_key.decode(), ALICE)
             
             decrypted_message, hmac_validity = ef.decrypt_message(secret_key, ciphertext)
 
             # ------------ DIGITAL SIGNATURE --------------
             # ---- Reads the signature from the file
             signature = fm.read_signature()
-            # ---- USER2 verifies the signature with USER2 public key
-            verification = ds.verify_signature(decrypted_message.decode(), signature, USER2)
+            # ---- Alice verifies the signature with Bob public key
+            verification = ds.verify_signature(decrypted_message.decode(), signature, BOB)
 
             if verification:
                 print("Signature verified")

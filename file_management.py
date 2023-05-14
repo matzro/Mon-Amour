@@ -19,7 +19,7 @@ def read_file(filename):
 
 
 # ------------- RSA --------------
-# ---- Writes the private key to a file
+# ---- Opens the private key
 def import_private_key(username):
     # Deserialize the PEM file to a private key object
     with open(f'private_key_{username}.pem', 'rb') as f:
@@ -28,7 +28,7 @@ def import_private_key(username):
     return private_key
 
 
-# ---- Writes the public key to a file
+# ---- Opens the public key
 def import_public_key(username):
     # Deserialize the PEM file to a public key object
     with open(f'public_key_{username}.pem', 'rb') as f:
@@ -47,14 +47,14 @@ def write_rsa_cipher(encrypted_secret_key, username):
 # ---- Reads ciphered secret key from the file (maybe not needed)
 def read_rsa_cipher(username):
     with open(f"rsa_ciphertext_{username}.txt", 'r') as file:
-        input = bytes.fromhex(file.read())
-        return input
+        ciphertext = bytes.fromhex(file.read())
+        return ciphertext
 
 
 # ---- Writes the deciphered secret key to a file (maybe not needed)
 def write_rsa_decipher(deciphered_secretkey, username):
-    with open(f"deciphered_key{username}", 'w') as file:
-        file.write(deciphered_secretkey.hex())
+    with open(f"deciphered_key_{username}.txt", 'w') as file:
+        file.write(deciphered_secretkey)
         file.close()
 
 
