@@ -31,15 +31,16 @@ def decrypt_message(password, input):
     key = hf.find_hash(iter_counter, salt, password)
     cipher = AES.new(key, AES.MODE_CTR, counter=counter)
 
-    hmac_received = bytes.fromhex(input[3])[:HMAC_SIZE]
-    hmac_value = mf.calculate_hmac(ciphertext, password)
-    # print(f"HMAC R: {hmac_received.hex()}")
-    # print(f"HMAC C: {hmac_value}")
-    hmac_validity = hmac_received.hex() == hmac_value
+    hmac_received = input[3][:HMAC_SIZE]
+    hmac_value = mf.calculate_hmac(ciphertext, password)[:HMAC_SIZE]
+    print(f"HMAC R: {hmac_received}")
+    print(f"HMAC C: {hmac_value}")
+
+    hmac_validity = (hmac_received == hmac_value)
 
     decrypted_msg = cipher.decrypt(ciphertext)
 
-    try: 
+    try:
         print(f"Decrypted message: {decrypted_msg.decode()}")
     except:
         print("Decryption failed. Wrong password.")

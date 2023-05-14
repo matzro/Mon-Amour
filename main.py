@@ -54,7 +54,7 @@ def main():
             # ------------ HMAC -------------
             # ---- It is more secure to encrypt the message first and then calculate the hmac,
             # ---- lastly concatenate the hmac with the ciphertext
-            hmac_value = mf.calculate_hmac(ciphertext[BLOCK_SIZE:], secret_key)
+            hmac_value = mf.calculate_hmac(ciphertext, secret_key)
 
             # ---- Write the ciphertext, salt, iv and hmac to a file
             fm.write_file(iter_counter, question, salt, ciphertext, hmac_value)

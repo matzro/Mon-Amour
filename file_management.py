@@ -4,7 +4,7 @@ from Crypto.PublicKey import RSA
 # ------------- AES --------------
 # ---- Writes the ciphertext to a file
 def write_file(iter_counter, question, salt, ciphertext, hmac_value):
-    # Format: no. hash iterations | question | random number | hmac+iv+ciphertext
+    # Format: no. hash iterations | question | random number | hmac+ciphertext
     output = f"{iter_counter} | {question} | {salt.hex()} | {hmac_value}{ciphertext.hex()}"
     with open(f"ciphertext.txt", "w") as file:
         file.write(output)
