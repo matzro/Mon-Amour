@@ -68,15 +68,6 @@ def main():
             print(f"Question: {question}")
 
             secret_key = input("Password: ").lower()
-            
-            decrypted_message, hmac_validity = ef.decrypt_message(secret_key, ciphertext)
-
-            print(f"hmac: {hmac_validity}")
-
-        elif option == "0":
-            exit(0)
-
-            secret_key = input("Password: ")
 
             # ------------ RSA (decrypt) --------------
             # --- Reads the ciphertext of the secret key that USER1 sent to USER2
@@ -85,25 +76,25 @@ def main():
             decrypted_secret_key = rf.decrypt_secret_key(cipher_secretkey, USER2)
             # --- Writes the decrypted secret key to a file (only for testing purposes!!!!!!!)
             fm.write_rsa_decipher(decrypted_secret_key, USER2)
+            
+            decrypted_message, hmac_validity = ef.decrypt_message(secret_key, ciphertext)
 
             # ------------ DIGITAL SIGNATURE --------------
             # ---- Reads the signature from the file
             signature = fm.read_signature()
             # ---- USER2 verifies the signature with USER2 public key
-            verification = ds.verify_signature(question, signature, USER2)
+            verification = ds.verify_signature(decrypted_message.decode(), signature, USER2)
+
             if verification:
                 print("Signature verified")
             else:
                 print("Signature not verified")
 
-            # ------------ AES (decrypt) -------------
-            error, decrypted_message = ef.decrypt_message(secret_key, ciphertext)
 
-            # ---- Handle errors
-            if error is None:
-                print(f"Message: {decrypted_message}")
-            else:
-                print(f"Error: {error}")
+            print(f"hmac: {hmac_validity}")
+
+        elif option == "0":
+            exit(0)
 
 
 
