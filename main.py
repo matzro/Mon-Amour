@@ -61,7 +61,12 @@ def main():
 
         # ---- DECRYPT ----
         elif option == "2":
-            ciphertext = fm.read_file(FILE_NAME)
+            try:
+                ciphertext = fm.read_file(FILE_NAME)
+            except: 
+                print("No ciphertext found. Please encrypt a message first.")
+                continue
+
             question = ciphertext[1]
 
             print("\n")
