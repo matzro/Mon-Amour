@@ -6,6 +6,7 @@ import file_management as fm
 import mac_functions as mf
 import print_info as pi
 import hash_functions as hf
+import account_management as am
 
 import rsa_functions as rf
 
@@ -18,8 +19,12 @@ ALICE = "alice"
 
 
 def main():
-    rf.generate_key_pair(BOB)
-    rf.generate_key_pair(ALICE)
+    if (am.check_if_keys_exist(BOB) and am.check_if_keys_exist(ALICE)) == False:
+        print(f"Generating keys for {BOB} and {ALICE}...")
+        rf.generate_key_pair(BOB)
+        rf.generate_key_pair(ALICE)
+    else:
+        print(f"Keys for {BOB} and {ALICE} already exist.")
 
     while True:
         pi.print_menu()

@@ -40,3 +40,8 @@ def find_hash(iter_counter, salt, password):
         hash_value = hashlib.sha256(hash_value).digest()
         i += 1
     return hash_value
+
+
+def short_hash(string):
+    hash = hashlib.sha256(string.encode('utf-8')).digest()[:8].hex().upper()
+    return hash

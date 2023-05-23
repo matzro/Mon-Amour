@@ -1,21 +1,18 @@
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP, PKCS1_v1_5  # para que serve isto?
 import file_management as fm
+import account_management as am
 
 
 def generate_key_pair(username):
     # Generate a new RSA key pair
     key = RSA.generate(2048)
 
-    # Serialize the private key to a PEM file
-    private_key = key.export_key()
-    with open(f'private_key_{username}.pem', 'wb') as f:
-        f.write(private_key)
-
-    # Serialize the public key to a PEM file
+    # Serialize the public and private keys to PEM files
     public_key = key.publickey().export_key()
-    with open(f'public_key_{username}.pem', 'wb') as f:
-        f.write(public_key)
+    private_key = key.export_key()
+
+    am.store_user_keys(username, public_key, private_key)
 
     return private_key, public_key
 
