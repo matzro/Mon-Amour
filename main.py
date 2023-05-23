@@ -18,7 +18,7 @@ ALICE = "alice"  # This is the username of the sender
 customtkinter.set_appearance_mode('dark')
 customtkinter.set_default_color_theme('blue')
 
-def cifrar():
+def cipher():
     """This function is called when the user clicks on the "Send" button. It reads the values from the GUI - question,
     secret key and message to send.
     First, the secret key created by the user is encrypted with the public key of the receiver, using RSA. The encrypted
@@ -44,7 +44,7 @@ def cifrar():
                                                                                                 # secret_key of login
     fm.write_signature(signature)
 
-def decifrar():
+def decipher():
     """This function is called when the user clicks on the "Receive" button. It reads the value from the GUI - secret
     key.
     First, the secret key received is decrypted with the private key of the receiver, using RSA.
@@ -76,6 +76,8 @@ def decifrar():
 
 
 if __name__ == '__main__':
+    """This is the main function. It creates the GUI and calls the functions cipher() and decipher() when the user clicks
+    """
 
     rf.generate_key_pair(BOB, hashlib.sha256("key1".encode()).digest()) # !!!!!!!!!! CHANGE THIS
     rf.generate_key_pair(ALICE, hashlib.sha256("key2".encode()).digest()) # !!!!!!!!!! CHANGE THIS
@@ -107,7 +109,7 @@ if __name__ == '__main__':
     message1 = customtkinter.CTkEntry(tabview.tab('Send message'), placeholder_text='Message', font=('Calibri', 15))
     message1.pack(padx=10, pady=10)
 
-    botao_send = customtkinter.CTkButton(tabview.tab('Send message'), text='Send', font=('Calibri', 15), command=cifrar)
+    botao_send = customtkinter.CTkButton(tabview.tab('Send message'), text='Send', font=('Calibri', 15), command=cipher)
     botao_send.pack(padx=10, pady=10)
 
     # Tab 2
@@ -123,7 +125,7 @@ if __name__ == '__main__':
     secret_key2 = customtkinter.CTkEntry(tabview.tab('Receive message'), placeholder_text='Secret Key', font=('Calibri', 15), show='*')
     secret_key2.pack(padx=10, pady=10)
 
-    botao_receive = customtkinter.CTkButton(tabview.tab('Receive message'), text='Receive', font=('Calibri', 15), command=decifrar)
+    botao_receive = customtkinter.CTkButton(tabview.tab('Receive message'), text='Receive', font=('Calibri', 15), command=decipher)
     botao_receive.pack(padx=10, pady=10)
 
     # Tab 3
