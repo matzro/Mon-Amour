@@ -30,4 +30,11 @@ def store_user_keys(username, public_key, private_key):
         f.write(private_key)
         f.close()
 
-    
+def get_keys_path(username):
+    user_id = short_hash(username)
+    path = USERDATA_PATH + user_id + "/"
+
+    public_key_path = f"{path}public_key_{user_id}.pem"
+    private_key_path = f"{path}private_key_{user_id}.pem"
+
+    return public_key_path, private_key_path
