@@ -12,95 +12,87 @@ import rsa_functions as rf
 BLOCK_SIZE = 16  # 128 bits
 FILE_NAME = "ciphertext.txt"
 HMAC_SIZE = 32  # 256 bits
-BOB = "bob"
-ALICE = "alice"
+BOB = "bob" # This is the username of the receiver
+ALICE = "alice"  # This is the username of the sender
 
 customtkinter.set_appearance_mode('dark')
 customtkinter.set_default_color_theme('blue')
 
 def cifrar():
+    """This function is called when the user clicks on the "Send" button. It reads the values from the GUI - question,
+    secret key and message to send.
+    First, the secret key created by the user is encrypted with the public key of the receiver, using RSA. The encrypted
+    secret key is written to a file.
+    Then, the message is encrypted using AES. The iter_counter, question, salt, ciphertext and hmac are written to a
+    file.
+    It is needed to generate a digital signature of the message, so the message is signed with the private key of the
+    sender. The signature is written to a file.
+    :return: None
+    """
     question = question1.get()
     secret_key = secret_key1.get().lower()
     message = message1.get()
-    print("Question: ", question)
-    print("Secret Key: ", secret_key)
-    print("Message: ", message)
 
-    # ------------ RSA (encrypt) --------------
-    # ---- The user that sends messages encrypts the secret key with the public key of the receiver
-    # ---- And writes the encrypted secret key to a file
     encrypted_secret_key = rf.encrypt_secret_key(secret_key.encode(), ALICE)
     fm.write_rsa_cipher(encrypted_secret_key, BOB)
 
     iter_counter, salt, ciphertext = ef.encrypt_message(message, secret_key)
     hmac_value = mf.calculate_hmac(ciphertext, secret_key)
-    print(f"HMAC: {hmac_value}")
     fm.write_file(iter_counter, question, salt, ciphertext, hmac_value)
 
-    # ------------ DIGITAL SIGNATURE --------------
-    # ---- Bob signs the message with his private key
-    signature = ds.generate_signature(message, BOB, hashlib.sha256("key1".encode()).digest())
+    signature = ds.generate_signature(message, BOB, hashlib.sha256("key1".encode()).digest()) # !!!!!!!!!! CHANGE THIS
+                                                                                                # secret_key of login
     fm.write_signature(signature)
 
-    # -------------- AES (encrypt) --------------
-    iter_counter, salt, ciphertext = ef.encrypt_message(message, secret_key)
-
-    # ------------ HMAC -------------
-    # ---- It is more secure to encrypt the message first and then calculate the hmac,
-    # ---- lastly concatenate the hmac with the ciphertext
-    hmac_value = mf.calculate_hmac(ciphertext, secret_key)
-
-    # ---- Write the ciphertext, salt, iv and hmac to a file
-    fm.write_file(iter_counter, question, salt, ciphertext, hmac_value)
-
-
 def decifrar():
+    """This function is called when the user clicks on the "Receive" button. It reads the value from the GUI - secret
+    key.
+    First, the secret key received is decrypted with the private key of the receiver, using RSA.
+    Then, the ciphertext is read from the file and the message is decrypted using AES.
+    The HMAC is calculated and compared with the HMAC received. If they are equal, it is printed "HMAC verified".
+    It is needed to verify the digital signature of the message, so the signature is read from the file and verified. If
+    the signature is valid, it is printed "Signature verified". If not, it is printed "Signature not verified".
+    :return: None
+    """
     secret_key3 = secret_key2.get().lower()
     ciphertext1 = fm.read_file(FILE_NAME)
 
-    # ------------ RSA (decrypt) --------------
-    # --- Reads the ciphered secret key from the file
     cipher_secretkey = fm.read_rsa_cipher(BOB)
-    # --- Alice decrypts the secret key with her private key
-    decrypted_secret_key = rf.decrypt_secret_key(cipher_secretkey, ALICE, hashlib.sha256("key2".encode()).digest())
+    decrypted_secret_key = rf.decrypt_secret_key(cipher_secretkey, ALICE, hashlib.sha256("key2".encode()).digest()) # !!!!!!!!!! CHANGE THIS
     print(decrypted_secret_key)
-    # --- Writes the decrypted secret key to a file (only for testing purposes!!!!!!!)
-    fm.write_rsa_decipher(decrypted_secret_key.decode(), ALICE)
+
+    #fm.write_rsa_decipher(decrypted_secret_key.decode(), ALICE)
 
     decrypted_message, hmac_validity = ef.decrypt_message(secret_key3, ciphertext1)
+    print(f"HMAC: {hmac_validity}")
+    print(f"Decrypted message: {decrypted_message}")
 
-    # ------------ DIGITAL SIGNATURE --------------
-    # ---- Reads the signature from the file
     signature = fm.read_signature()
-    # ---- Alice verifies the signature with Bob public key
     verification = ds.verify_signature(decrypted_message.decode(), signature, BOB)
-
     if verification:
         print("Signature verified")
     else:
         print("Signature not verified")
 
-    print(f"hmac: {hmac_validity}")
-
 
 if __name__ == '__main__':
-    # Janela principal
-    janela = customtkinter.CTk()
-    janela.geometry('650x550')
-    janela.title('Mon-Amour')
 
+    rf.generate_key_pair(BOB, hashlib.sha256("key1".encode()).digest()) # !!!!!!!!!! CHANGE THIS
+    rf.generate_key_pair(ALICE, hashlib.sha256("key2".encode()).digest()) # !!!!!!!!!! CHANGE THIS
 
-    texto = customtkinter.CTkLabel(janela, text='Welcome to Mon-Amour messaging app', font=('Calibri', 20))
-    texto.pack(padx=10, pady=20)
+    # Main window
+    window = customtkinter.CTk()
+    window.geometry('650x550')
+    window.title('Mon-Amour')
 
-    tabview = customtkinter.CTkTabview(janela, width=400, height=350)
+    text = customtkinter.CTkLabel(window, text='Welcome to Mon-Amour messaging app', font=('Calibri', 20))
+    text.pack(padx=10, pady=20)
+
+    tabview = customtkinter.CTkTabview(window, width=400, height=350)
     tabview.pack()
     tabview.add('Send message')
     tabview.add('Receive message')
     tabview.add('Help')
-
-    rf.generate_key_pair(BOB, hashlib.sha256("key1".encode()).digest())
-    rf.generate_key_pair(ALICE, hashlib.sha256("key2".encode()).digest())
 
     # Tab 1
     text = customtkinter.CTkLabel(tabview.tab('Send message'), text='Send message', font=('Calibri', 15))
@@ -139,9 +131,9 @@ if __name__ == '__main__':
     text.pack(padx=10, pady=10)
 
 
-    # Fecha janela
-    botao4 = customtkinter.CTkButton(janela, text='Exit', font=('Calibri', 15), command=janela.destroy)
+    # Close window
+    botao4 = customtkinter.CTkButton(window, text='Exit', font=('Calibri', 15), command=window.destroy)
     botao4.pack(padx=10, pady=10)
 
 
-    janela.mainloop()  # Mantém a janela aberta
+    window.mainloop()  # Keep the window open

@@ -18,15 +18,6 @@ def read_file(filename):
         return input
 
 
-# ------------- RSA --------------
-# ---- Opens the private key
-def import_private_key(username):
-    # Deserialize the PEM file to a private key object
-    with open(f'private_key_{username}.pem', 'rb') as f:
-        private_key = RSA.import_key(f.read())
-
-    return private_key
-
 
 # ---- Opens the public key
 def import_public_key(username):
