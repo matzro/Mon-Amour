@@ -8,6 +8,7 @@ import print_info as pi
 import hash_functions as hf
 
 import rsa_functions as rf
+import gui as gui
 
 # GLOBAL VARIABLES
 BLOCK_SIZE = 16  # 128 bits
@@ -20,6 +21,9 @@ ALICE = "alice"
 def main():
     rf.generate_key_pair(BOB)
     rf.generate_key_pair(ALICE)
+
+    gui.callInterface()
+
 
     while True:
         pi.print_menu()
