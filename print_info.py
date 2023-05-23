@@ -1,3 +1,8 @@
+def print_login():
+    print("\n")
+    print("Enter your login credentials")
+    print("\n")
+
 def print_menu():
     print("\n")
     print("Welcome to Mon-Amour messaging app")

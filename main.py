@@ -1,30 +1,30 @@
-from sys import exit
+import sys
 
+import account_management as am
 import digital_signature as ds
 import encryption_functions as ef
 import file_management as fm
 import mac_functions as mf
 import print_info as pi
-import hash_functions as hf
-import account_management as am
-
 import rsa_functions as rf
+
 
 # GLOBAL VARIABLES
 BLOCK_SIZE = 16  # 128 bits
 FILE_NAME = "ciphertext.txt"
 HMAC_SIZE = 32  # 256 bits
-BOB = "bob"
-ALICE = "alice"
 
 
 def main():
-    if (am.check_if_keys_exist(BOB) and am.check_if_keys_exist(ALICE)) == False:
-        print(f"Generating keys for {BOB} and {ALICE}...")
-        rf.generate_key_pair(BOB)
-        rf.generate_key_pair(ALICE)
+    pi.print_login()
+    username = input("Username: ")
+    password = input("Password: ").lower()
+
+    if (am.check_if_keys_exist(username) == False):
+        print(f"Generating keys for {username}...")
+        rf.generate_key_pair(username)
     else:
-        print(f"Keys for {BOB} and {ALICE} already exist.")
+        print(f"Keys for {username} already exist.")
 
     while True:
         pi.print_menu()
@@ -105,7 +105,7 @@ def main():
             print(f"hmac: {hmac_validity}")
 
         elif option == "0":
-            exit(0)
+            sys.exit(0)
 
 
 
