@@ -4,16 +4,25 @@ from Crypto.Random import get_random_bytes
 
 BLOCK_SIZE = 16
 
-def generate_salt():
-    """Generates salt for hashing
+def generate_salt() -> bytes:
+    """Generates a random salt value of 16 bytes.
 
-    :return: random 16-bytes `bytes` object
+    Returns:
+        bytes: 16 byte generated salt value.
     """
     return get_random_bytes(BLOCK_SIZE)
 
 
 # https://stackoverflow.com/questions/3566176/salting-passwords-101
 def generate_hash(password):
+    """Generates a hash value from a password using the SHA256 algorithm and 
+
+    Args:
+        password (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     password_bytes = password.encode('utf-8')
     salt = generate_salt()
     key = b''.join([password_bytes, salt])
