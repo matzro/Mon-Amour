@@ -1,8 +1,10 @@
 import os
 from hash_functions import short_hash
 
-# Constant
+# Constants
 USERDATA_PATH = "./user_data/"
+HASHING_ITERATIONS = 50_000
+
 
 def check_if_keys_exist(username):
     user_id = short_hash(username)
@@ -14,6 +16,7 @@ def check_if_keys_exist(username):
         return True
     else:
         return False
+
 
 def store_user_keys(username, public_key, private_key):
     user_id = short_hash(username)
@@ -29,6 +32,7 @@ def store_user_keys(username, public_key, private_key):
     with open(f"{path}private_key_{user_id}.pem", "wb") as f:
         f.write(private_key)
         f.close()
+
 
 def get_keys_path(username):
     user_id = short_hash(username)

@@ -5,6 +5,10 @@ from Crypto.Random import get_random_bytes
 BLOCK_SIZE = 16
 
 def generate_salt():
+    """Generates salt for hashing
+
+    :return: random 16-bytes `bytes` object
+    """
     return get_random_bytes(BLOCK_SIZE)
 
 
