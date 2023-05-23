@@ -31,7 +31,7 @@ def encrypt_private_key_AES(private_key_str, secret_key):
     """Encrypts the private key with AES.
     :param private_key_str: Private key to be encrypted
     :param secret_key: Encryption key for the private key
-    :return:
+    :return: ciphertext
     """
     counter = Counter.new(nbits=BLOCK_SIZE * 8)
 
@@ -45,7 +45,7 @@ def encrypt_secret_key(secret_for_private, username):
     """Encrypts the secret key with the public key of the user.
     :param secret_for_private: Secret key to be encrypted
     :param username: To get the public key of the user
-    :return:
+    :return: encrypted_secret_key
     """
     public_key = fm.import_public_key(username)
     cipher_rsa = PKCS1_v1_5.new(public_key)
@@ -58,7 +58,7 @@ def decrypt_secret_key(encrypted_secret_key, username, secret_for_private):
     :param encrypted_secret_key: Secret key to be decrypted
     :param username: To get the private key of the user
     :param secret_for_private: Encryption key for the private key
-    :return:
+    :return: decrypted_secret_key
     """
     with open(f'private_key_{username}.pem', 'rb') as f:
         private_key = f.read()

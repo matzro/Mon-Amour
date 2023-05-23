@@ -1,22 +1,29 @@
 from Crypto.PublicKey import RSA
 
 
-# ------------- AES --------------
-# ---- Writes the ciphertext to a file
 def write_file(iter_counter, question, salt, ciphertext, hmac_value):
-    # Format: no. hash iterations | question | random number | hmac+ciphertext
+    """
+    This function writes the iter_counter, question, salt, ciphertext and hmac to a file.
+    :param iter_counter: Value of the iter_counter used in the hashing function
+    :param question: Question to be sent
+    :param salt: Salt used in the hashing function
+    :param ciphertext: Ciphertext of the message
+    :param hmac_value: HMAC of the ciphertext
+    :return: none
+    """
     output = f"{iter_counter} | {question} | {salt.hex()} | {hmac_value}{ciphertext.hex()}"
     with open(f"ciphertext.txt", "w") as file:
         file.write(output)
         file.close()
 
 
-# ---- Reads and splits the ciphertext from a file
 def read_file(filename):
+    """This function reads the ciphertext from a file and splits it into iter_counter, question, salt, ciphertext and hmac.
+    :param filename:
+    :return: iter_counter | question | salt | ciphertext+hmac
+    """
     with open(filename, 'r') as file:
-        input = file.read().split(' | ')
-        return input
-
+        return file.read().split(' | ')
 
 
 # ---- Opens the public key
