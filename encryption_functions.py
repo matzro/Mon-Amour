@@ -46,3 +46,4 @@ def decrypt_message(password, input):
         print("Decryption failed. Wrong password.")
     
     return decrypted_msg, hmac_validity
+
