@@ -12,3 +12,4 @@ System to exchange love letters, with a twist...
  - [Password hashing using Bcrypt](https://www.geeksforgeeks.org/hashing-passwords-in-python-with-bcrypt/)
  - [Pycryptodome AES cipher documentation](https://pycryptodome.readthedocs.io/en/v3.10.4/src/cipher/aes.html)
  - [Salting passwords](https://stackoverflow.com/questions/3566176/salting-passwords-101)
+ - [Glob filename pattern](https://favtutor.com/blogs/glob-python)

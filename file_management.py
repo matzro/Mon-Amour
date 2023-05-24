@@ -1,22 +1,34 @@
 from Crypto.PublicKey import RSA
 import account_management as am
+import hash_functions as hf
+import glob
 
 
 # ------------- AES --------------
 # ---- Writes the ciphertext to a file
-def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature):
-    # Format: no. hash iterations | question | random number | hmac+ciphertext
+def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, addressee):
+    # Format: no. hash iterations | question | random number | hmac+ciphertext | signature
+    user_id = hf.short_hash(username)
+    addressee_id = hf.short_hash(addressee)
     output = f"{iter_counter} | {question} | {salt.hex()} | {hmac_value}{ciphertext.hex()} | {signature.hex()}"
-    with open(f"ciphertext.txt", "w") as file:
+    with open(f"{user_id}_{addressee_id}.txt", "w") as file:
         file.write(output)
         file.close()
 
 
 # ---- Reads and splits the ciphertext from a file
-def read_file(filename):
-    with open(filename, 'r') as file:
+def read_file(username):
+    user_id = hf.short_hash(username)
+    files = glob.glob(f"*_{user_id}.txt")
+    sender_id = files[0].split('_')[0]
+
+    print(f"File: {files[0]}")
+    print(f"Message from {sender_id}.")
+    
+    with open(files[0], 'r') as file:
         input = file.read().split(' | ')
-        return input
+        return input, sender_id
+
 
 
 # ------------- RSA --------------
@@ -36,24 +48,3 @@ def import_public_key(username):
         public_key = RSA.import_key(f.read())
 
     return public_key
-
-
-# ---- Writes the ciphered secret key to a file (maybe not needed)
-def write_rsa_cipher(encrypted_secret_key, username):
-    with open(f"rsa_ciphertext_{username}.txt", 'w') as file:
-        file.write(encrypted_secret_key.hex())
-        file.close()
-
-
-# ---- Reads ciphered secret key from the file (maybe not needed)
-def read_rsa_cipher(username):
-    with open(f"rsa_ciphertext_{username}.txt", 'r') as file:
-        ciphertext = bytes.fromhex(file.read())
-        return ciphertext
-
-
-# ---- Writes the deciphered secret key to a file (maybe not needed)
-def write_rsa_decipher(deciphered_secretkey, username):
-    with open(f"deciphered_key_{username}.txt", 'w') as file:
-        file.write(deciphered_secretkey)
-        file.close()

@@ -69,17 +69,18 @@ def main():
             hmac_value = mf.calculate_hmac(ciphertext, secret_key)
             # print(f"HMAC: {hmac_value}")
             signature = ds.generate_signature(message, username, password)
-            fm.write_file(iter_counter, question, salt, ciphertext, hmac_value, signature)
+            fm.write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, addressee)
 
         # ---- DECRYPT ----
         elif option == "2":
             try:
-                ciphertext = fm.read_file(FILE_NAME)
+                ciphertext, sender_id = fm.read_file(username)
             except: 
-                print("No ciphertext found. Please encrypt a message first.")
+                print("No message for you.")
                 continue
 
             question = ciphertext[1]
+            sender_username = dbm.get_username_by_id(sender_id)
             signature = ciphertext[4]
 
             print("\n")
@@ -89,7 +90,7 @@ def main():
             
             decrypted_message, hmac_validity = ef.decrypt_message(secret_key, ciphertext)
             
-            verification = ds.verify_signature(decrypted_message.decode(), bytes.fromhex(signature), "eduardo")
+            verification = ds.verify_signature(decrypted_message.decode(), bytes.fromhex(signature), sender_username)
 
             if verification:
                 print("Signature verified")
