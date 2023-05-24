@@ -2,6 +2,9 @@ from Crypto.PublicKey import RSA
 import account_management as am
 import hash_functions as hf
 import glob
+import os
+
+MESSAGE_PATH = "./messages/"
 
 
 # ------------- AES --------------
@@ -11,7 +14,11 @@ def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, 
     user_id = hf.short_hash(username)
     addressee_id = hf.short_hash(addressee)
     output = f"{iter_counter} | {question} | {salt.hex()} | {hmac_value}{ciphertext.hex()} | {signature.hex()}"
-    with open(f"{user_id}_{addressee_id}.txt", "w") as file:
+    
+    if not os.path.exists(MESSAGE_PATH):
+        os.makedirs(MESSAGE_PATH)
+
+    with open(f"{MESSAGE_PATH}{user_id}_{addressee_id}.txt", "w") as file:
         file.write(output)
         file.close()
 
@@ -19,11 +26,13 @@ def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, 
 # ---- Reads and splits the ciphertext from a file
 def read_file(username):
     user_id = hf.short_hash(username)
-    files = glob.glob(f"*_{user_id}.txt")
-    sender_id = files[0].split('_')[0]
+    files = glob.glob(f"{MESSAGE_PATH}*_{user_id}.txt")
+    temp = files[0].split('_')[0]
+    sender_id = temp.split('\\')[1]
+
 
     print(f"File: {files[0]}")
-    print(f"Message from {sender_id}.")
+    print(f"Message from {sender_id}")
     
     with open(files[0], 'r') as file:
         input = file.read().split(' | ')
