@@ -1,3 +1,4 @@
+import os
 import sys
 
 import account_management as am
@@ -17,6 +18,7 @@ HMAC_SIZE = 32  # 256 bits
 
 
 def main():
+    # Login ---------------------------------------------------------
     dbm.load_database()
     
     while True:
@@ -25,7 +27,9 @@ def main():
         password = input("Password: ").lower()
 
         if dbm.check_if_user_exists(username):
+            # If user exists, check if password is correct
             hashed_password = dbm.get_user_password(username)
+
             if dbm.password_checking(password, hashed_password):
                 print("Login successful.")
                 break
@@ -38,11 +42,14 @@ def main():
 
     if (am.check_if_keys_exist(username) == False):
         print(f"Generating keys for {username}...")
-        rf.generate_key_pair(username)
+        rf.generate_key_pair(username, password)
     else:
         print(f"Keys for {username} already exist.")
+    # ----------------------------------------------------------------
+
 
     while True:
+        # os.system("cls")
         pi.print_menu()
         option = input("Option: ")
 
@@ -52,10 +59,10 @@ def main():
             question = input("Question: ")
             secret_key = input("Password: ").lower()
 
-            # ------------ RSA (encrypt) --------------
-            # ---- Bob encrypts the secret key with ALICE public key
-            encrypted_secret_key = rf.encrypt_secret_key(secret_key.encode(), ALICE)
-            fm.write_rsa_cipher(encrypted_secret_key, BOB)
+            addressee = input("Addressee: ")
+            if (am.check_if_keys_exist(addressee) == False):
+                print(f"User {addressee} does not exist. Please try again.")
+                continue
 
             message = input("Message: ")
 
@@ -66,7 +73,7 @@ def main():
 
             # ------------ DIGITAL SIGNATURE --------------
             # ---- Bob signs the message with his private key
-            signature = ds.generate_signature(message, BOB)
+            signature = ds.generate_signature(message, username, password)
             fm.write_signature(signature)
 
             # -------------- AES (encrypt) --------------
@@ -94,15 +101,6 @@ def main():
             print(f"Question: {question}")
 
             secret_key = input("Password: ").lower()
-
-            # ------------ RSA (decrypt) --------------
-            # --- Reads the ciphered secret key from the file
-            cipher_secretkey = fm.read_rsa_cipher(BOB)
-            # --- Alice decrypts the secret key with her private key
-            decrypted_secret_key = rf.decrypt_secret_key(cipher_secretkey, ALICE)
-            print(decrypted_secret_key)
-            # --- Writes the decrypted secret key to a file (only for testing purposes!!!!!!!)
-            fm.write_rsa_decipher(decrypted_secret_key.decode(), ALICE)
             
             decrypted_message, hmac_validity = ef.decrypt_message(secret_key, ciphertext)
 
@@ -110,7 +108,7 @@ def main():
             # ---- Reads the signature from the file
             signature = fm.read_signature()
             # ---- Alice verifies the signature with Bob public key
-            verification = ds.verify_signature(decrypted_message.decode(), signature, BOB)
+            verification = ds.verify_signature(decrypted_message.decode(), signature, "eduardo")
 
             if verification:
                 print("Signature verified")

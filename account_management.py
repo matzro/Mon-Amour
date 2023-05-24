@@ -10,7 +10,7 @@ def check_if_keys_exist(username):
     user_id = short_hash(username)
 
     public_key_path = f"{USERDATA_PATH}{user_id}/public_key_{user_id}.pem"
-    private_key_path = f"{USERDATA_PATH}{user_id}/private_key_{user_id}.pem"
+    private_key_path = f"{USERDATA_PATH}{user_id}/private_key_{user_id}.pem.aes"
 
     if os.path.exists(public_key_path) and os.path.exists(private_key_path):
         return True
@@ -29,16 +29,24 @@ def store_user_keys(username, public_key, private_key):
         f.write(public_key)
         f.close()
     
-    with open(f"{path}private_key_{user_id}.pem", "wb") as f:
+    with open(f"{path}private_key_{user_id}.pem.aes", "wb") as f:
         f.write(private_key)
         f.close()
 
 
-def get_keys_path(username):
+def get_public_key_path(username):
     user_id = short_hash(username)
     path = USERDATA_PATH + user_id + "/"
 
     public_key_path = f"{path}public_key_{user_id}.pem"
-    private_key_path = f"{path}private_key_{user_id}.pem"
 
-    return public_key_path, private_key_path
+    return public_key_path
+
+
+def get_private_key_path(username):
+    user_id = short_hash(username)
+    path = USERDATA_PATH + user_id + "/"
+
+    private_key_path = f"{path}private_key_{user_id}.pem.aes"
+
+    return private_key_path

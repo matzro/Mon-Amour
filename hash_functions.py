@@ -2,6 +2,7 @@ import hashlib
 import time
 from Crypto.Random import get_random_bytes
 
+TIME_IN_SECONDS = 15
 BLOCK_SIZE = 16
 
 def generate_salt() -> bytes:
@@ -32,7 +33,7 @@ def generate_hash(password):
     iter_counter = 0
 
     # Calculate SHA256 value
-    while time.time() - start_time <= 1:
+    while time.time() - start_time <= TIME_IN_SECONDS:
         if iter_counter == 0:
             hash_value = hashlib.sha256(key).digest()
             iter_counter += 1

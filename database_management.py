@@ -11,7 +11,7 @@ DATABASE_PATH = 'database.json'
 def password_hashing(password):
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-    return hashed_password.decode('utf-8')
+    return hashed_password
 
 
 # Checks if the password inserted by the user is the same as the one in the database

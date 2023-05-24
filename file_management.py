@@ -1,4 +1,5 @@
 from Crypto.PublicKey import RSA
+import account_management as am
 
 
 # ------------- AES --------------
@@ -22,7 +23,7 @@ def read_file(filename):
 # ---- Opens the private key
 def import_private_key(username):
     # Deserialize the PEM file to a private key object
-    with open(f'private_key_{username}.pem', 'rb') as f:
+    with open(am.get_private_key_path(username), 'rb') as f:
         private_key = RSA.import_key(f.read())
 
     return private_key
@@ -31,7 +32,7 @@ def import_private_key(username):
 # ---- Opens the public key
 def import_public_key(username):
     # Deserialize the PEM file to a public key object
-    with open(f'public_key_{username}.pem', 'rb') as f:
+    with open(am.get_public_key_path(username), 'rb') as f:
         public_key = RSA.import_key(f.read())
 
     return public_key

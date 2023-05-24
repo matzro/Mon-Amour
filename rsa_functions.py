@@ -1,33 +1,47 @@
 from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP, PKCS1_v1_5  # para que serve isto?
+from Crypto.Cipher import PKCS1_v1_5, AES
+from Crypto.Util import Counter
 import file_management as fm
 import account_management as am
+import hashlib
+
+# Constants
+BLOCK_SIZE = 16  # 128 bits
 
 
-def generate_key_pair(username):
+def generate_key_pair(username, password):
     # Generate a new RSA key pair
     key = RSA.generate(2048)
 
     # Serialize the public and private keys to PEM files
     public_key = key.publickey().export_key()
     private_key = key.export_key()
+    encrypted_private_key = encrypt_private_key_AES(private_key, password)
 
-    am.store_user_keys(username, public_key, private_key)
-
-    return private_key, public_key
-
-
-def encrypt_secret_key(secret_key, username):
-    # load public key
-    public_key = fm.import_public_key(username)
-    cipher_rsa = PKCS1_v1_5.new(public_key)
-    encrypted_secret_key = cipher_rsa.encrypt(secret_key)
-    return encrypted_secret_key
+    am.store_user_keys(username, public_key, encrypted_private_key)
 
 
-def decrypt_secret_key(encrypted_secret_key, username):
-    # load private key
-    private_key = fm.import_private_key(username)
-    cipher_rsa = PKCS1_v1_5.new(private_key)
-    decrypted_secret_key = cipher_rsa.decrypt(encrypted_secret_key, None)
-    return decrypted_secret_key
+def encrypt_private_key_AES(private_key, password):
+    """Encrypts the private key with AES.
+    :param private_key: Private key to be encrypted
+    :param password: Encryption key for the private key
+    :return: AES-encrypted private key
+    """
+    counter = Counter.new(nbits=BLOCK_SIZE * 8)
+    cipher = AES.new(hashlib.sha256(password.encode()).digest(), AES.MODE_CTR, counter=counter)
+    encrypted_private_key = cipher.encrypt(private_key)
+
+    return encrypted_private_key
+
+
+def decrypt_private_key_AES(encrypted_private_key, password):
+    """Decrypts the private key with AES.
+    :param encrypted_private_key: Private key to be decrypted
+    :param password: Encryption key for the private key
+    :return: AES-decrypted private key
+    """
+    counter = Counter.new(nbits=BLOCK_SIZE * 8)
+    cipher = AES.new(hashlib.sha256(password.encode()).digest(), AES.MODE_CTR, counter=counter)
+    decrypted_private_key = cipher.decrypt(encrypted_private_key)
+
+    return decrypted_private_key
