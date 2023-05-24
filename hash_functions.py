@@ -2,7 +2,8 @@ import hashlib
 import time
 from Crypto.Random import get_random_bytes
 
-TIME_IN_SECONDS = 15
+ID_LENGTH = 8
+TIME_IN_SECONDS = 2
 BLOCK_SIZE = 16
 
 def generate_salt() -> bytes:
@@ -56,6 +57,14 @@ def find_hash(iter_counter, salt, password):
     return hash_value
 
 
-def short_hash(string):
-    hash = hashlib.sha256(string.encode('utf-8')).digest()[:8].hex().upper()
+def short_hash(string: str) -> str:
+    """Generates an 8-byte hash of a given string.
+
+    Args:
+        string (str): String to be hashed.
+
+    Returns:
+        str: 8-byte hash value of the string.
+    """
+    hash = hashlib.sha256(string.encode('utf-8')).digest()[:ID_LENGTH].hex().upper()
     return hash

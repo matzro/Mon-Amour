@@ -56,36 +56,20 @@ def main():
         # ---- ENCRYPT ----
         if option == "1":
             print("\n")
-            question = input("Question: ")
-            secret_key = input("Password: ").lower()
-
             addressee = input("Addressee: ")
             if (am.check_if_keys_exist(addressee) == False):
                 print(f"User {addressee} does not exist. Please try again.")
                 continue
-
+            
+            question = input("Question: ")
+            secret_key = input("Password: ").lower()
             message = input("Message: ")
 
             iter_counter, salt, ciphertext = ef.encrypt_message(message, secret_key)
             hmac_value = mf.calculate_hmac(ciphertext, secret_key)
-            print(f"HMAC: {hmac_value}")
-            fm.write_file(iter_counter, question, salt, ciphertext, hmac_value)
-
-            # ------------ DIGITAL SIGNATURE --------------
-            # ---- Bob signs the message with his private key
+            # print(f"HMAC: {hmac_value}")
             signature = ds.generate_signature(message, username, password)
-            fm.write_signature(signature)
-
-            # -------------- AES (encrypt) --------------
-            iter_counter, salt, ciphertext = ef.encrypt_message(message, secret_key)
-
-            # ------------ HMAC -------------
-            # ---- It is more secure to encrypt the message first and then calculate the hmac,
-            # ---- lastly concatenate the hmac with the ciphertext
-            hmac_value = mf.calculate_hmac(ciphertext, secret_key)
-
-            # ---- Write the ciphertext, salt, iv and hmac to a file
-            fm.write_file(iter_counter, question, salt, ciphertext, hmac_value)
+            fm.write_file(iter_counter, question, salt, ciphertext, hmac_value, signature)
 
         # ---- DECRYPT ----
         elif option == "2":
@@ -96,6 +80,7 @@ def main():
                 continue
 
             question = ciphertext[1]
+            signature = ciphertext[4]
 
             print("\n")
             print(f"Question: {question}")
@@ -103,12 +88,8 @@ def main():
             secret_key = input("Password: ").lower()
             
             decrypted_message, hmac_validity = ef.decrypt_message(secret_key, ciphertext)
-
-            # ------------ DIGITAL SIGNATURE --------------
-            # ---- Reads the signature from the file
-            signature = fm.read_signature()
-            # ---- Alice verifies the signature with Bob public key
-            verification = ds.verify_signature(decrypted_message.decode(), signature, "eduardo")
+            
+            verification = ds.verify_signature(decrypted_message.decode(), bytes.fromhex(signature), "eduardo")
 
             if verification:
                 print("Signature verified")
