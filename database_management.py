@@ -1,6 +1,8 @@
 import json
 import bcrypt
 
+import hash_functions as hf
+
 # CONSTANTS
 DATABASE_PATH = 'database.json'
 
@@ -17,20 +19,23 @@ def password_checking(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 
-# Creates an empty JSON database
-def create_database():
-    empty_database = {
-        "id": None,
-        "username": None,
-        "password": None,
-    }
+# Loads/Creates an empty JSON database
+def load_database():
+    try:
+        with open(DATABASE_PATH, 'r') as f:
+            database = json.load(f)
+    except FileNotFoundError:
+        empty_database = []
 
-    with open(DATABASE_PATH, 'w') as f:
-        json.dump(empty_database, f)
+        with open(DATABASE_PATH, 'w') as f:
+            json.dump(empty_database, f)
+        with open(DATABASE_PATH, 'r') as f:
+            database = json.load(f)
 
 
 # Adds a new user to the database
-def add_user(username, user_id, password):
+def add_user(username, password):
+    user_id = hf.short_hash(username)
     hashed_password = password_hashing(password)
 
     new_user = {
@@ -54,7 +59,17 @@ def check_if_user_exists(username):
         database = json.load(f)
 
     for user in database:
-        if user['username'] == username:
+        if user.get('username') == username:
             return True
+
+    return False
+
+def get_user_password(username):
+    with open(DATABASE_PATH, 'r') as f:
+        database = json.load(f)
+
+    for user in database:
+        if user.get('username') == username:
+            return user.get('password')
 
     return False

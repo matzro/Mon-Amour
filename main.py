@@ -1,6 +1,7 @@
 import sys
 
 import account_management as am
+import database_management as dbm
 import digital_signature as ds
 import encryption_functions as ef
 import file_management as fm
@@ -16,9 +17,24 @@ HMAC_SIZE = 32  # 256 bits
 
 
 def main():
-    pi.print_login()
-    username = input("Username: ")
-    password = input("Password: ").lower()
+    dbm.load_database()
+    
+    while True:
+        pi.print_login()
+        username = input("Username: ")
+        password = input("Password: ").lower()
+
+        if dbm.check_if_user_exists(username):
+            hashed_password = dbm.get_user_password(username)
+            if dbm.password_checking(password, hashed_password):
+                print("Login successful.")
+                break
+            else:
+                print("Wrong password. Please try again.")
+        else:
+            print("User does not exist. Creating new account...")
+            dbm.add_user(username, password)
+            print("Account created successfully.")
 
     if (am.check_if_keys_exist(username) == False):
         print(f"Generating keys for {username}...")
