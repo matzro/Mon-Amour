@@ -7,7 +7,6 @@ import account_management as am
 import file_management as fm
 import rsa_functions as rf
 
-
 BLOCK_SIZE = 16  # 128 bits
 
 
