@@ -66,5 +66,6 @@ def short_hash(string: str) -> str:
     Returns:
         str: 8-byte hash value of the string.
     """
-    hash = hashlib.sha256(string.encode('utf-8')).digest()[:ID_LENGTH].hex().upper()
+    hash: str = hashlib.sha256(string.encode('utf-8')).digest()[:ID_LENGTH].hex().upper()
+    
     return hash

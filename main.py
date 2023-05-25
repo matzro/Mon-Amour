@@ -1,4 +1,3 @@
-import os
 import sys
 
 import account_management as am
@@ -9,7 +8,6 @@ import file_management as fm
 import mac_functions as mf
 import print_info as pi
 import rsa_functions as rf
-
 
 # GLOBAL VARIABLES
 BLOCK_SIZE = 16  # 128 bits
@@ -49,25 +47,23 @@ def main():
 
 
     while True:
-        # os.system("cls")
         pi.print_menu()
-        option = input("Option: ")
+        option: str = input("Option: ")
 
         # ---- ENCRYPT ----
         if option == "1":
             print("\n")
-            addressee = input("Addressee: ")
+            addressee: str = input("Addressee: ")
             if (am.check_if_keys_exist(addressee) == False):
                 print(f"User {addressee} does not exist. Please try again.")
                 continue
             
-            question = input("Question: ")
-            secret_key = input("Password: ").lower()
-            message = input("Message: ")
+            question: str = input("Question: ")
+            secret_key: str = input("Password: ").lower()
+            message: str = input("Message: ")
 
             iter_counter, salt, ciphertext = ef.encrypt_message(message, secret_key)
             hmac_value = mf.calculate_hmac(ciphertext, secret_key)
-            # print(f"HMAC: {hmac_value}")
             signature = ds.generate_signature(message, username, password)
             fm.write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, addressee)
 
