@@ -45,24 +45,39 @@ class LoginWindow(CTk):
 
             if dm.password_checking(password, hashed_password):
                 print("Login successful")
+
+                # DUPLICATED CODE --- FIX THIS
+                if not am.check_if_keys_exist(username):
+                    print(f"Generating keys for {username}...")
+                    public_key, encrypted_private_key = rf.generate_key_pair(username, password)
+                    am.store_user_keys(username, public_key, encrypted_private_key)
+                else:
+                    print(f"Keys for {username} already exist")
+                
                 self.withdraw()
                 window = MainWindow(username, password)
                 window.mainloop()
             else:
                 print("Wrong password")
+    
         else:
             print("User does not exist. Creating new account...")
             dm.add_user(username, password)
             print("Account created successfully")
+
+            # DUPLICATED CODE --- FIX THIS
+            if not am.check_if_keys_exist(username):
+                print(f"Generating keys for {username}...")
+                public_key, encrypted_private_key = rf.generate_key_pair(username, password)
+                am.store_user_keys(username, public_key, encrypted_private_key)
+            else:
+                print(f"Keys for {username} already exist")
+
             self.withdraw()
             window = MainWindow(username, password)
             window.mainloop()
 
-        if not am.check_if_keys_exist(username):
-            print(f"Generating keys for {username}...")
-            rf.generate_key_pair(username, password)
-        else:
-            print(f"Keys for {username} already exist")
+
 
 
 
