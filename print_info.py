@@ -1,3 +1,9 @@
+def print_login():
+    print("\n")
+    print("Enter your login credentials")
+    print("\n")
+
+
 def print_menu():
     print("\n")
     print("Welcome to Mon-Amour messaging app")
@@ -10,7 +16,6 @@ def print_menu():
 
 
 def print_properties(input, hmac_received, ciphertext, decrypted_msg):
-
     print(f"--- HMAC+Ciphertext ---")
     print(f"Value: {input[3]}")
     print(f"--- HMAC properties ---")

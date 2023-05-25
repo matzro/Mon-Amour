@@ -1,71 +1,87 @@
+import glob
+import os
+
 from Crypto.PublicKey import RSA
 
+import account_management as am
+import hash_functions as hf
 
-def write_file(iter_counter, question, salt, ciphertext, hmac_value):
+
+MESSAGE_PATH = "./messages/"
+
+
+def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, addressee):
+    """Writes the ciphertext and its attributes to a file in the messages folder. The file name is the concatenation of the sender's user ID and the receiver's user ID. The ciphertext file has the following format: `Number of hash iterations | Question | Salt | HMAC + Ciphertext | Digital Signature`.
+
+    Args:
+        iter_counter: Number of hash iterations used to generate the key.
+        question: Sender's question to the receiver. The receiver must answer the question correctly in order to decrypt the message.
+        salt: Salt used to generate the key.
+        ciphertext: Ciphertext generated from the message's encryption.
+        hmac_value: HMAC value of the ciphertext.
+        signature: Digital signature of the message.
+        username: Sender's username.
+        addressee: Receiver's username.
     """
-    This function writes the iter_counter, question, salt, ciphertext and hmac to a file.
-    :param iter_counter: Value of the iter_counter used in the hashing function
-    :param question: Question to be sent
-    :param salt: Salt used in the hashing function
-    :param ciphertext: Ciphertext of the message
-    :param hmac_value: HMAC of the ciphertext
-    :return: none
-    """
-    output = f"{iter_counter} | {question} | {salt.hex()} | {hmac_value}{ciphertext.hex()}"
-    with open(f"ciphertext.txt", "w") as file:
+    user_id: str = hf.short_hash(username)
+    addressee_id: str = hf.short_hash(addressee)
+    output: str = f"{iter_counter} | {question} | {salt.hex()} | {hmac_value}{ciphertext.hex()} | {signature.hex()}"
+    
+    if not os.path.exists(MESSAGE_PATH):
+        os.makedirs(MESSAGE_PATH)
+
+    with open(f"{MESSAGE_PATH}{user_id}_{addressee_id}.txt", "w") as file:
         file.write(output)
         file.close()
 
 
-def read_file(filename):
-    """This function reads the ciphertext from a file and splits it into iter_counter, question, salt, ciphertext and hmac.
-    :param filename:
-    :return: iter_counter | question | salt | ciphertext+hmac
+def read_file(username: str) -> tuple[list[str], str]:
+    """Reads and splits the ciphertext and its attributes from a file in the messages folder. The file name is the concatenation of the sender's user ID and the receiver's user ID. The ciphertext file has the following format: `Number of hash iterations | Question | Salt | HMAC + Ciphertext | Digital Signature`.
+
+    Args:
+        username (str): Username of the receiver.
+
+    Returns:
+        tuple[list[str], str]: A tuple containing the ciphertext's data and the sender's ID for verification of the digital signature.
     """
-    with open(filename, 'r') as file:
-        return file.read().split(' | ')
+    user_id: str = hf.short_hash(username)
+    files: list[glob.AnyStr@glob] = glob.glob(f"{MESSAGE_PATH}*_{user_id}.txt")
+    temp: str = files[0].split('_')[0]
+    sender_id: str = temp.split('\\')[1]
+
+    # print(f"File: {files[0]}")
+    # print(f"Message from {sender_id}")
+    
+    with open(files[0], 'r') as file:
+        input: list[str] = file.read().split(' | ')
+        return input, sender_id
 
 
-# ---- Opens the public key
-def import_public_key(username):
-    # Deserialize the PEM file to a public key object
-    with open(f'public_key_{username}.pem', 'rb') as f:
-        public_key = RSA.import_key(f.read())
+def import_private_key(username: str) -> RSA.RsaKey:
+    """Imports the RSA private key from a .pem file. 
+
+    Args:
+        username (str): Username associated with the private key.
+
+    Returns:
+        RSA.RsaKey: Private key object.
+    """
+    with open(am.get_private_key_path(username), 'rb') as f:
+        private_key: RSA.RsaKey = RSA.import_key(f.read())
+
+    return private_key
+
+
+def import_public_key(username: str) -> RSA.RsaKey:
+    """Imports the RSA public key from a .pem file.
+
+    Args:
+        username (str): Username associated with the public key.
+
+    Returns:
+        RSA.RsaKey: Public key object.
+    """
+    with open(am.get_public_key_path(username), 'rb') as f:
+        public_key: RSA.RsaKey = RSA.import_key(f.read())
 
     return public_key
-
-
-# ---- Writes the ciphered secret key to a file (maybe not needed)
-def write_rsa_cipher(encrypted_secret_key, username):
-    with open(f"rsa_ciphertext_{username}.txt", 'w') as file:
-        file.write(encrypted_secret_key.hex())
-        file.close()
-
-
-# ---- Reads ciphered secret key from the file (maybe not needed)
-def read_rsa_cipher(username):
-    with open(f"rsa_ciphertext_{username}.txt", 'r') as file:
-        ciphertext = bytes.fromhex(file.read())
-        return ciphertext
-
-
-# ---- Writes the deciphered secret key to a file (maybe not needed)
-def write_rsa_decipher(deciphered_secretkey, username):
-    with open(f"deciphered_key_{username}.txt", 'w') as file:
-        file.write(deciphered_secretkey)
-        file.close()
-
-
-# ------- DIGITAL SIGNATURE -------
-# ---- Writes the signature to a file
-def write_signature(signature):
-    with open(f"signature.txt", 'w') as file:
-        file.write(signature.hex())
-        file.close()
-
-
-# ---- Reads the signature from a file
-def read_signature():
-    with open(f"signature.txt", 'r') as file:
-        input = bytes.fromhex(file.read())
-        return input

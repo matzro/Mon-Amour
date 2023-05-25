@@ -1,3 +1,6 @@
 *.txt
 __pycache__/
 *.pem
+user_data/
+messages/
+database.json

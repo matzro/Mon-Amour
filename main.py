@@ -9,9 +9,8 @@ import file_management as fm
 import mac_functions as mf
 import rsa_functions as rf
 
-# GLOBAL VARIABLES
+
 BLOCK_SIZE = 16  # 128 bits
-FILE_NAME = "ciphertext.txt"
 HMAC_SIZE = 32  # 256 bits
 BOB = "bob"  # This is the username of the receiver
 ALICE = "alice"  # This is the username of the sender
@@ -79,7 +78,7 @@ def decipher():
         print("Signature not verified")
 
 
-if __name__ == '__main__':
+def main():
     """This is the main function. It creates the GUI and calls the functions cipher() and decipher() when the user clicks
     """
 
@@ -152,3 +151,7 @@ if __name__ == '__main__':
     botao4.pack(padx=10, pady=10)
 
     window.mainloop()  # Keep the window open
+
+
+if __name__ == '__main__':
+    main()
