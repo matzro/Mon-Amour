@@ -1,15 +1,13 @@
 from customtkinter import *
 
 import account_management as am
-import database_management as dm
 import rsa_functions as rf
-import account_management as am
-import database_management as dm
+import database_management as dbm
 import digital_signature as ds
 import encryption_functions as ef
 import file_management as fm
 import mac_functions as mf
-import rsa_functions as rf
+
 
 class LoginWindow(CTk):
     def __init__(self, *args, **kwargs):
@@ -35,15 +33,16 @@ class LoginWindow(CTk):
         password_entry.grid(row=2, column=1, pady=(0, 10), padx=10)
 
         # Login button
-        login_button = CTkButton(main_frame, text="Login", command=lambda: self.login(user_entry.get(), password_entry.get()))
+        login_button = CTkButton(main_frame, text="Login",
+                                 command=lambda: self.login(user_entry.get(), password_entry.get()))
         login_button.grid(row=4, column=1, pady=(0, 20), sticky="e")
 
     def login(self, username, password):
-        dm.load_database()
-        if dm.check_if_user_exists(username):
-            hashed_password = dm.get_user_password(username)
+        dbm.load_database()
+        if dbm.check_if_user_exists(username):
+            hashed_password = dbm.get_user_password(username)
 
-            if dm.password_checking(password, hashed_password):
+            if dbm.password_checking(password, hashed_password):
                 print("Login successful")
 
                 # DUPLICATED CODE --- FIX THIS
@@ -53,16 +52,16 @@ class LoginWindow(CTk):
                     am.store_user_keys(username, public_key, encrypted_private_key)
                 else:
                     print(f"Keys for {username} already exist")
-                
+
                 self.withdraw()
                 window = MainWindow(username, password)
                 window.mainloop()
             else:
                 print("Wrong password")
-    
+
         else:
             print("User does not exist. Creating new account...")
-            dm.add_user(username, password)
+            dbm.add_user(username, password)
             print("Account created successfully")
 
             # DUPLICATED CODE --- FIX THIS
@@ -76,9 +75,6 @@ class LoginWindow(CTk):
             self.withdraw()
             window = MainWindow(username, password)
             window.mainloop()
-
-
-
 
 
 class CustomTabView(CTkTabview):
@@ -100,56 +96,65 @@ class CustomTabView(CTkTabview):
         self.entry_recipient.grid(row=0, column=1, padx=20, pady=10)
 
         # Question
-        self.label_question = CTkLabel(self.tab("Send"), text="Question")
-        self.label_question.grid(row=1, column=0, padx=20, pady=10)
-        self.entry_question = CTkEntry(self.tab("Send"))
-        self.entry_question.grid(row=1, column=1, padx=20, pady=10)
+        self.label_question_sent = CTkLabel(self.tab("Send"), text="Question")
+        self.label_question_sent.grid(row=1, column=0, padx=20, pady=10)
+        self.entry_question_sent = CTkEntry(self.tab("Send"))
+        self.entry_question_sent.grid(row=1, column=1, padx=20, pady=10)
 
         # Answer
-        self.label_answer = CTkLabel(self.tab("Send"), text="Answer")
-        self.label_answer.grid(row=2, column=0, padx=20, pady=10)
-        self.entry_answer = CTkEntry(self.tab("Send"), show="*")
-        self.entry_answer.grid(row=2, column=1, padx=20, pady=10)
+        self.label_answer_sent = CTkLabel(self.tab("Send"), text="Answer")
+        self.label_answer_sent.grid(row=2, column=0, padx=20, pady=10)
+        self.entry_answer_sent = CTkEntry(self.tab("Send"), show="*")
+        self.entry_answer_sent.grid(row=2, column=1, padx=20, pady=10)
 
         # Message
-        self.label_message = CTkLabel(self.tab("Send"), text="Message")
-        self.label_message.grid(row=3, column=0, padx=20, pady=10)
-        self.entry_message = CTkEntry(self.tab("Send"))
-        self.entry_message.grid(row=3, column=1, padx=20, pady=10)
+        self.label_message_sent = CTkLabel(self.tab("Send"), text="Message")
+        self.label_message_sent.grid(row=3, column=0, padx=20, pady=10)
+        self.entry_message_sent = CTkEntry(self.tab("Send"))
+        self.entry_message_sent.grid(row=3, column=1, padx=20, pady=10)
 
-        #Button
+        # Button
         self.button_send = CTkButton(self.tab("Send"), text="Send", command=lambda: self.cipher(
             username,
             password,
-            self.entry_question.get(),
-            self.entry_answer.get(),
-            self.entry_message.get(),
+            self.entry_question_sent.get(),
+            self.entry_answer_sent.get(),
+            self.entry_message_sent.get(),
             self.entry_recipient.get()
         ))
         self.button_send.grid(row=4, column=1, padx=20, pady=10)
 
-        # Add widgets to Receive tab
-        # Question
-        self.label = CTkLabel(self.tab("Receive"), text="Question:")
-        self.label.grid(row=0, column=0, padx=20, pady=10)
-        self.entry = CTkEntry(self.tab("Receive"))
-        self.entry.grid(row=0, column=1, padx=20, pady=10)
+        global ciphertext, sender_id
+        try:
+            ciphertext, sender_id = fm.read_file(username)
+            question_received = ciphertext[1]
+            # Add widgets to Receive tab
+            # Question
+            self.label_question_received = CTkLabel(self.tab("Receive"), text=question_received)
+            self.label_question_received.grid(row=0, column=0, padx=20, pady=10)
+            self.entry_question_received = CTkEntry(self.tab("Receive"))
+            self.entry_question_received.grid(row=0, column=1, padx=20, pady=10)
 
-        # Answer
-        self.label = CTkLabel(self.tab("Receive"), text="Answer")
-        self.label.grid(row=1, column=0, padx=20, pady=10)
-        self.entry = CTkEntry(self.tab("Receive"))
-        self.entry.grid(row=1, column=1, padx=20, pady=10)
+            # Answer
+            self.label_answer_guess = CTkLabel(self.tab("Receive"), text="Answer")
+            self.label_answer_guess.grid(row=1, column=0, padx=20, pady=10)
+            self.entry_answer_guess = CTkEntry(self.tab("Receive"))
+            self.entry_answer_guess.grid(row=1, column=1, padx=20, pady=10)
 
-        # Message
-        self.label = CTkLabel(self.tab("Receive"), text="Message")
-        self.label.grid(row=2, column=0, padx=20, pady=10)
-        self.entry = CTkEntry(self.tab("Receive"))
-        self.entry.grid(row=2, column=1, padx=20, pady=10)
+            # Message
+            self.label_message_received = CTkLabel(self.tab("Receive"), text="Message")
+            self.label_message_received.grid(row=2, column=0, padx=20, pady=10)
+            self.entry_message_received = CTkEntry(self.tab("Receive"))
+            self.entry_message_received.grid(row=2, column=1, padx=20, pady=10)
 
-        # Button
-        self.button = CTkButton(self.tab("Receive"), text="Test my love")
-        self.button.grid(row=3, column=1, padx=20, pady=10)
+            # Button
+            self.button_receive = CTkButton(self.tab("Receive"), text="Test my love", command=lambda: self.decipher(
+                self.entry_answer_guess.get(),
+            ))
+            self.button_receive.grid(row=3, column=1, padx=20, pady=10)
+        except:
+            self.label_no_messages = CTkLabel(self.tab("Receive"), text="No messages")
+            self.label_no_messages.grid(row=0, column=0, padx=20, pady=10)
 
     def cipher(self, username, password, question, secret_key, message, recipient):
         """This function is called when the user clicks on the "Send" button. It reads the values from the GUI - question,
@@ -167,10 +172,29 @@ class CustomTabView(CTkTabview):
             print("Recipient does not exist")
             return
 
-        iter_counter, salt, ciphertext = ef.encrypt_message(message, sk)
-        hmac_value = mf.calculate_hmac(ciphertext, sk)
+        iter_counter, salt, ciphertext_sent = ef.encrypt_message(message, sk)
+        hmac_value = mf.calculate_hmac(ciphertext_sent, sk)
         signature = ds.generate_signature(message, username, password)
-        fm.write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, recipient)
+        fm.write_file(iter_counter, question, salt, ciphertext_sent, hmac_value, signature, username, recipient)
+
+    def decipher(self, secret_key):
+
+        sender_username = dbm.get_username_by_id(sender_id)
+        signature = ciphertext[4]
+
+        sk = secret_key.lower()
+
+        decrypted_message, hmac_validity = ef.decrypt_message(sk, ciphertext)
+
+        verification = ds.verify_signature(decrypted_message.decode(), bytes.fromhex(signature), sender_username)
+
+        if verification:
+            print("Signature verified")
+        else:
+            print("Signature not verified")
+
+        print(f"hmac: {hmac_validity}")
+
 
 class MainWindow(CTk):
     def __init__(self, username, password):
@@ -183,9 +207,3 @@ class MainWindow(CTk):
 
         self.tab_view = CustomTabView(self, username, password)
         self.tab_view.grid(row=0, column=0, padx=20, pady=20)
-
-
-
-
-
-
