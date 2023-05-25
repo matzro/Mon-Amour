@@ -10,7 +10,7 @@ import hash_functions as hf
 MESSAGE_PATH = "./messages/"
 
 
-def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, addressee) -> None:
+def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, addressee):
     """Writes the ciphertext and its attributes to a file in the messages folder. The file name is the concatenation of the sender's user ID and the receiver's user ID. The ciphertext file has the following format: `Number of hash iterations | Question | Salt | HMAC + Ciphertext | Digital Signature`.
 
     Args:
@@ -23,9 +23,9 @@ def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, 
         username: Sender's username.
         addressee: Receiver's username.
     """
-    user_id = hf.short_hash(username)
-    addressee_id = hf.short_hash(addressee)
-    output = f"{iter_counter} | {question} | {salt.hex()} | {hmac_value}{ciphertext.hex()} | {signature.hex()}"
+    user_id: str = hf.short_hash(username)
+    addressee_id: str = hf.short_hash(addressee)
+    output: str = f"{iter_counter} | {question} | {salt.hex()} | {hmac_value}{ciphertext.hex()} | {signature.hex()}"
     
     if not os.path.exists(MESSAGE_PATH):
         os.makedirs(MESSAGE_PATH)

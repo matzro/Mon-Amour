@@ -1,10 +1,13 @@
 import hashlib
 import time
+
 from Crypto.Random import get_random_bytes
 
+
+BLOCK_SIZE = 16
 ID_LENGTH = 8
 TIME_IN_SECONDS = 2
-BLOCK_SIZE = 16
+
 
 def generate_salt() -> bytes:
     """Generates a random salt value of 16 bytes.

@@ -9,10 +9,9 @@ import mac_functions as mf
 import print_info as pi
 import rsa_functions as rf
 
-# GLOBAL VARIABLES
-BLOCK_SIZE = 16  # 128 bits
-FILE_NAME = "ciphertext.txt"
-HMAC_SIZE = 32  # 256 bits
+
+BLOCK_SIZE = 16  # 16 bytes = 128 bits
+HMAC_SIZE = 32  # 32 bytes = 256 bits
 
 
 def main():
