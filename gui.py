@@ -1,17 +1,17 @@
-import tkinter
-
 from customtkinter import *
 
 import account_management as am
-import rsa_functions as rf
 import database_management as dbm
 import digital_signature as ds
 import encryption_functions as ef
 import file_management as fm
 import mac_functions as mf
+import rsa_functions as rf
+
 
 set_appearance_mode('dark')
 set_default_color_theme('blue')
+
 
 class LoginWindow(CTk):
     def __init__(self, *args, **kwargs):
@@ -56,7 +56,6 @@ class LoginWindow(CTk):
             if dbm.password_checking(password, hashed_password):
                 print("Login successful")
 
-                # DUPLICATED CODE --- FIX THIS
                 if not am.check_if_keys_exist(username):
                     print(f"Generating keys for {username}...")
                     public_key, encrypted_private_key = rf.generate_key_pair(username, password)
@@ -76,7 +75,6 @@ class LoginWindow(CTk):
             dbm.add_user(username, password)
             print("Account created successfully")
 
-            # DUPLICATED CODE --- FIX THIS
             if not am.check_if_keys_exist(username):
                 print(f"Generating keys for {username}...")
                 public_key, encrypted_private_key = rf.generate_key_pair(username, password)

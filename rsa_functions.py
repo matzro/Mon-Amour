@@ -4,8 +4,6 @@ from Crypto.Cipher import AES
 from Crypto.PublicKey import RSA
 from Crypto.Util import Counter
 
-import account_management as am
-
 
 BLOCK_SIZE = 16  # in bytes
 

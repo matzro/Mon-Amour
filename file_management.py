@@ -10,8 +10,11 @@ import hash_functions as hf
 MESSAGE_PATH = "./messages/"
 
 
-def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, addressee):
-    """Writes the ciphertext and its attributes to a file in the messages folder. The file name is the concatenation of the sender's user ID and the receiver's user ID. The ciphertext file has the following format: `Number of hash iterations | Question | Salt | HMAC + Ciphertext | Digital Signature`.
+def write_file(iter_counter, question, salt, ciphertext, hmac_value, signature, username, addressee) -> None:
+    """Writes the ciphertext and its attributes to a file in the messages folder. 
+    
+    The file name is the concatenation of the sender's user ID and the receiver's user ID. 
+    The ciphertext file has the following format: `Number of hash iterations | Question | Salt | HMAC + Ciphertext | Digital Signature`.
 
     Args:
         iter_counter: Number of hash iterations used to generate the key.
