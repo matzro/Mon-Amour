@@ -61,12 +61,16 @@ def decrypt_message(password: str, input: list[str]) -> tuple[str, bool] | tuple
         decrypted_msg: str = decrypted_msg.decode()
         hmac_received: str = input[3][:HMAC_SIZE]
         hmac_value: str = mf.calculate_hmac(ciphertext, password)[:HMAC_SIZE]
+
+        # Debugging
         print(f"HMAC R: {hmac_received}")
         print(f"HMAC C: {hmac_value}")
 
         hmac_validity: bool = (hmac_received == hmac_value)
+
         return decrypted_msg, hmac_validity
     except:
         print("Decryption failed. Wrong password.")
+        
         return None, None
 
