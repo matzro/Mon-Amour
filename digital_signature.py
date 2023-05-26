@@ -14,7 +14,8 @@ BLOCK_SIZE = 16  # in bytes
 def generate_signature(message: str, username: str, password: str) -> bytes:
     """This function generates a digital signature of the message, using the private key of the sender. 
     
-    The sender's private key is read from a file, then it is decrypted with the secret key of the user and lastly, the message is hashed and the digital signature is generated.
+    The sender's private key is read from a file, then it is decrypted with the secret key of the user and lastly,
+    the message is hashed and the digital signature is generated.
 
     Args:
         message (str): The message to be signed.

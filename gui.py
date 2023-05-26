@@ -173,7 +173,6 @@ class CustomTabView(CTkTabview):
         Ao enviar uma mensagem, esta será encriptada utilizando o algoritmo AES128, no modo CTR. Para realizar a encriptação, será necessária a resposta à questão definida pelo emissor.
         Ao receber uma mensagem, a mesma será desencriptada utilizando o mesmo algoritmo e modo. A pergunta definida pelo emissor será exibida na tela, e é necessário inserir a mesma resposta que o emissor para visualizar o conteúdo da mensagem.
 
-
         2. Guia de Utilização
         	2.1. Após iniciar a aplicação será exibida a página do login, onde serão exibidas duas caixas de texto e dois botões. Deverá introduzir um nome de utilizador, na caixa de texto "Username" e uma password na caixa de texto "Password". De seguida, deverá pressionar o botão "Login" para começar a sua experiência com a "Mon-Amor Messaging App".
         	     O botão "Help" serve para abrir o manual de ajuda, onde encontrará todas as informações necessárias para utilizar de maneira correta a aplicação.
@@ -189,10 +188,13 @@ class CustomTabView(CTkTabview):
         	2.3 Receive Message: este botão quando pressionado redireciona para um novo separador. Nesse separador deverá encontrar uma questão, uma caixa de texto e um botão.
         		2.1 Na caixa de texto, "Secret Key", deverá introduzir a resposta correta à questão que se encontra no ecrã. 
         		2.2 Depois deverá pressionar o botão, "Receive", e se a resposta à questão estiver correta, conseguirá visualizar o conteúdo da mensagem que lhe foi enviada. Caso contrário, deverá aparecerá um pop-up a dizer que a resposta à questão está incorreta.
-
-
         """
 
+        # Add widgets to Help tab
+        scrollable_frame = CTkScrollableFrame(self.tab("Help"))
+        scrollable_frame.pack(expand=True, fill="both")
+        self.label_help = CTkLabel(scrollable_frame, text=help, wraplength=320, font=("Poppins", 12), justify="left")
+        self.label_help.grid(row=0, column=0, padx=20)
 
     def cipher(self, username, password, question, secret_key, message, recipient):
         """This function is called when the user clicks on the "Send" button. It reads the values from the GUI - question,
@@ -238,18 +240,18 @@ class CustomTabView(CTkTabview):
         else:
             digital_signature_verification = ds.verify_signature(decrypted_message, bytes.fromhex(signature), sender_username)
 
-            self.label_message_received.configure(text="Message: " + decrypted_message)
+            self.label_message_received.configure(text="Message: " + decrypted_message, text_color="white")
             self.label_hmac_verification.configure(text="HMAC verified", text_color="green")
 
             if hmac_validity:
-                self.label_hmac_verification.configure(text="HMAC verified", text_color="green")
+                self.label_hmac_verification.configure(text="HMAC verified: Authentic message recieved.", text_color="green")
             else:
-                self.label_hmac_verification.configure(text="HMAC not verified", text_color="red")
+                self.label_hmac_verification.configure(text="HMAC not verified: The message recieved is not authentic!!", text_color="red")
 
             if digital_signature_verification:
-                self.label_digital_signature_verification.configure(text="Signature verified", text_color="green")
+                self.label_digital_signature_verification.configure(text="Signature verified: ", text_color="green")
             else:
-                self.label_digital_signature_verification.configure(text="Signature not verified", text_color="red")
+                self.label_digital_signature_verification.configure(text="Signature not verified: ", text_color="red")
 class MainWindow(CTk):
     def __init__(self, username, password):
         super().__init__()
@@ -258,7 +260,7 @@ class MainWindow(CTk):
         self.password = password
         self.title("Mon-Amour")
 
-        self.geometry("380x410")
+        self.geometry("400x420")
         self.resizable(False, False)
 
         self.tab_view = CustomTabView(self, username, password)
