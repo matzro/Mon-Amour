@@ -3,7 +3,6 @@ from Crypto.Random import get_random_bytes
 from Crypto.Util import Counter
 
 import hash_functions as hf
-import print_info as pi
 import mac_functions as mf
 
 
