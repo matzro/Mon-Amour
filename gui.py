@@ -16,10 +16,10 @@ class LoginWindow(CTk):
         super().__init__(*args, **kwargs)
 
         main_frame = CTkFrame(self, fg_color=self.cget("bg"))
-        main_frame.grid(row=0, column=0, padx=10, pady=10)
+        main_frame.pack(padx=10, pady=10, fill="both", expand=True)
 
         # Login title
-        title = CTkLabel(main_frame, text="Login")
+        title = CTkLabel(main_frame, text="Welcome to Mon-Amour!\nPlease login to love.")
         title.grid(row=0, column=0, pady=(0, 20))
 
         # Username label
@@ -147,6 +147,7 @@ class CustomTabView(CTkTabview):
                 self.entry_answer_guess.get(),
             ))
             self.button_receive.grid(row=3, column=1, padx=20, pady=10)
+
         except:
             self.label_no_messages = CTkLabel(self.tab("Receive"), text="No messages")
             self.label_no_messages.grid(row=0, column=0, padx=20, pady=10)
@@ -154,6 +155,14 @@ class CustomTabView(CTkTabview):
         # Message
         self.label_message_received = CTkLabel(self.tab("Receive"), text="")
         self.label_message_received.grid(row=2, column=0, padx=20, pady=10)
+
+        # HMAC Verification
+        self.label_hmac_verification = CTkLabel(self.tab("Receive"), text="")
+        self.label_hmac_verification.grid(row=3, column=0, padx=20, pady=10)
+
+        # Digital Signature Verification
+        self.label_digital_signature_verification = CTkLabel(self.tab("Receive"), text="")
+        self.label_digital_signature_verification.grid(row=4, column=0, padx=20, pady=10)
 
     def cipher(self, username, password, question, secret_key, message, recipient):
         """This function is called when the user clicks on the "Send" button. It reads the values from the GUI - question,
@@ -195,17 +204,17 @@ class CustomTabView(CTkTabview):
 
         verification = ds.verify_signature(decrypted_message.decode(), bytes.fromhex(signature), sender_username)
 
-        if verification:
-            print("Signature verified")
-        else:
-            print("Signature not verified")
-
-        print(f"hmac: {hmac_validity}")
-
-        #Show message
         self.label_message_received.configure(text=decrypted_message.decode())
 
+        if hmac_validity:
+            self.label_hmac_verification.configure(text="HMAC verified")
+        else:
+            self.label_hmac_verification.configure(text="HMAC not verified")
 
+        if verification:
+            self.label_digital_signature_verification.configure(text="Signature verified")
+        else:
+            self.label_digital_signature_verification.configure(text="Signature not verified")
 class MainWindow(CTk):
     def __init__(self, username, password):
         super().__init__()
