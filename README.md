@@ -1,7 +1,26 @@
-
 # Mon-Amour
 
-System to exchange love letters, with a twist... 
+Mon-Amour is a secure messaging Python application that uses AES-CTR encryption to cipher messages between two users.
+
+
+## Features
+
+* **Base features**
+  - AES-CTR message encryption 
+  - Encryption key generated from time-based hash of correct answer to a question from the sender
+  - HMAC validation
+
+* **Extra features**
+  - RSA keys generation per user
+  - RSA private keys encryption
+  - Digital signatures
+  - "Help" section
+
+* **Extra extra features**
+  - Graphical User Interface (GUI)
+  - User accounts system
+  - Password hashing in database
+  - HTML project documentation
 
 
 ## Sources

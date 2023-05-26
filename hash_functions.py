@@ -13,13 +13,15 @@ def generate_salt() -> bytes:
     """Generates a random salt value of 16 bytes.
 
     Returns:
-        bytes: 16 byte generated salt value.
+        bytes: 16-byte generated salt value.
     """
     return get_random_bytes(BLOCK_SIZE)
 
 
 def generate_hash(password: str) -> tuple[int, bytes, bytes]:
     """Generates a hash value of the secret key by iterating through the SHA256 hashing algorithm for a specific time.
+
+    A 16-byte salt is pseudo-randomly generated and appended to the secret key, both in bytes. The SHA256 hashing algorithm is then iterated through for 15 seconds, by default and the hash value is returned.
 
     Args:
         password (str): Secret key to be hashed.
