@@ -167,27 +167,27 @@ class CustomTabView(CTkTabview):
         self.label_digital_signature_verification.pack(pady=10, padx=20)
 
         help = """
-        1. Introdução
-        Este programa designado "Mon-Amour Messaging App" tem como objetivo enviar e receber mensagens de amor.
-        Para poder utilizar esta aplicação, terá que se registar.
-        Ao enviar uma mensagem, esta será encriptada utilizando o algoritmo AES128, no modo CTR. Para realizar a encriptação, será necessária a resposta à questão definida pelo emissor.
-        Ao receber uma mensagem, a mesma será desencriptada utilizando o mesmo algoritmo e modo. A pergunta definida pelo emissor será exibida na tela, e é necessário inserir a mesma resposta que o emissor para visualizar o conteúdo da mensagem.
+    1. Introdução
+    Este programa designado "Mon-Amour Messaging App" tem como objetivo enviar e receber mensagens de amor.
+    Para poder utilizar esta aplicação, terá que se registar.
+    Ao enviar uma mensagem, esta será encriptada utilizando o algoritmo AES128, no modo CTR. Para realizar a encriptação, será necessária a resposta à questão definida pelo emissor.
+    Ao receber uma mensagem, a mesma será desencriptada utilizando o mesmo algoritmo e modo. A pergunta definida pelo emissor será exibida na tela, e é necessário inserir a mesma resposta que o emissor para visualizar o conteúdo da mensagem.
 
-        2. Guia de Utilização
-        	2.1. Após iniciar a aplicação será exibida a página do login, onde serão exibidas duas caixas de texto e dois botões. Deverá introduzir um nome de utilizador, na caixa de texto "Username" e uma password na caixa de texto "Password". De seguida, deverá pressionar o botão "Login" para começar a sua experiência com a "Mon-Amor Messaging App".
-        	     O botão "Help" serve para abrir o manual de ajuda, onde encontrará todas as informações necessárias para utilizar de maneira correta a aplicação.
+    2. Guia de Utilização
+        2.1. Após iniciar a aplicação será exibida a página do login, onde serão exibidas duas caixas de texto e dois botões. Deverá introduzir um nome de utilizador, na caixa de texto "Username" e uma password na caixa de texto "Password". De seguida, deverá pressionar o botão "Login" para começar a sua experiência com a "Mon-Amor Messaging App".
+        	O botão "Help" serve para abrir o manual de ajuda, onde encontrará todas as informações necessárias para utilizar de maneira correta a aplicação.
 
-        	2.2 Se fizer o registo corretamente, será mostrada no ecrã uma nova página com duas opções: "Send Message", "Receive Message". 
-        		1. Send Message: ao pressionar este botão no menu inicial, será reencaminahdo para um novo separador. Nesse separador encontrará três caixas de texto e dois botões. 
-        			1.1 Na primeira caixa de texto, "Question", deverá introduzir uma questão. (p. ex. "Qual é a sua cor favorita?").
-        			1.2 Na segunda caixa de texto, "Secret Key", deverá introduzir a resposta à questão que introduziu na caixa anterior. (p. ex. "amarelo")
-        			1.3 Na terceira caixa de texto, "Message", deve incluir a mensagem que prentende enviar.
-        			1.4 O botão "Send" permitirá enviar a sua mensagem.
-        			1.5 Caso não pretenda enviar a mensagem, deverá pressionar o botão "Back" e voltará à página inicial. 
+        2.2 Se fizer o registo corretamente, será mostrada no ecrã uma nova página com duas opções: "Send Message", "Receive Message". 
+        	2.2.1 Send Message: ao pressionar este botão no menu inicial, será reencaminahdo para um novo separador. Nesse separador encontrará três caixas de texto e dois botões. 
+        	1. Na primeira caixa de texto, "Question", deverá introduzir uma questão. (p. ex. "Qual é a sua cor favorita?").
+        	2. Na segunda caixa de texto, "Secret Key", deverá introduzir a resposta à questão que introduziu na caixa anterior. (p. ex. "amarelo")
+        	3. Na terceira caixa de texto, "Message", deve incluir a mensagem que prentende enviar.
+        	4. O botão "Send" permitirá enviar a sua mensagem.
+        	5. Caso não pretenda enviar a mensagem, deverá pressionar o botão "Back" e voltará à página inicial. 
 
-        	2.3 Receive Message: este botão quando pressionado redireciona para um novo separador. Nesse separador deverá encontrar uma questão, uma caixa de texto e um botão.
-        		2.1 Na caixa de texto, "Secret Key", deverá introduzir a resposta correta à questão que se encontra no ecrã. 
-        		2.2 Depois deverá pressionar o botão, "Receive", e se a resposta à questão estiver correta, conseguirá visualizar o conteúdo da mensagem que lhe foi enviada. Caso contrário, deverá aparecerá um pop-up a dizer que a resposta à questão está incorreta.
+        2.3 Receive Message: este botão quando pressionado redireciona para um novo separador. Nesse separador deverá encontrar uma questão, uma caixa de texto e um botão.
+        	1. Na caixa de texto, "Secret Key", deverá introduzir a resposta correta à questão que se encontra no ecrã. 
+        	2. Depois deverá pressionar o botão, "Receive", e se a resposta à questão estiver correta, conseguirá visualizar o conteúdo da mensagem que lhe foi enviada. Caso contrário, deverá aparecerá um pop-up a dizer que a resposta à questão está incorreta.
         """
 
         # Add widgets to Help tab
