@@ -51,9 +51,6 @@ def read_file(username: str) -> tuple[list[str], str]:
     files: list[glob.AnyStr@glob] = glob.glob(f"{MESSAGE_PATH}*_{user_id}.txt")
     temp: str = files[0].split('_')[0]
     sender_id: str = temp.split('\\')[1]
-
-    # print(f"File: {files[0]}")
-    # print(f"Message from {sender_id}")
     
     with open(files[0], 'r') as file:
         input: list[str] = file.read().split(' | ')

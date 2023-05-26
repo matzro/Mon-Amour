@@ -1,5 +1,6 @@
-import bcrypt
 import json
+
+import bcrypt
 
 import hash_functions as hf
 

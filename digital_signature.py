@@ -12,7 +12,7 @@ BLOCK_SIZE = 16  # in bytes
 
 
 def generate_signature(message: str, username: str, password: str) -> bytes:
-    """This function generates a digital signature of the message, using the private key of the sender. 
+    """Generates a digital signature of the message, using the private key of the sender. 
     
     The sender's private key is read from a file, then it is decrypted with the secret key of the user and lastly,
     the message is hashed and the digital signature is generated.
@@ -38,7 +38,7 @@ def generate_signature(message: str, username: str, password: str) -> bytes:
 
 
 def verify_signature(message: str, signature: bytes, username: str) -> bool:
-    """This function verifies the digital signature of the message, using the public key of the sender. 
+    """Verifies the digital signature of the message, using the public key of the sender. 
     
     The sender's public key is read from a file, then the message is hashed and the digital signature is verified.
 
