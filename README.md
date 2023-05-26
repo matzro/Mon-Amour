@@ -23,6 +23,24 @@ Mon-Amour is a secure messaging Python application that uses AES-CTR encryption 
   - HTML project documentation
 
 
+## Screenshots
+
+| Login  | Send Message | Receive Message | Help | 
+| ------------- | ------------- | ------------- | ------------- |
+| ![Login](/images/screen-login.png)  | ![Send message](/images/screen-send.png)  | ![Receive message](/images/screen-receive.png) | ![Help](/images/screen-help.png)
+
+
+## Diagrams
+
+### System diagram
+
+![System diagram](/images/diagram-system.png)
+
+### Attack diagram
+
+![Attack diagram](/images/diagram-attack.png)
+
+
 ## Credits
 
 - [bcrypt](https://github.com/pyca/bcrypt)
