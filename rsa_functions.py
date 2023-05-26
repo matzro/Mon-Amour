@@ -19,7 +19,7 @@ def generate_key_pair(username, password):
     private_key = key.export_key()
     encrypted_private_key = encrypt_private_key_AES(private_key, password)
 
-    am.store_user_keys(username, public_key, encrypted_private_key)
+    return public_key, encrypted_private_key
 
 
 def encrypt_private_key_AES(private_key, password):
