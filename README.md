@@ -47,12 +47,18 @@ Or alternatively, by executing the `main.py` script located in the root director
 ![Attack diagram](/images/diagram-attack.png)
 
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
 ## Acknowledgements
 
 - [bcrypt](https://github.com/pyca/bcrypt)
 - [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
 - [pdoc3](https://pdoc3.github.io/pdoc/)
 - [pycryptodome](https://github.com/Legrandin/pycryptodome/)
+- [pyinstaller](https://github.com/pyinstaller/pyinstaller)
 
 
 ## Sources
