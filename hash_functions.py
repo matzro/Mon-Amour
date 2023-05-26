@@ -6,7 +6,7 @@ from Crypto.Random import get_random_bytes
 
 BLOCK_SIZE = 16 # in bytes
 ID_LENGTH = 8
-TIME = 2 # in seconds
+TIME = 15 # in seconds
 
 
 def generate_salt() -> bytes:
