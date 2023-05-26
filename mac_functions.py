@@ -11,6 +11,6 @@ def calculate_hmac(ciphertext: bytes, secret_key: str) -> str:
     Returns:
         str: The ciphertext's HMAC value.
     """
-    hmac_value = hmac.new(secret_key.encode(), ciphertext, hashlib.sha256).hexdigest()
+    hmac_value: str = hmac.new(secret_key.encode(), ciphertext, hashlib.sha256).hexdigest()
     
     return hmac_value

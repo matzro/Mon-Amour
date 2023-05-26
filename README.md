@@ -13,5 +13,6 @@ System to exchange love letters, with a twist...
  - [Password hashing using Bcrypt](https://www.geeksforgeeks.org/hashing-passwords-in-python-with-bcrypt/)
  - [PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/)
  - [Pycryptodome AES cipher documentation](https://pycryptodome.readthedocs.io/en/v3.10.4/src/cipher/aes.html)
- - [Salting passwords](https://stackoverflow.com/questions/3566176/salting-passwords-101)
+ - [Salting passwords 101](https://stackoverflow.com/questions/3566176/salting-passwords-101)
  - [Type hinting in Python](https://docs.python.org/3/library/typing.html)
+ - [PDOC3 - Auto-generate API documentation for Python projects](https://pdoc3.github.io/pdoc/)

@@ -7,42 +7,56 @@ from Crypto.Util import Counter
 import account_management as am
 
 
-BLOCK_SIZE = 16  # 128 bits
+BLOCK_SIZE = 16  # in bytes
 
 
-def generate_key_pair(username, password):
-    # Generate a new RSA key pair
+def generate_key_pair(username: str, password: str) -> tuple[bytes, bytes]:
+    """Generates a pair of RSA keys for the user, then serializes both and encrypts the private key.
+
+    Args:
+        username (str): Username of the keys' user.
+        password (str): Password for the private key's AES encryption.
+
+    Returns:
+        tuple[bytes, bytes]: A tuple containing the user's public key and encrypted private key.
+    """
     key = RSA.generate(2048)
-
-    # Serialize the public and private keys to PEM files
-    public_key = key.publickey().export_key()
-    private_key = key.export_key()
-    encrypted_private_key = encrypt_private_key_AES(private_key, password)
+    public_key: bytes = key.publickey().export_key()
+    private_key: bytes = key.export_key()
+    encrypted_private_key: bytes = encrypt_private_key_AES(private_key, password)
 
     return public_key, encrypted_private_key
 
 
-def encrypt_private_key_AES(private_key, password):
+def encrypt_private_key_AES(private_key: bytes, password: str) -> bytes:
     """Encrypts the private key with AES.
-    :param private_key: Private key to be encrypted
-    :param password: Encryption key for the private key
-    :return: AES-encrypted private key
+
+    Args:
+        private_key (bytes): Private key to be encrypted.
+        password (str): Encryption key for the private key.
+    
+    Returns:
+        bytes: AES-encrypted private key.
     """
     counter = Counter.new(nbits=BLOCK_SIZE * 8)
     cipher = AES.new(hashlib.sha256(password.encode()).digest(), AES.MODE_CTR, counter=counter)
-    encrypted_private_key = cipher.encrypt(private_key)
+    encrypted_private_key: bytes = cipher.encrypt(private_key)
 
     return encrypted_private_key
 
 
-def decrypt_private_key_AES(encrypted_private_key, password):
+def decrypt_private_key_AES(encrypted_private_key: bytes, password: str) -> bytes:
     """Decrypts the private key with AES.
-    :param encrypted_private_key: Private key to be decrypted
-    :param password: Encryption key for the private key
-    :return: AES-decrypted private key
+
+    Args:
+        encrypted_private_key (bytes): Private key to be decrypted.
+        password (str): Encryption key for the private key.
+    
+    Returns:    
+        bytes: AES-decrypted private key.
     """
     counter = Counter.new(nbits=BLOCK_SIZE * 8)
     cipher = AES.new(hashlib.sha256(password.encode()).digest(), AES.MODE_CTR, counter=counter)
-    decrypted_private_key = cipher.decrypt(encrypted_private_key)
+    decrypted_private_key: bytes = cipher.decrypt(encrypted_private_key)
 
     return decrypted_private_key
