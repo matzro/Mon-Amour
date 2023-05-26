@@ -5,8 +5,6 @@ import mac_functions as mf
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Util import Counter
-from Crypto.Util.Padding import pad
-from Crypto.Util.Padding import unpad
 
 BLOCK_SIZE = 16  # 128 bits
 HMAC_SIZE = 32  # 256 bits

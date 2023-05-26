@@ -15,29 +15,33 @@ class LoginWindow(CTk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        main_frame = CTkFrame(self, fg_color=self.cget("bg"))
-        main_frame.pack(padx=10, pady=10, fill="both", expand=True)
+        self.geometry("380x390")
 
+        self.title("Mon-Amour")
+        self.resizable(False, False)
         # Login title
-        title = CTkLabel(main_frame, text="Welcome to Mon-Amour!\nPlease login to love.")
-        title.grid(row=0, column=0, pady=(0, 20))
+        title = CTkLabel(self, text="Welcome to Mon-Amour!", font=("Poppins", 16, "bold"))
+        title.pack(pady=20)
+
+        main_frame = CTkFrame(self)
+        main_frame.pack(pady=20, padx=40, expand=True, fill="both")
+
+        label = CTkLabel(main_frame, text="Login", font=("Poppins", 20, "bold"))
+        label.pack(pady=12, padx=10)
 
         # Username label
-        username_label = CTkLabel(main_frame, text="Username")
-        username_label.grid(row=1, column=0, sticky="w", pady=(0, 10))
-        user_entry = CTkEntry(main_frame)
-        user_entry.grid(row=1, column=1, pady=(0, 10))
+        user_entry = CTkEntry(main_frame, placeholder_text="Username", font=("Poppins", 12))
+        user_entry.pack(pady=12, padx=10)
 
         # Password label
-        password_label = CTkLabel(main_frame, text="Password")
-        password_label.grid(row=2, column=0, sticky="w", pady=(0, 10))
-        password_entry = CTkEntry(main_frame, show="*")
-        password_entry.grid(row=2, column=1, pady=(0, 10), padx=10)
+        password_entry = CTkEntry(main_frame, placeholder_text="Password", show="*", font=("Poppins", 12))
+        password_entry.pack(pady=12, padx=10)
 
         # Login button
-        login_button = CTkButton(main_frame, text="Login",
+        login_button = CTkButton(main_frame, text="Login", font=("Poppins", 15),
                                  command=lambda: self.login(user_entry.get(), password_entry.get()))
-        login_button.grid(row=4, column=1, pady=(0, 20), sticky="e")
+        login_button.pack(pady=12, padx=10)
+
 
     def login(self, username, password):
         dbm.load_database()
