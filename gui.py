@@ -102,7 +102,7 @@ class HelpWindow(CTk):
 
         label = CTkLabel(self, text="Help", font=("Poppins", 20, "bold"))
         label.pack(pady=10, padx=10)
-        
+
         help = """
         1. Introduction
           The "Mon-Amour Messaging App" is a secure messaging app that allows you to send and receive encrypted messages.
