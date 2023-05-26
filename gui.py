@@ -167,27 +167,27 @@ class CustomTabView(CTkTabview):
         self.label_digital_signature_verification.pack(pady=10, padx=20)
 
         help = """
-        1. Introduction
-		The "Mon-Amour Messaging App" is a secure messaging app that allows you to send and receive encrypted messages.
-        The AES-128 algorithm in CTR mode is used to encrypt the messages you send and in order to decrypt, the recipient must answer correctly to the sender's question.
+1. Introduction
+  The "Mon-Amour Messaging App" is a secure messaging app that allows you to send and receive encrypted messages.
+  The AES-128 algorithm in CTR mode is used to encrypt the messages you send and in order to decrypt, the recipient must answer correctly to the sender's question.
 
 
-        2. User Guide
-        	2.1. When you first open the application, you will be met with a login screen. Insert your credentials, if you are already registered, or create a new account by choosing an untaken username and a secure password.
-            The "Help" button, when clicked, displays the user manual, which contains all the instructions you need in order to use the program correctly.
+2. User Guide
+  2.1. When you first open the application, you will be met with a login screen. Insert your credentials, if you are already registered, or create a new account by choosing an untaken username and a secure password.
+The "Help" button, when clicked, displays the user manual, which contains all the instructions you need in order to use the program correctly.
 
-        	2.2  After a successful login, two tabs will be shown: "Send" and "Receive".
-        		1. Send: Selecting this option will redirect you to a new window, where you can send a message to another user. In this window, there are three text fields;
-        			1.1 Recipient: Type the username of the person you want to send the message to;
-				    1.2 Question: Enter a personal question that only the recipient can answer (e.g., "Which are my favorite cereals?");
-        			1.3 Answer: Type the correct answer to the question above in this text box (e.g., "Chocapic");
-        			1.4 Message: Include the message you want to send encrypted in this text box;
-        			1.5 Your message will encrypted and then sent after you press the "Send" button;
-        			1.6 If you changed your mind and do not want to send the message anymore, you can close the program or change to the "Receive" tab. 
+  2.2  After a successful login, two tabs will be shown: "Send" and "Receive".
+    1. Send: Selecting this option will redirect you to a new window, where you can send a message to another user. In this window, there are three text fields;
+    1.1 Recipient: Type the username of the person you want to send the message to;
+    1.2 Question: Enter a personal question that only the recipient can answer (e.g., "Which are my favorite cereals?");
+    1.3 Answer: Type the correct answer to the question above in this text box (e.g., "Chocapic");
+    1.4 Message: Include the message you want to send encrypted in this text box;
+    1.5 Your message will encrypted and then sent after you press the "Send" button;
+    1.6 If you changed your mind and do not want to send the message anymore, you can close the program or change to the "Receive" tab. 
 
-        		2. Receive: Selecting this option will redirect you to a new window, where you can decrypt a message sent to you from another user. In this window, there are two text fields;
-        			2.1 Answer: Type the correct answer to the question you received in order to decrypt the message;
-        			2.2 If the answer is correct, the message will be decrypted and displayed alongside the HMAC and digital signature verification results;
+    2. Receive: Selecting this option will redirect you to a new window, where you can decrypt a message sent to you from another user. In this window, there are two text fields;
+    2.1 Answer: Type the correct answer to the question you received in order to decrypt the message;
+    2.2 If the answer is correct, the message will be decrypted and displayed alongside the HMAC and digital signature verification results;
         """
 
         # Add widgets to Help tab
