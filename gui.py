@@ -1,3 +1,5 @@
+import tkinter
+
 from customtkinter import *
 
 import account_management as am
@@ -37,6 +39,9 @@ class LoginWindow(CTk):
         password_entry = CTkEntry(main_frame, placeholder_text="Password", show="*", font=("Poppins", 12))
         password_entry.pack(pady=12, padx=10)
 
+        self.error_label = CTkLabel(main_frame, text="", font=("Poppins", 12, "bold"))
+        self.error_label.pack(pady=12, padx=10)
+
         # Login button
         login_button = CTkButton(main_frame, text="Login", font=("Poppins", 15),
                                  command=lambda: self.login(user_entry.get(), password_entry.get()))
@@ -64,6 +69,7 @@ class LoginWindow(CTk):
                 window.mainloop()
             else:
                 print("Wrong password")
+                self.error_label.configure(text="Wrong password", text_color="red")
 
         else:
             print("User does not exist. Creating new account...")
@@ -85,7 +91,7 @@ class LoginWindow(CTk):
 
 class CustomTabView(CTkTabview):
     def __init__(self, master, username, password, **kwargs):
-        super().__init__(master, width=380, height=390, **kwargs)
+        super().__init__(master, **kwargs)
 
         self.username = username
         self.password = password
@@ -93,6 +99,8 @@ class CustomTabView(CTkTabview):
         # Create tabs
         self.add("Send")
         self.add("Receive")
+        self.add("Help")
+
 
         # Add widgets to Send tab
         # Recipient
@@ -101,6 +109,7 @@ class CustomTabView(CTkTabview):
 
         # Question
         self.entry_question_sent = CTkEntry(self.tab("Send"), placeholder_text="Question")
+        self.entry_question_sent.configure(width=300)
         self.entry_question_sent.pack(pady=10, anchor="w", padx=30)
 
         # Answer
@@ -108,9 +117,10 @@ class CustomTabView(CTkTabview):
         self.entry_answer_sent.pack(pady=10, anchor="w", padx=30)
 
         # Message
-        self.entry_message_sent = CTkEntry(self.tab("Send"), placeholder_text="Message")
-        self.entry_message_sent.configure(height=100, width=300)
-        self.entry_message_sent.pack(pady=10, padx=20)
+        self.label_message_sent = CTkLabel(self.tab("Send"), text="Message", font=("Poppins", 12))
+        self.label_message_sent.pack(pady=10, padx=30, anchor="w")
+        self.entry_message_sent = CTkTextbox(self.tab("Send"), width=300, height=30)
+        self.entry_message_sent.pack(fill="both", expand=True, padx=30, pady=10)
 
         # Button
         self.button_send = CTkButton(self.tab("Send"), text="Send", command=lambda: self.cipher(
@@ -118,7 +128,7 @@ class CustomTabView(CTkTabview):
             password,
             self.entry_question_sent.get(),
             self.entry_answer_sent.get(),
-            self.entry_message_sent.get(),
+            self.entry_message_sent.get("0.0", "end"),
             self.entry_recipient.get()
         ))
         self.button_send.pack(pady=10, padx=20)
@@ -157,6 +167,34 @@ class CustomTabView(CTkTabview):
         # Digital Signature Verification
         self.label_digital_signature_verification = CTkLabel(self.tab("Receive"), text="", font=("Poppins", 12, "bold"))
         self.label_digital_signature_verification.pack(pady=10, padx=20)
+
+        help = """
+        1. Introdução
+        Este programa designado "Mon-Amour Messaging App" tem como objetivo enviar e receber mensagens de amor.
+        Para poder utilizar esta aplicação, terá que se registar.
+        Ao enviar uma mensagem, esta será encriptada utilizando o algoritmo AES128, no modo CTR. Para realizar a encriptação, será necessária a resposta à questão definida pelo emissor.
+        Ao receber uma mensagem, a mesma será desencriptada utilizando o mesmo algoritmo e modo. A pergunta definida pelo emissor será exibida na tela, e é necessário inserir a mesma resposta que o emissor para visualizar o conteúdo da mensagem.
+
+
+        2. Guia de Utilização
+        	2.1. Após iniciar a aplicação será exibida a página do login, onde serão exibidas duas caixas de texto e dois botões. Deverá introduzir um nome de utilizador, na caixa de texto "Username" e uma password na caixa de texto "Password". De seguida, deverá pressionar o botão "Login" para começar a sua experiência com a "Mon-Amor Messaging App".
+        	     O botão "Help" serve para abrir o manual de ajuda, onde encontrará todas as informações necessárias para utilizar de maneira correta a aplicação.
+
+        	2.2 Se fizer o registo corretamente, será mostrada no ecrã uma nova página com duas opções: "Send Message", "Receive Message". 
+        		1. Send Message: ao pressionar este botão no menu inicial, será reencaminahdo para um novo separador. Nesse separador encontrará três caixas de texto e dois botões. 
+        			1.1 Na primeira caixa de texto, "Question", deverá introduzir uma questão. (p. ex. "Qual é a sua cor favorita?").
+        			1.2 Na segunda caixa de texto, "Secret Key", deverá introduzir a resposta à questão que introduziu na caixa anterior. (p. ex. "amarelo")
+        			1.3 Na terceira caixa de texto, "Message", deve incluir a mensagem que prentende enviar.
+        			1.4 O botão "Send" permitirá enviar a sua mensagem.
+        			1.5 Caso não pretenda enviar a mensagem, deverá pressionar o botão "Back" e voltará à página inicial. 
+
+        	2.3 Receive Message: este botão quando pressionado redireciona para um novo separador. Nesse separador deverá encontrar uma questão, uma caixa de texto e um botão.
+        		2.1 Na caixa de texto, "Secret Key", deverá introduzir a resposta correta à questão que se encontra no ecrã. 
+        		2.2 Depois deverá pressionar o botão, "Receive", e se a resposta à questão estiver correta, conseguirá visualizar o conteúdo da mensagem que lhe foi enviada. Caso contrário, deverá aparecerá um pop-up a dizer que a resposta à questão está incorreta.
+
+
+        """
+
 
     def cipher(self, username, password, question, secret_key, message, recipient):
         """This function is called when the user clicks on the "Send" button. It reads the values from the GUI - question,
