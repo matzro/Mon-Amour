@@ -1,5 +1,6 @@
+from typing import Tuple
+
 from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
 from Crypto.Util import Counter
 
 import hash_functions as hf
@@ -29,7 +30,7 @@ def encrypt_message(message: str, secret_key: str) -> tuple[int, bytes, bytes]:
     return iter_counter, salt, ciphertext
 
 
-def decrypt_message(password: str, input: list[str]) -> tuple[bytes, bool]:
+def decrypt_message(password: str, input: list[str]) -> tuple[str, bool] | tuple[None, None]:
     """_summary_
 
     Args:
@@ -47,18 +48,18 @@ def decrypt_message(password: str, input: list[str]) -> tuple[bytes, bool]:
     key: bytes = hf.find_hash(iter_counter, salt, password)
     cipher = AES.new(key, AES.MODE_CTR, counter=counter)
 
-    hmac_received: str = input[3][:HMAC_SIZE]
-    hmac_value: str = mf.calculate_hmac(ciphertext, password)[:HMAC_SIZE]
-    print(f"HMAC R: {hmac_received}")
-    print(f"HMAC C: {hmac_value}")
-
-    hmac_validity: bool = (hmac_received == hmac_value)
     decrypted_msg: bytes = cipher.decrypt(ciphertext)
 
     try:
-        print(f"Decrypted message: {decrypted_msg.decode()}")
+        decrypted_msg: str = decrypted_msg.decode()
+        hmac_received: str = input[3][:HMAC_SIZE]
+        hmac_value: str = mf.calculate_hmac(ciphertext, password)[:HMAC_SIZE]
+        print(f"HMAC R: {hmac_received}")
+        print(f"HMAC C: {hmac_value}")
+
+        hmac_validity: bool = (hmac_received == hmac_value)
+        return decrypted_msg, hmac_validity
     except:
         print("Decryption failed. Wrong password.")
-    
-    return decrypted_msg, hmac_validity
+        return None, None
 

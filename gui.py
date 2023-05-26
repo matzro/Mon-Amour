@@ -231,20 +231,25 @@ class CustomTabView(CTkTabview):
         sk = secret_key.lower()
 
         decrypted_message, hmac_validity = ef.decrypt_message(sk, ciphertext)
+        print(decrypted_message)
 
-        verification = ds.verify_signature(decrypted_message.decode(), bytes.fromhex(signature), sender_username)
+        if decrypted_message is None:
+            self.label_message_received.configure(text="Answer incorrect", text_color="red")
+        else:
+            digital_signature_verification = ds.verify_signature(decrypted_message, bytes.fromhex(signature), sender_username)
 
-        self.label_message_received.configure(text="Message: " + decrypted_message.decode())
-
-        if hmac_validity:
+            self.label_message_received.configure(text="Message: " + decrypted_message)
             self.label_hmac_verification.configure(text="HMAC verified", text_color="green")
-        else:
-            self.label_hmac_verification.configure(text="HMAC not verified", text_color="red")
 
-        if verification:
-            self.label_digital_signature_verification.configure(text="Signature verified", text_color="green")
-        else:
-            self.label_digital_signature_verification.configure(text="Signature not verified", text_color="red")
+            if hmac_validity:
+                self.label_hmac_verification.configure(text="HMAC verified", text_color="green")
+            else:
+                self.label_hmac_verification.configure(text="HMAC not verified", text_color="red")
+
+            if digital_signature_verification:
+                self.label_digital_signature_verification.configure(text="Signature verified", text_color="green")
+            else:
+                self.label_digital_signature_verification.configure(text="Signature not verified", text_color="red")
 class MainWindow(CTk):
     def __init__(self, username, password):
         super().__init__()
