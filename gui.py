@@ -249,9 +249,9 @@ class CustomTabView(CTkTabview):
                 self.label_hmac_verification.configure(text="HMAC not verified: The message recieved is not authentic!!", text_color="red")
 
             if digital_signature_verification:
-                self.label_digital_signature_verification.configure(text="Signature verified: ", text_color="green")
+                self.label_digital_signature_verification.configure(text="Signature verified ", text_color="green")
             else:
-                self.label_digital_signature_verification.configure(text="Signature not verified: ", text_color="red")
+                self.label_digital_signature_verification.configure(text="Signature not verified ", text_color="red")
 class MainWindow(CTk):
     def __init__(self, username, password):
         super().__init__()
