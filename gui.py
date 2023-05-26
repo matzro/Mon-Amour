@@ -53,7 +53,7 @@ class LoginWindow(CTk):
         if dbm.check_if_user_exists(username):
             hashed_password = dbm.get_user_password(username)
 
-            if dbm.password_checking(password, hashed_password):
+            if dbm.password_checking(password, hashed_password) and password != "":
                 print("Login successful")
 
                 if not am.check_if_keys_exist(username):
