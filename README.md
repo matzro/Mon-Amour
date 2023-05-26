@@ -16,12 +16,18 @@ Mon-Amour is a secure messaging Python application that uses AES-CTR encryption 
   - Digital signatures
   - "Help" section
 
-* **Extra extra features**
+* **EXTRA features**
   - Graphical User Interface (GUI)
   - User accounts system
   - Password hashing in database
   - HTML project documentation
 
+
+## Running the Application
+
+The project can be run by executing the `main.exe` located in the `Mon-Amour/dist/main/` directory.
+
+Or alternatively, by executing the `main.py` script located in the root directory.
 
 ## Screenshots
 
@@ -41,7 +47,7 @@ Mon-Amour is a secure messaging Python application that uses AES-CTR encryption 
 ![Attack diagram](/images/diagram-attack.png)
 
 
-## Credits
+## Acknowledgements
 
 - [bcrypt](https://github.com/pyca/bcrypt)
 - [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
