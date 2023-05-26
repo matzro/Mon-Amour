@@ -23,6 +23,14 @@ Mon-Amour is a secure messaging Python application that uses AES-CTR encryption 
   - HTML project documentation
 
 
+## Credits
+
+- [bcrypt](https://github.com/pyca/bcrypt)
+- [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
+- [pdoc3](https://pdoc3.github.io/pdoc/)
+- [pycryptodome](https://github.com/Legrandin/pycryptodome/)
+
+
 ## Sources
 
  - [Append to JSON file using Python](https://www.geeksforgeeks.org/append-to-json-file-using-python/)
@@ -34,4 +42,3 @@ Mon-Amour is a secure messaging Python application that uses AES-CTR encryption 
  - [Pycryptodome AES cipher documentation](https://pycryptodome.readthedocs.io/en/v3.10.4/src/cipher/aes.html)
  - [Salting passwords 101](https://stackoverflow.com/questions/3566176/salting-passwords-101)
  - [Type hinting in Python](https://docs.python.org/3/library/typing.html)
- - [PDOC3 - Auto-generate API documentation for Python projects](https://pdoc3.github.io/pdoc/)
