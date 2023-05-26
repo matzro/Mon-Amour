@@ -167,27 +167,29 @@ class CustomTabView(CTkTabview):
         self.label_digital_signature_verification.pack(pady=10, padx=20)
 
         help = """
-    1. Introdução
-    Este programa designado "Mon-Amour Messaging App" tem como objetivo enviar e receber mensagens de amor.
-    Para poder utilizar esta aplicação, terá que se registar.
-    Ao enviar uma mensagem, esta será encriptada utilizando o algoritmo AES128, no modo CTR. Para realizar a encriptação, será necessária a resposta à questão definida pelo emissor.
-    Ao receber uma mensagem, a mesma será desencriptada utilizando o mesmo algoritmo e modo. A pergunta definida pelo emissor será exibida na tela, e é necessário inserir a mesma resposta que o emissor para visualizar o conteúdo da mensagem.
+    1. Introduction
+	This program called "Mon-Amour Messaging App" aims to send and receive messages of love.
+	To use this application, you will need to register.
+	When sending a message, it will be encrypted using the AES128 algorithm in CTR mode. To perform the encryption, you will need to provide the answer to the question defined by the sender.
+	When receiving a message, it will be decrypted using the same algorithm and mode. The question defined by the sender will be displayed on the screen, and you need to enter the same answer as the sender to view the message content.
 
-    2. Guia de Utilização
-        2.1. Após iniciar a aplicação será exibida a página do login, onde serão exibidas duas caixas de texto e dois botões. Deverá introduzir um nome de utilizador, na caixa de texto "Username" e uma password na caixa de texto "Password". De seguida, deverá pressionar o botão "Login" para começar a sua experiência com a "Mon-Amor Messaging App".
-        	O botão "Help" serve para abrir o manual de ajuda, onde encontrará todas as informações necessárias para utilizar de maneira correta a aplicação.
 
-        2.2 Se fizer o registo corretamente, será mostrada no ecrã uma nova página com duas opções: "Send Message", "Receive Message". 
-        	1.  Send Message: ao pressionar este botão no menu inicial, será reencaminahdo para um novo separador. Nesse separador encontrará três caixas de texto e dois botões. 
-        	1.1 Na primeira caixa de texto, "Question", deverá introduzir uma questão. (p. ex. "Qual é a sua cor favorita?").
-        	1.2 Na segunda caixa de texto, "Secret Key", deverá introduzir a resposta à questão que introduziu na caixa anterior. (p. ex. "amarelo")
-        	1.3 Na terceira caixa de texto, "Message", deve incluir a mensagem que prentende enviar.
-        	1.4 O botão "Send" permitirá enviar a sua mensagem.
-        	1.5 Caso não pretenda enviar a mensagem, deverá pressionar o botão "Back" e voltará à página inicial. 
+    2. User Guide
+        2.1. After launching the application, the login page will be displayed, showing two text boxes and two buttons. Enter a username in the "Username" text box and a password in the "Password" text box. Then, click the "Login" button to start your experience with the "Mon-Amour Messaging App".
+        The "Help" button is used to open the help manual, where you will find all the necessary information to correctly use the application.
 
-        2.3 Receive Message: este botão quando pressionado redireciona para um novo separador. Nesse separador deverá encontrar uma questão, uma caixa de texto e um botão.
-        	1. Na caixa de texto, "Secret Key", deverá introduzir a resposta correta à questão que se encontra no ecrã. 
-        	2. Depois deverá pressionar o botão, "Receive", e se a resposta à questão estiver correta, conseguirá visualizar o conteúdo da mensagem que lhe foi enviada. Caso contrário, deverá aparecerá um pop-up a dizer que a resposta à questão está incorreta.
+        2.2  If you register successfully, a new page will be shown with two options: "Send Message" and "Receive Message". 
+        	1. Send Message: By clicking this button on the main menu, you will be redirected to a new tab. In that tab, you will find three text boxes and two buttons. 
+        	1.1 In the first text box, "Recipient", enter the recipient of the message;
+        	1.2 In  second text box, "Question", enter a question (e.g., "What is your favorite color?");
+        	1.3 In the third text box, "Answer", enter the answer to the question you entered in the previous box (e.g., "yellow");
+        	1.4 In the fourth text box, "Message", include the message you want to send.
+        	1.5 The "Send" button will send your message;
+        	1.6 If you don't want to send the message, choose another tab.
+
+        	2. Receive Message: When clicking this button, you will be redirected to a new tab. In that tab, you should find a question, a text box, and a button.
+        	2.1 In the text box, "Answer", enter the correct answer to the question displayed on the screen. 
+        	2.2 Then, click the "Receive" button, and if the answer to the question is correct, you will be able to view the content of the message you received. Otherwise, a pop-up will appear indicating that the answer to the question is incorrect.
         """
 
         # Add widgets to Help tab
