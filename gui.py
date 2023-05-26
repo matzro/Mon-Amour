@@ -28,8 +28,12 @@ class LoginWindow(CTk):
         main_frame = CTkFrame(self)
         main_frame.pack(pady=20, padx=40, expand=True, fill="both")
 
+        # Help button
+        help_button = CTkButton(main_frame, text="?", font=("Poppins", 12, "bold"), command=self.help, width=10, height=10)
+        help_button.pack(anchor="ne", padx=10, pady=5)
+
         label = CTkLabel(main_frame, text="Login", font=("Poppins", 20, "bold"))
-        label.pack(pady=12, padx=10)
+        label.pack(pady=5, padx=10)
 
         # Username label
         user_entry = CTkEntry(main_frame, placeholder_text="Username", font=("Poppins", 12))
@@ -40,13 +44,16 @@ class LoginWindow(CTk):
         password_entry.pack(pady=12, padx=10)
 
         self.error_label = CTkLabel(main_frame, text="", font=("Poppins", 12, "bold"))
-        self.error_label.pack(pady=12, padx=10)
+        self.error_label.pack(padx=10)
 
         # Login button
         login_button = CTkButton(main_frame, text="Login", font=("Poppins", 15),
                                  command=lambda: self.login(user_entry.get(), password_entry.get()))
-        login_button.pack(pady=12, padx=10)
+        login_button.pack(pady=5, padx=10)
 
+    def help(self):
+        window = HelpWindow()
+        window.mainloop()
 
     def login(self, username, password):
         dbm.load_database()
@@ -85,6 +92,43 @@ class LoginWindow(CTk):
             self.withdraw()
             window = MainWindow(username, password)
             window.mainloop()
+
+class HelpWindow(CTk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.geometry("400x420")
+        self.resizable(False, False)
+
+        help = """
+            1. Introduction
+        	This program called "Mon-Amour Messaging App" aims to send and receive messages of love.
+        	To use this application, you will need to register.
+        	When sending a message, it will be encrypted using the AES128 algorithm in CTR mode. To perform the encryption, you will need to provide the answer to the question defined by the sender.
+        	When receiving a message, it will be decrypted using the same algorithm and mode. The question defined by the sender will be displayed on the screen, and you need to enter the same answer as the sender to view the message content.
+
+
+            2. User Guide
+                2.1. After launching the application, the login page will be displayed, showing two text boxes and two buttons. Enter a username in the "Username" text box and a password in the "Password" text box. Then, click the "Login" button to start your experience with the "Mon-Amour Messaging App".
+                The "Help" button is used to open the help manual, where you will find all the necessary information to correctly use the application.
+
+                2.2  If you register successfully, a new page will be shown with two options: "Send Message" and "Receive Message". 
+                	1. Send Message: By clicking this button on the main menu, you will be redirected to a new tab. In that tab, you will find three text boxes and two buttons. 
+                	1.1 In the first text box, "Recipient", enter the recipient of the message;
+                	1.2 In  second text box, "Question", enter a question (e.g., "What is your favorite color?");
+                	1.3 In the third text box, "Answer", enter the answer to the question you entered in the previous box (e.g., "yellow");
+                	1.4 In the fourth text box, "Message", include the message you want to send.
+                	1.5 The "Send" button will send your message;
+                	1.6 If you don't want to send the message, choose another tab.
+
+                	2. Receive Message: When clicking this button, you will be redirected to a new tab. In that tab, you should find a question, a text box, and a button.
+                	2.1 In the text box, "Answer", enter the correct answer to the question displayed on the screen. 
+                	2.2 Then, click the "Receive" button, and if the answer to the question is correct, you will be able to view the content of the message you received. Otherwise, a pop-up will appear indicating that the answer to the question is incorrect.
+                """
+
+        scrollable_frame = CTkScrollableFrame(self)
+        scrollable_frame.pack(expand=True, fill="both")
+        self.label_help = CTkLabel(scrollable_frame, text=help, wraplength=320, font=("Poppins", 12), justify="left")
+        self.label_help.grid(row=0, column=0, padx=20)
 
 
 class CustomTabView(CTkTabview):
