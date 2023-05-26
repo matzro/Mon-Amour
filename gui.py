@@ -85,7 +85,7 @@ class LoginWindow(CTk):
 
 class CustomTabView(CTkTabview):
     def __init__(self, master, username, password, **kwargs):
-        super().__init__(master, width=800, height=600, **kwargs)
+        super().__init__(master, width=380, height=390, **kwargs)
 
         self.username = username
         self.password = password
@@ -96,28 +96,21 @@ class CustomTabView(CTkTabview):
 
         # Add widgets to Send tab
         # Recipient
-        self.label_recipient = CTkLabel(self.tab("Send"), text="Recipient")
-        self.label_recipient.grid(row=0, column=0, padx=20, pady=10)
-        self.entry_recipient = CTkEntry(self.tab("Send"))
-        self.entry_recipient.grid(row=0, column=1, padx=20, pady=10)
+        self.entry_recipient = CTkEntry(self.tab("Send"), placeholder_text="Recipient")
+        self.entry_recipient.pack(pady=10, anchor="w", padx=30)
 
         # Question
-        self.label_question_sent = CTkLabel(self.tab("Send"), text="Question")
-        self.label_question_sent.grid(row=1, column=0, padx=20, pady=10)
-        self.entry_question_sent = CTkEntry(self.tab("Send"))
-        self.entry_question_sent.grid(row=1, column=1, padx=20, pady=10)
+        self.entry_question_sent = CTkEntry(self.tab("Send"), placeholder_text="Question")
+        self.entry_question_sent.pack(pady=10, anchor="w", padx=30)
 
         # Answer
-        self.label_answer_sent = CTkLabel(self.tab("Send"), text="Answer")
-        self.label_answer_sent.grid(row=2, column=0, padx=20, pady=10)
-        self.entry_answer_sent = CTkEntry(self.tab("Send"), show="*")
-        self.entry_answer_sent.grid(row=2, column=1, padx=20, pady=10)
+        self.entry_answer_sent = CTkEntry(self.tab("Send"), show="*", placeholder_text="Answer")
+        self.entry_answer_sent.pack(pady=10, anchor="w", padx=30)
 
         # Message
-        self.label_message_sent = CTkLabel(self.tab("Send"), text="Message")
-        self.label_message_sent.grid(row=3, column=0, padx=20, pady=10)
-        self.entry_message_sent = CTkEntry(self.tab("Send"))
-        self.entry_message_sent.grid(row=3, column=1, padx=20, pady=10)
+        self.entry_message_sent = CTkEntry(self.tab("Send"), placeholder_text="Message")
+        self.entry_message_sent.configure(height=100, width=300)
+        self.entry_message_sent.pack(pady=10, padx=20)
 
         # Button
         self.button_send = CTkButton(self.tab("Send"), text="Send", command=lambda: self.cipher(
@@ -128,7 +121,7 @@ class CustomTabView(CTkTabview):
             self.entry_message_sent.get(),
             self.entry_recipient.get()
         ))
-        self.button_send.grid(row=4, column=1, padx=20, pady=10)
+        self.button_send.pack(pady=10, padx=20)
 
         # Add widgets to Receive tab
         global ciphertext, sender_id
@@ -137,36 +130,33 @@ class CustomTabView(CTkTabview):
             question_received = ciphertext[1]
 
             # Question
-            self.label_question_received = CTkLabel(self.tab("Receive"), text="Question: " + question_received)
-            self.label_question_received.grid(row=0, column=0, padx=20, pady=10)
-
+            self.label_question_received = CTkLabel(self.tab("Receive"), text="Question: " + question_received, font=("Poppins", 12, "bold"))
+            self.label_question_received.pack(pady=10, padx=20)
             # Answer
-            self.label_answer_guess = CTkLabel(self.tab("Receive"), text="Answer")
-            self.label_answer_guess.grid(row=1, column=0, padx=20, pady=10)
-            self.entry_answer_guess = CTkEntry(self.tab("Receive"))
-            self.entry_answer_guess.grid(row=1, column=1, padx=20, pady=10)
+            self.entry_answer_guess = CTkEntry(self.tab("Receive"), placeholder_text="Answer", show="*")
+            self.entry_answer_guess.pack(pady=10, padx=20)
 
             # Button
             self.button_receive = CTkButton(self.tab("Receive"), text="Test my love", command=lambda: self.decipher(
                 self.entry_answer_guess.get(),
             ))
-            self.button_receive.grid(row=3, column=1, padx=20, pady=10)
+            self.button_receive.pack(pady=10, padx=20)
 
         except:
             self.label_no_messages = CTkLabel(self.tab("Receive"), text="No messages")
-            self.label_no_messages.grid(row=0, column=0, padx=20, pady=10)
+            self.label_no_messages.pack(pady=10, padx=20)
 
         # Message
         self.label_message_received = CTkLabel(self.tab("Receive"), text="")
-        self.label_message_received.grid(row=2, column=0, padx=20, pady=10)
+        self.label_message_received.pack(pady=10, padx=20)
 
         # HMAC Verification
-        self.label_hmac_verification = CTkLabel(self.tab("Receive"), text="")
-        self.label_hmac_verification.grid(row=3, column=0, padx=20, pady=10)
+        self.label_hmac_verification = CTkLabel(self.tab("Receive"), text="", font=("Poppins", 12, "bold"))
+        self.label_hmac_verification.pack(pady=10, padx=20)
 
         # Digital Signature Verification
-        self.label_digital_signature_verification = CTkLabel(self.tab("Receive"), text="")
-        self.label_digital_signature_verification.grid(row=4, column=0, padx=20, pady=10)
+        self.label_digital_signature_verification = CTkLabel(self.tab("Receive"), text="", font=("Poppins", 12, "bold"))
+        self.label_digital_signature_verification.pack(pady=10, padx=20)
 
     def cipher(self, username, password, question, secret_key, message, recipient):
         """This function is called when the user clicks on the "Send" button. It reads the values from the GUI - question,
@@ -208,25 +198,27 @@ class CustomTabView(CTkTabview):
 
         verification = ds.verify_signature(decrypted_message.decode(), bytes.fromhex(signature), sender_username)
 
-        self.label_message_received.configure(text=decrypted_message.decode())
+        self.label_message_received.configure(text="Message: " + decrypted_message.decode())
 
         if hmac_validity:
-            self.label_hmac_verification.configure(text="HMAC verified")
+            self.label_hmac_verification.configure(text="HMAC verified", text_color="green")
         else:
-            self.label_hmac_verification.configure(text="HMAC not verified")
+            self.label_hmac_verification.configure(text="HMAC not verified", text_color="red")
 
         if verification:
-            self.label_digital_signature_verification.configure(text="Signature verified")
+            self.label_digital_signature_verification.configure(text="Signature verified", text_color="green")
         else:
-            self.label_digital_signature_verification.configure(text="Signature not verified")
+            self.label_digital_signature_verification.configure(text="Signature not verified", text_color="red")
 class MainWindow(CTk):
     def __init__(self, username, password):
         super().__init__()
 
         self.username = username
         self.password = password
+        self.title("Mon-Amour")
 
-        self.geometry("800x600")
+        self.geometry("380x410")
+        self.resizable(False, False)
 
         self.tab_view = CustomTabView(self, username, password)
-        self.tab_view.grid(row=0, column=0, padx=20, pady=20)
+        self.tab_view.pack(fill="both", expand=True)
