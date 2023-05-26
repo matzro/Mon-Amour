@@ -1,6 +1,6 @@
-*.txt
-__pycache__/
-*.pem
-user_data/
 messages/
-database.json
+user_data/
+__pycache__/
+*.txt
+*.pem
+*.json

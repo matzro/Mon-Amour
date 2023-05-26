@@ -15,3 +15,4 @@ System to exchange love letters, with a twist...
  - [Pycryptodome AES cipher documentation](https://pycryptodome.readthedocs.io/en/v3.10.4/src/cipher/aes.html)
  - [Salting passwords](https://stackoverflow.com/questions/3566176/salting-passwords-101)
  - [Type hinting in Python](https://docs.python.org/3/library/typing.html)
+ - [PDOC3 - Auto-generate API documentation for Python projects](https://pdoc3.github.io/pdoc/)
