@@ -167,29 +167,27 @@ class CustomTabView(CTkTabview):
         self.label_digital_signature_verification.pack(pady=10, padx=20)
 
         help = """
-    1. Introduction
-	This program called "Mon-Amour Messaging App" aims to send and receive messages of love.
-	To use this application, you will need to register.
-	When sending a message, it will be encrypted using the AES128 algorithm in CTR mode. To perform the encryption, you will need to provide the answer to the question defined by the sender.
-	When receiving a message, it will be decrypted using the same algorithm and mode. The question defined by the sender will be displayed on the screen, and you need to enter the same answer as the sender to view the message content.
+        1. Introduction
+		The "Mon-Amour Messaging App" is a secure messaging app that allows you to send and receive encrypted messages.
+        The AES-128 algorithm in CTR mode is used to encrypt the messages you send and in order to decrypt, the recipient must answer correctly to the sender's question.
 
 
-    2. User Guide
-        2.1. After launching the application, the login page will be displayed, showing two text boxes and two buttons. Enter a username in the "Username" text box and a password in the "Password" text box. Then, click the "Login" button to start your experience with the "Mon-Amour Messaging App".
-        The "Help" button is used to open the help manual, where you will find all the necessary information to correctly use the application.
+        2. User Guide
+        	2.1. When you first open the application, you will be met with a login screen. Insert your credentials, if you are already registered, or create a new account by choosing an untaken username and a secure password.
+            The "Help" button, when clicked, displays the user manual, which contains all the instructions you need in order to use the program correctly.
 
-        2.2  If you register successfully, a new page will be shown with two options: "Send Message" and "Receive Message". 
-        	1. Send Message: By clicking this button on the main menu, you will be redirected to a new tab. In that tab, you will find three text boxes and two buttons. 
-        	1.1 In the first text box, "Recipient", enter the recipient of the message;
-        	1.2 In  second text box, "Question", enter a question (e.g., "What is your favorite color?");
-        	1.3 In the third text box, "Answer", enter the answer to the question you entered in the previous box (e.g., "yellow");
-        	1.4 In the fourth text box, "Message", include the message you want to send.
-        	1.5 The "Send" button will send your message;
-        	1.6 If you don't want to send the message, choose another tab.
+        	2.2  After a successful login, two tabs will be shown: "Send" and "Receive".
+        		1. Send: Selecting this option will redirect you to a new window, where you can send a message to another user. In this window, there are three text fields;
+        			1.1 Recipient: Type the username of the person you want to send the message to;
+				    1.2 Question: Enter a personal question that only the recipient can answer (e.g., "Which are my favorite cereals?");
+        			1.3 Answer: Type the correct answer to the question above in this text box (e.g., "Chocapic");
+        			1.4 Message: Include the message you want to send encrypted in this text box;
+        			1.5 Your message will encrypted and then sent after you press the "Send" button;
+        			1.6 If you changed your mind and do not want to send the message anymore, you can close the program or change to the "Receive" tab. 
 
-        	2. Receive Message: When clicking this button, you will be redirected to a new tab. In that tab, you should find a question, a text box, and a button.
-        	2.1 In the text box, "Answer", enter the correct answer to the question displayed on the screen. 
-        	2.2 Then, click the "Receive" button, and if the answer to the question is correct, you will be able to view the content of the message you received. Otherwise, a pop-up will appear indicating that the answer to the question is incorrect.
+        		2. Receive: Selecting this option will redirect you to a new window, where you can decrypt a message sent to you from another user. In this window, there are two text fields;
+        			2.1 Answer: Type the correct answer to the question you received in order to decrypt the message;
+        			2.2 If the answer is correct, the message will be decrypted and displayed alongside the HMAC and digital signature verification results;
         """
 
         # Add widgets to Help tab
