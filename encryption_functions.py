@@ -14,6 +14,10 @@ HMAC_SIZE = 32  # in bytes
 def encrypt_message(message: str, secret_key: str) -> tuple[int, bytes, bytes]:
     """Encrypts the message using the AES algorithm in CTR mode.
 
+    The answer to the question imposed is sent to the hashing function where it will be hashed for 15 seconds (default) together with a 16-byte pseudo-randomly generated salt.
+    A 16-byte counter is also generated and used in the AES algorithm in CTR mode to encrypt the message.
+    In the end, the number of hashing iterations, the salt generated and the encrypted ciphertext are returned.
+
     Args:
         message (str): Message to be encrypted.
         secret_key (str): Secret key to encrypt the message.
@@ -31,14 +35,19 @@ def encrypt_message(message: str, secret_key: str) -> tuple[int, bytes, bytes]:
 
 
 def decrypt_message(password: str, input: list[str]) -> tuple[str, bool] | tuple[None, None]:
-    """_summary_
+    """Decrypts the ciphertext using the AES algorithm in CTR mode.
+
+    The answer given by the recipient is sent to the hashing function where it will be hashed for 15 seconds (default) together with the salt generated during encryption.
+    A 16-byte counter needed for the AES algorithm in CTR mode is also generated.
+    When decrypting the ciphertext, the HMAC is also calculated and compared with the HMAC received from the recipient, in order to verify it.
+    If the password is correct, the decrypted message and the HMAC validity are returned. Otherwise, an exception is thrown and None is returned.
 
     Args:
-        password (str): _description_
-        input (list[str]): _description_
+        password (str): Answer given by the recipient to the question imposed by the sender to decrypt the ciphertext.
+        input (list[str]): List containing the number of hashing iterations, the salt, the ciphertext, the HMAC calculated and the digital signature of the ciphertext.
 
     Returns:
-        tuple[bytes, bool]: _description_
+        tuple[bytes, bool]: A tuple containing the decrypted message and the HMAC validity.
     """
     iter_counter: int = int(input[0])
     salt: bytes = bytes.fromhex(input[2])
