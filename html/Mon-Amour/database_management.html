@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Mon-Amour.database_management API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Mon-Amour.database_management</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+
+import bcrypt
+
+import hash_functions as hf
+
+
+DATABASE_PATH = &#39;database.json&#39;
+
+
+def password_hashing(password: str) -&gt; bytes:
+    &#34;&#34;&#34;Hashes the user&#39;s password using the bcrypt algorithm to securely store in the database.
+
+    This method of storing passwords prevents the database from being compromised and the passwords being exposed in plaintext.
+    Storing encrypted passwords is also not recommended, as the encryption key would have to be stored in the same database.
+    Hashing the passwords is the most secure way of storing them, as it is a one-way function, in other words, it is not possible to reverse the hashing process.
+    Bcrypt algorithm also adds a salt to the password, which makes it even more secure.
+
+    Args:
+        password (str): Account&#39;s password in plain text.
+
+    Returns:
+        bytes: Hashed password.
+    &#34;&#34;&#34;
+    hashed_password: bytes = bcrypt.hashpw(password.encode(&#39;utf-8&#39;), bcrypt.gensalt())
+
+    return hashed_password
+
+
+def password_checking(password: str, hashed_password: bytes) -&gt; bool:
+    &#34;&#34;&#34;Checks if the login password is correct.
+
+    When the user logs in, the password inputed by the user is hashed and compared to the hashed password previously stored in the database.
+
+    Args:
+        password (str): Passowrd inputed by the user in plain text.
+        hashed_password (bytes): Hashed password of the same user stored in the database.
+
+    Returns:
+        bool: True if the password is correct, False if not.
+    &#34;&#34;&#34;
+    return bcrypt.checkpw(password.encode(&#39;utf-8&#39;), hashed_password)
+
+
+def load_database() -&gt; None:
+    &#34;&#34;&#34;Loads the database from the database.json file. If the database JSON file does not exist, creates an empty one.
+    &#34;&#34;&#34;
+    try:
+        with open(DATABASE_PATH, &#39;r&#39;) as f:
+            database = json.load(f)
+
+    except FileNotFoundError:
+        empty_database = []
+
+        with open(DATABASE_PATH, &#39;w&#39;) as f:
+            json.dump(empty_database, f)
+
+
+def add_user(username: str, password: str) -&gt; None:
+    &#34;&#34;&#34;Adds a new account to the database.
+
+    The account is added to the database in the form of a dictionary, with the following keys being `id`, `username` and `password`.
+    The password is store as a hash, using the bcrypt algorithm.
+
+    Args:
+        username (str): Username of the new account.
+        password (str): Password of the new account in plain text.
+    &#34;&#34;&#34;
+    user_id: str = hf.short_hash(username)
+    hashed_password: str = password_hashing(password).decode(&#39;utf-8&#39;)
+
+    new_user = {
+        &#34;id&#34;: user_id,
+        &#34;username&#34;: username,
+        &#34;password&#34;: hashed_password,
+    }
+
+    with open(DATABASE_PATH, &#39;r&#39;) as f:
+        database = json.load(f)
+
+    database.append(new_user)
+
+    with open(DATABASE_PATH, &#39;w&#39;) as f:
+        json.dump(database, f)
+
+
+def check_if_user_exists(username: str) -&gt; bool:
+    &#34;&#34;&#34;Checks if the user already exists in the database through a username search.
+
+    Args:
+        username (str): Account&#39;s username.
+
+    Returns:
+        bool: True if the user exists, False if not.
+    &#34;&#34;&#34;
+    with open(DATABASE_PATH, &#39;r&#39;) as f:
+        database = json.load(f)
+
+    for user in database:
+        if user.get(&#39;username&#39;) == username:
+            return True
+
+    return False
+
+
+def get_user_password(username: str):
+    &#34;&#34;&#34;Gets the user&#39;s password from the database.
+
+    Args:
+        username (str): Account&#39;s username.
+
+    Returns:
+        The user&#39;s hashed password in bytes if the user exists, False if not.
+    &#34;&#34;&#34;
+    with open(DATABASE_PATH, &#39;r&#39;) as f:
+        database = json.load(f)
+
+    for user in database:
+        if user.get(&#39;username&#39;) == username:
+            return user.get(&#39;password&#39;).encode(&#39;utf-8&#39;)
+
+    return False
+
+
+def get_username_by_id(user_id: str):
+    &#34;&#34;&#34;Gets the username from the database through a user ID search.
+
+    Args:
+        user_id (str): Account&#39;s ID.
+
+    Returns:
+        The user&#39;s username if the user exists, False if not.
+    &#34;&#34;&#34;
+    with open(DATABASE_PATH, &#39;r&#39;) as f:
+        database = json.load(f)
+
+    for user in database:
+        if user.get(&#39;id&#39;) == user_id:
+            return user.get(&#39;username&#39;)
+        
+    return False</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="Mon-Amour.database_management.add_user"><code class="name flex">
+<span>def <span class="ident">add_user</span></span>(<span>username: str, password: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds a new account to the database.</p>
+<p>The account is added to the database in the form of a dictionary, with the following keys being <code>id</code>, <code>username</code> and <code>password</code>.
+The password is store as a hash, using the bcrypt algorithm.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>username</code></strong> :&ensp;<code>str</code></dt>
+<dd>Username of the new account.</dd>
+<dt><strong><code>password</code></strong> :&ensp;<code>str</code></dt>
+<dd>Password of the new account in plain text.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_user(username: str, password: str) -&gt; None:
+    &#34;&#34;&#34;Adds a new account to the database.
+
+    The account is added to the database in the form of a dictionary, with the following keys being `id`, `username` and `password`.
+    The password is store as a hash, using the bcrypt algorithm.
+
+    Args:
+        username (str): Username of the new account.
+        password (str): Password of the new account in plain text.
+    &#34;&#34;&#34;
+    user_id: str = hf.short_hash(username)
+    hashed_password: str = password_hashing(password).decode(&#39;utf-8&#39;)
+
+    new_user = {
+        &#34;id&#34;: user_id,
+        &#34;username&#34;: username,
+        &#34;password&#34;: hashed_password,
+    }
+
+    with open(DATABASE_PATH, &#39;r&#39;) as f:
+        database = json.load(f)
+
+    database.append(new_user)
+
+    with open(DATABASE_PATH, &#39;w&#39;) as f:
+        json.dump(database, f)</code></pre>
+</details>
+</dd>
+<dt id="Mon-Amour.database_management.check_if_user_exists"><code class="name flex">
+<span>def <span class="ident">check_if_user_exists</span></span>(<span>username: str) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the user already exists in the database through a username search.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>username</code></strong> :&ensp;<code>str</code></dt>
+<dd>Account's username.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if the user exists, False if not.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_if_user_exists(username: str) -&gt; bool:
+    &#34;&#34;&#34;Checks if the user already exists in the database through a username search.
+
+    Args:
+        username (str): Account&#39;s username.
+
+    Returns:
+        bool: True if the user exists, False if not.
+    &#34;&#34;&#34;
+    with open(DATABASE_PATH, &#39;r&#39;) as f:
+        database = json.load(f)
+
+    for user in database:
+        if user.get(&#39;username&#39;) == username:
+            return True
+
+    return False</code></pre>
+</details>
+</dd>
+<dt id="Mon-Amour.database_management.get_user_password"><code class="name flex">
+<span>def <span class="ident">get_user_password</span></span>(<span>username: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the user's password from the database.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>username</code></strong> :&ensp;<code>str</code></dt>
+<dd>Account's username.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The user's hashed password in bytes if the user exists, False if not.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_user_password(username: str):
+    &#34;&#34;&#34;Gets the user&#39;s password from the database.
+
+    Args:
+        username (str): Account&#39;s username.
+
+    Returns:
+        The user&#39;s hashed password in bytes if the user exists, False if not.
+    &#34;&#34;&#34;
+    with open(DATABASE_PATH, &#39;r&#39;) as f:
+        database = json.load(f)
+
+    for user in database:
+        if user.get(&#39;username&#39;) == username:
+            return user.get(&#39;password&#39;).encode(&#39;utf-8&#39;)
+
+    return False</code></pre>
+</details>
+</dd>
+<dt id="Mon-Amour.database_management.get_username_by_id"><code class="name flex">
+<span>def <span class="ident">get_username_by_id</span></span>(<span>user_id: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the username from the database through a user ID search.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>user_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Account's ID.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The user's username if the user exists, False if not.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_username_by_id(user_id: str):
+    &#34;&#34;&#34;Gets the username from the database through a user ID search.
+
+    Args:
+        user_id (str): Account&#39;s ID.
+
+    Returns:
+        The user&#39;s username if the user exists, False if not.
+    &#34;&#34;&#34;
+    with open(DATABASE_PATH, &#39;r&#39;) as f:
+        database = json.load(f)
+
+    for user in database:
+        if user.get(&#39;id&#39;) == user_id:
+            return user.get(&#39;username&#39;)
+        
+    return False</code></pre>
+</details>
+</dd>
+<dt id="Mon-Amour.database_management.load_database"><code class="name flex">
+<span>def <span class="ident">load_database</span></span>(<span>) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Loads the database from the database.json file. If the database JSON file does not exist, creates an empty one.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_database() -&gt; None:
+    &#34;&#34;&#34;Loads the database from the database.json file. If the database JSON file does not exist, creates an empty one.
+    &#34;&#34;&#34;
+    try:
+        with open(DATABASE_PATH, &#39;r&#39;) as f:
+            database = json.load(f)
+
+    except FileNotFoundError:
+        empty_database = []
+
+        with open(DATABASE_PATH, &#39;w&#39;) as f:
+            json.dump(empty_database, f)</code></pre>
+</details>
+</dd>
+<dt id="Mon-Amour.database_management.password_checking"><code class="name flex">
+<span>def <span class="ident">password_checking</span></span>(<span>password: str, hashed_password: bytes) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the login password is correct.</p>
+<p>When the user logs in, the password inputed by the user is hashed and compared to the hashed password previously stored in the database.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>password</code></strong> :&ensp;<code>str</code></dt>
+<dd>Passowrd inputed by the user in plain text.</dd>
+<dt><strong><code>hashed_password</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>Hashed password of the same user stored in the database.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if the password is correct, False if not.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def password_checking(password: str, hashed_password: bytes) -&gt; bool:
+    &#34;&#34;&#34;Checks if the login password is correct.
+
+    When the user logs in, the password inputed by the user is hashed and compared to the hashed password previously stored in the database.
+
+    Args:
+        password (str): Passowrd inputed by the user in plain text.
+        hashed_password (bytes): Hashed password of the same user stored in the database.
+
+    Returns:
+        bool: True if the password is correct, False if not.
+    &#34;&#34;&#34;
+    return bcrypt.checkpw(password.encode(&#39;utf-8&#39;), hashed_password)</code></pre>
+</details>
+</dd>
+<dt id="Mon-Amour.database_management.password_hashing"><code class="name flex">
+<span>def <span class="ident">password_hashing</span></span>(<span>password: str) ‑> bytes</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Hashes the user's password using the bcrypt algorithm to securely store in the database.</p>
+<p>This method of storing passwords prevents the database from being compromised and the passwords being exposed in plaintext.
+Storing encrypted passwords is also not recommended, as the encryption key would have to be stored in the same database.
+Hashing the passwords is the most secure way of storing them, as it is a one-way function, in other words, it is not possible to reverse the hashing process.
+Bcrypt algorithm also adds a salt to the password, which makes it even more secure.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>password</code></strong> :&ensp;<code>str</code></dt>
+<dd>Account's password in plain text.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bytes</code></dt>
+<dd>Hashed password.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def password_hashing(password: str) -&gt; bytes:
+    &#34;&#34;&#34;Hashes the user&#39;s password using the bcrypt algorithm to securely store in the database.
+
+    This method of storing passwords prevents the database from being compromised and the passwords being exposed in plaintext.
+    Storing encrypted passwords is also not recommended, as the encryption key would have to be stored in the same database.
+    Hashing the passwords is the most secure way of storing them, as it is a one-way function, in other words, it is not possible to reverse the hashing process.
+    Bcrypt algorithm also adds a salt to the password, which makes it even more secure.
+
+    Args:
+        password (str): Account&#39;s password in plain text.
+
+    Returns:
+        bytes: Hashed password.
+    &#34;&#34;&#34;
+    hashed_password: bytes = bcrypt.hashpw(password.encode(&#39;utf-8&#39;), bcrypt.gensalt())
+
+    return hashed_password</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="Mon-Amour" href="index.html">Mon-Amour</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="Mon-Amour.database_management.add_user" href="#Mon-Amour.database_management.add_user">add_user</a></code></li>
+<li><code><a title="Mon-Amour.database_management.check_if_user_exists" href="#Mon-Amour.database_management.check_if_user_exists">check_if_user_exists</a></code></li>
+<li><code><a title="Mon-Amour.database_management.get_user_password" href="#Mon-Amour.database_management.get_user_password">get_user_password</a></code></li>
+<li><code><a title="Mon-Amour.database_management.get_username_by_id" href="#Mon-Amour.database_management.get_username_by_id">get_username_by_id</a></code></li>
+<li><code><a title="Mon-Amour.database_management.load_database" href="#Mon-Amour.database_management.load_database">load_database</a></code></li>
+<li><code><a title="Mon-Amour.database_management.password_checking" href="#Mon-Amour.database_management.password_checking">password_checking</a></code></li>
+<li><code><a title="Mon-Amour.database_management.password_hashing" href="#Mon-Amour.database_management.password_hashing">password_hashing</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Mon-Amour.gui API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Mon-Amour.gui</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from customtkinter import *
+
+import account_management as am
+import database_management as dbm
+import digital_signature as ds
+import encryption_functions as ef
+import file_management as fm
+import mac_functions as mf
+import rsa_functions as rf
+
+
+set_appearance_mode(&#39;dark&#39;)
+set_default_color_theme(&#39;blue&#39;)
+
+
+class LoginWindow(CTk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.geometry(&#34;380x390&#34;)
+
+        self.title(&#34;Mon-Amour&#34;)
+        self.resizable(False, False)
+        # Login title
+        title = CTkLabel(self, text=&#34;Welcome to Mon-Amour!&#34;, font=(&#34;Poppins&#34;, 16, &#34;bold&#34;))
+        title.pack(pady=20)
+
+        main_frame = CTkFrame(self)
+        main_frame.pack(pady=20, padx=40, expand=True, fill=&#34;both&#34;)
+
+        # Help button
+        help_button = CTkButton(main_frame, text=&#34;?&#34;, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;), command=self.help, width=10, height=10)
+        help_button.pack(anchor=&#34;ne&#34;, padx=10, pady=5)
+
+        label = CTkLabel(main_frame, text=&#34;Login&#34;, font=(&#34;Poppins&#34;, 20, &#34;bold&#34;))
+        label.pack(pady=5, padx=10)
+
+        # Username label
+        user_entry = CTkEntry(main_frame, placeholder_text=&#34;Username&#34;, font=(&#34;Poppins&#34;, 12))
+        user_entry.pack(pady=12, padx=10)
+
+        # Password label
+        password_entry = CTkEntry(main_frame, placeholder_text=&#34;Password&#34;, show=&#34;*&#34;, font=(&#34;Poppins&#34;, 12))
+        password_entry.pack(pady=12, padx=10)
+
+        self.error_label = CTkLabel(main_frame, text=&#34;&#34;, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;))
+        self.error_label.pack(padx=10)
+
+        # Login button
+        login_button = CTkButton(main_frame, text=&#34;Login&#34;, font=(&#34;Poppins&#34;, 15),
+                                 command=lambda: self.login(user_entry.get(), password_entry.get()))
+        login_button.pack(pady=5, padx=10)
+
+    def help(self):
+        window = HelpWindow()
+        window.mainloop()
+
+    def login(self, username, password):
+        dbm.load_database()
+        if dbm.check_if_user_exists(username):
+            hashed_password = dbm.get_user_password(username)
+
+            if dbm.password_checking(password, hashed_password) and password != &#34;&#34;:
+                print(&#34;Login successful&#34;)
+
+                if not am.check_if_keys_exist(username):
+                    print(f&#34;Generating keys for {username}...&#34;)
+                    public_key, encrypted_private_key = rf.generate_key_pair(username, password)
+                    am.store_user_keys(username, public_key, encrypted_private_key)
+                else:
+                    print(f&#34;Keys for {username} already exist&#34;)
+
+                self.withdraw()
+                window = MainWindow(username, password)
+                window.mainloop()
+            else:
+                print(&#34;Wrong password&#34;)
+                self.error_label.configure(text=&#34;Wrong password&#34;, text_color=&#34;red&#34;)
+
+        else:
+            print(&#34;User does not exist. Creating new account...&#34;)
+            dbm.add_user(username, password)
+            print(&#34;Account created successfully&#34;)
+
+            if not am.check_if_keys_exist(username):
+                print(f&#34;Generating keys for {username}...&#34;)
+                public_key, encrypted_private_key = rf.generate_key_pair(username, password)
+                am.store_user_keys(username, public_key, encrypted_private_key)
+            else:
+                print(f&#34;Keys for {username} already exist&#34;)
+
+            self.withdraw()
+            window = MainWindow(username, password)
+            window.mainloop()
+
+class HelpWindow(CTk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.geometry(&#34;400x420&#34;)
+        self.resizable(False, False)
+        self.title(&#34;Help&#34;)
+
+        label = CTkLabel(self, text=&#34;Help&#34;, font=(&#34;Poppins&#34;, 20, &#34;bold&#34;))
+        label.pack(pady=10, padx=10)
+        
+        help = &#34;&#34;&#34;
+        1. Introduction
+          The &#34;Mon-Amour Messaging App&#34; is a secure messaging app that allows you to send and receive encrypted messages.
+          The AES-128 algorithm in CTR mode is used to encrypt the messages you send and in order to decrypt, the recipient must answer correctly to the sender&#39;s question.
+
+
+        2. User Guide
+          2.1. When you first open the application, you will be met with a login screen. Insert your credentials, if you are already registered, or create a new account by choosing an untaken username and a secure password.
+        The &#34;Help&#34; button, when clicked, displays the user manual, which contains all the instructions you need in order to use the program correctly.
+
+          2.2  After a successful login, two tabs will be shown: &#34;Send&#34; and &#34;Receive&#34;.
+            1. Send: Selecting this option will redirect you to a new window, where you can send a message to another user. In this window, there are three text fields;
+            1.1 Recipient: Type the username of the person you want to send the message to;
+            1.2 Question: Enter a personal question that only the recipient can answer (e.g., &#34;Which are my favorite cereals?&#34;);
+            1.3 Answer: Type the correct answer to the question above in this text box (e.g., &#34;Chocapic&#34;);
+            1.4 Message: Include the message you want to send encrypted in this text box;
+            1.5 Your message will encrypted and then sent after you press the &#34;Send&#34; button;
+            1.6 If you changed your mind and do not want to send the message anymore, you can close the program or change to the &#34;Receive&#34; tab. 
+
+            2. Receive: Selecting this option will redirect you to a new window, where you can decrypt a message sent to you from another user. In this window, there are two text fields;
+            2.1 Answer: Type the correct answer to the question you received in order to decrypt the message;
+            2.2 If the answer is correct, the message will be decrypted and displayed alongside the HMAC and digital signature verification results;
+                &#34;&#34;&#34;
+
+        scrollable_frame = CTkScrollableFrame(self)
+        scrollable_frame.pack(expand=True, fill=&#34;both&#34;)
+        self.label_help = CTkLabel(scrollable_frame, text=help, wraplength=320, font=(&#34;Poppins&#34;, 12), justify=&#34;left&#34;)
+        self.label_help.grid(row=0, column=0, padx=20)
+
+
+class CustomTabView(CTkTabview):
+    def __init__(self, master, username, password, **kwargs):
+        super().__init__(master, **kwargs)
+
+        self.username = username
+        self.password = password
+
+        # Create tabs
+        self.add(&#34;Send&#34;)
+        self.add(&#34;Receive&#34;)
+        self.add(&#34;Help&#34;)
+
+
+        # Add widgets to Send tab
+        # Recipient
+        self.entry_recipient = CTkEntry(self.tab(&#34;Send&#34;), placeholder_text=&#34;Recipient&#34;)
+        self.entry_recipient.pack(pady=10, anchor=&#34;w&#34;, padx=30)
+
+        # Question
+        self.entry_question_sent = CTkEntry(self.tab(&#34;Send&#34;), placeholder_text=&#34;Question&#34;)
+        self.entry_question_sent.configure(width=300)
+        self.entry_question_sent.pack(pady=10, anchor=&#34;w&#34;, padx=30)
+
+        # Answer
+        self.entry_answer_sent = CTkEntry(self.tab(&#34;Send&#34;), show=&#34;*&#34;, placeholder_text=&#34;Answer&#34;)
+        self.entry_answer_sent.pack(pady=10, anchor=&#34;w&#34;, padx=30)
+
+        # Message
+        self.label_message_sent = CTkLabel(self.tab(&#34;Send&#34;), text=&#34;Message&#34;, font=(&#34;Poppins&#34;, 12))
+        self.label_message_sent.pack(pady=10, padx=30, anchor=&#34;w&#34;)
+        self.entry_message_sent = CTkTextbox(self.tab(&#34;Send&#34;), width=300, height=30)
+        self.entry_message_sent.pack(fill=&#34;both&#34;, expand=True, padx=30, pady=10)
+
+        # Button
+        self.button_send = CTkButton(self.tab(&#34;Send&#34;), text=&#34;Send&#34;, command=lambda: self.cipher(
+            username,
+            password,
+            self.entry_question_sent.get(),
+            self.entry_answer_sent.get(),
+            self.entry_message_sent.get(&#34;0.0&#34;, &#34;end&#34;),
+            self.entry_recipient.get()
+        ))
+        self.button_send.pack(pady=10, padx=20)
+
+        # Add widgets to Receive tab
+        global ciphertext, sender_id
+        try:
+            ciphertext, sender_id = fm.read_file(username)
+            question_received = ciphertext[1]
+
+            # Question
+            self.label_question_received = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;Question: &#34; + question_received, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;))
+            self.label_question_received.pack(pady=10, padx=20)
+            # Answer
+            self.entry_answer_guess = CTkEntry(self.tab(&#34;Receive&#34;), placeholder_text=&#34;Answer&#34;, show=&#34;*&#34;)
+            self.entry_answer_guess.pack(pady=10, padx=20)
+
+            # Button
+            self.button_receive = CTkButton(self.tab(&#34;Receive&#34;), text=&#34;Test my love&#34;, command=lambda: self.decipher(
+                self.entry_answer_guess.get(),
+            ))
+            self.button_receive.pack(pady=10, padx=20)
+
+        except:
+            self.label_no_messages = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;No messages&#34;)
+            self.label_no_messages.pack(pady=10, padx=20)
+
+        # Message
+        self.label_message_received = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;&#34;)
+        self.label_message_received.pack(pady=10, padx=20)
+
+        # HMAC Verification
+        self.label_hmac_verification = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;&#34;, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;))
+        self.label_hmac_verification.pack(pady=10, padx=20)
+
+        # Digital Signature Verification
+        self.label_digital_signature_verification = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;&#34;, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;))
+        self.label_digital_signature_verification.pack(pady=10, padx=20)
+
+        help = &#34;&#34;&#34;
+1. Introduction
+  The &#34;Mon-Amour Messaging App&#34; is a secure messaging app that allows you to send and receive encrypted messages.
+  The AES-128 algorithm in CTR mode is used to encrypt the messages you send and in order to decrypt, the recipient must answer correctly to the sender&#39;s question.
+
+
+2. User Guide
+  2.1. When you first open the application, you will be met with a login screen. Insert your credentials, if you are already registered, or create a new account by choosing an untaken username and a secure password.
+The &#34;Help&#34; button, when clicked, displays the user manual, which contains all the instructions you need in order to use the program correctly.
+
+  2.2  After a successful login, two tabs will be shown: &#34;Send&#34; and &#34;Receive&#34;.
+    1. Send: Selecting this option will redirect you to a new window, where you can send a message to another user. In this window, there are three text fields;
+    1.1 Recipient: Type the username of the person you want to send the message to;
+    1.2 Question: Enter a personal question that only the recipient can answer (e.g., &#34;Which are my favorite cereals?&#34;);
+    1.3 Answer: Type the correct answer to the question above in this text box (e.g., &#34;Chocapic&#34;);
+    1.4 Message: Include the message you want to send encrypted in this text box;
+    1.5 Your message will encrypted and then sent after you press the &#34;Send&#34; button;
+    1.6 If you changed your mind and do not want to send the message anymore, you can close the program or change to the &#34;Receive&#34; tab. 
+
+    2. Receive: Selecting this option will redirect you to a new window, where you can decrypt a message sent to you from another user. In this window, there are two text fields;
+    2.1 Answer: Type the correct answer to the question you received in order to decrypt the message;
+    2.2 If the answer is correct, the message will be decrypted and displayed alongside the HMAC and digital signature verification results;
+        &#34;&#34;&#34;
+
+        # Add widgets to Help tab
+        scrollable_frame = CTkScrollableFrame(self.tab(&#34;Help&#34;))
+        scrollable_frame.pack(expand=True, fill=&#34;both&#34;)
+        self.label_help = CTkLabel(scrollable_frame, text=help, wraplength=320, font=(&#34;Poppins&#34;, 12), justify=&#34;left&#34;)
+        self.label_help.grid(row=0, column=0, padx=20)
+
+    def cipher(self, username, password, question, secret_key, message, recipient):
+        &#34;&#34;&#34;This function is called when the user clicks on the &#34;Send&#34; button. It reads the values from the GUI - question,
+        secret key and message to send.
+        First, the secret key created by the user is encrypted with the public key of the receiver, using RSA. The encrypted
+        secret key is written to a file.
+        Then, the message is encrypted using AES. The iter_counter, question, salt, ciphertext and hmac are written to a
+        file.
+        It is needed to generate a digital signature of the message, so the message is signed with the private key of the
+        sender. The signature is written to a file.
+        :return: None&#34;&#34;&#34;
+        sk: str = secret_key.lower()
+
+        if not am.check_if_keys_exist(recipient):
+            print(&#34;Recipient does not exist&#34;)
+            return
+
+        iter_counter, salt, ciphertext_sent = ef.encrypt_message(message, sk)
+        hmac_value = mf.calculate_hmac(ciphertext_sent, sk)
+        signature = ds.generate_signature(message, username, password)
+        fm.write_file(iter_counter, question, salt, ciphertext_sent, hmac_value, signature, username, recipient)
+
+    def decipher(self, secret_key):
+        &#34;&#34;&#34;This function is called when the user clicks on the &#34;Receive&#34; button. It reads the value from the GUI - secret
+        key.
+        First, the secret key received is decrypted with the private key of the receiver, using RSA.
+        Then, the ciphertext is read from the file and the message is decrypted using AES.
+        The HMAC is calculated and compared with the HMAC received. If they are equal, it is printed &#34;HMAC verified&#34;.
+        It is needed to verify the digital signature of the message, so the signature is read from the file and verified. If
+        the signature is valid, it is printed &#34;Signature verified&#34;. If not, it is printed &#34;Signature not verified&#34;.
+        :return: None&#34;&#34;&#34;
+
+        sender_username = dbm.get_username_by_id(sender_id)
+        signature = ciphertext[4]
+
+        sk = secret_key.lower()
+
+        decrypted_message, hmac_validity = ef.decrypt_message(sk, ciphertext)
+        print(decrypted_message)
+
+        if decrypted_message is None:
+            self.label_message_received.configure(text=&#34;Answer incorrect&#34;, text_color=&#34;red&#34;)
+        else:
+            digital_signature_verification = ds.verify_signature(decrypted_message, bytes.fromhex(signature), sender_username)
+
+            self.label_message_received.configure(text=&#34;Message: &#34; + decrypted_message, text_color=&#34;white&#34;)
+            self.label_hmac_verification.configure(text=&#34;HMAC verified&#34;, text_color=&#34;green&#34;)
+
+            if hmac_validity:
+                self.label_hmac_verification.configure(text=&#34;HMAC verified: Authentic message recieved.&#34;, text_color=&#34;green&#34;)
+            else:
+                self.label_hmac_verification.configure(text=&#34;HMAC not verified: The message recieved is not authentic!!&#34;, text_color=&#34;red&#34;)
+
+            if digital_signature_verification:
+                self.label_digital_signature_verification.configure(text=&#34;Signature verified &#34;, text_color=&#34;green&#34;)
+            else:
+                self.label_digital_signature_verification.configure(text=&#34;Signature not verified &#34;, text_color=&#34;red&#34;)
+class MainWindow(CTk):
+    def __init__(self, username, password):
+        super().__init__()
+
+        self.username = username
+        self.password = password
+        self.title(&#34;Mon-Amour&#34;)
+
+        self.geometry(&#34;400x420&#34;)
+        self.resizable(False, False)
+
+        self.tab_view = CustomTabView(self, username, password)
+        self.tab_view.pack(fill=&#34;both&#34;, expand=True)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="Mon-Amour.gui.CustomTabView"><code class="flex name class">
+<span>class <span class="ident">CustomTabView</span></span>
+<span>(</span><span>master, username, password, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Tabview&hellip;
+For detailed information check out the documentation.</p>
+<p>Construct a frame widget with the parent MASTER.</p>
+<p>Valid resource names: background, bd, bg, borderwidth, class,
+colormap, container, cursor, height, highlightbackground,
+highlightcolor, highlightthickness, relief, takefocus, visual, width.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CustomTabView(CTkTabview):
+    def __init__(self, master, username, password, **kwargs):
+        super().__init__(master, **kwargs)
+
+        self.username = username
+        self.password = password
+
+        # Create tabs
+        self.add(&#34;Send&#34;)
+        self.add(&#34;Receive&#34;)
+        self.add(&#34;Help&#34;)
+
+
+        # Add widgets to Send tab
+        # Recipient
+        self.entry_recipient = CTkEntry(self.tab(&#34;Send&#34;), placeholder_text=&#34;Recipient&#34;)
+        self.entry_recipient.pack(pady=10, anchor=&#34;w&#34;, padx=30)
+
+        # Question
+        self.entry_question_sent = CTkEntry(self.tab(&#34;Send&#34;), placeholder_text=&#34;Question&#34;)
+        self.entry_question_sent.configure(width=300)
+        self.entry_question_sent.pack(pady=10, anchor=&#34;w&#34;, padx=30)
+
+        # Answer
+        self.entry_answer_sent = CTkEntry(self.tab(&#34;Send&#34;), show=&#34;*&#34;, placeholder_text=&#34;Answer&#34;)
+        self.entry_answer_sent.pack(pady=10, anchor=&#34;w&#34;, padx=30)
+
+        # Message
+        self.label_message_sent = CTkLabel(self.tab(&#34;Send&#34;), text=&#34;Message&#34;, font=(&#34;Poppins&#34;, 12))
+        self.label_message_sent.pack(pady=10, padx=30, anchor=&#34;w&#34;)
+        self.entry_message_sent = CTkTextbox(self.tab(&#34;Send&#34;), width=300, height=30)
+        self.entry_message_sent.pack(fill=&#34;both&#34;, expand=True, padx=30, pady=10)
+
+        # Button
+        self.button_send = CTkButton(self.tab(&#34;Send&#34;), text=&#34;Send&#34;, command=lambda: self.cipher(
+            username,
+            password,
+            self.entry_question_sent.get(),
+            self.entry_answer_sent.get(),
+            self.entry_message_sent.get(&#34;0.0&#34;, &#34;end&#34;),
+            self.entry_recipient.get()
+        ))
+        self.button_send.pack(pady=10, padx=20)
+
+        # Add widgets to Receive tab
+        global ciphertext, sender_id
+        try:
+            ciphertext, sender_id = fm.read_file(username)
+            question_received = ciphertext[1]
+
+            # Question
+            self.label_question_received = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;Question: &#34; + question_received, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;))
+            self.label_question_received.pack(pady=10, padx=20)
+            # Answer
+            self.entry_answer_guess = CTkEntry(self.tab(&#34;Receive&#34;), placeholder_text=&#34;Answer&#34;, show=&#34;*&#34;)
+            self.entry_answer_guess.pack(pady=10, padx=20)
+
+            # Button
+            self.button_receive = CTkButton(self.tab(&#34;Receive&#34;), text=&#34;Test my love&#34;, command=lambda: self.decipher(
+                self.entry_answer_guess.get(),
+            ))
+            self.button_receive.pack(pady=10, padx=20)
+
+        except:
+            self.label_no_messages = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;No messages&#34;)
+            self.label_no_messages.pack(pady=10, padx=20)
+
+        # Message
+        self.label_message_received = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;&#34;)
+        self.label_message_received.pack(pady=10, padx=20)
+
+        # HMAC Verification
+        self.label_hmac_verification = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;&#34;, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;))
+        self.label_hmac_verification.pack(pady=10, padx=20)
+
+        # Digital Signature Verification
+        self.label_digital_signature_verification = CTkLabel(self.tab(&#34;Receive&#34;), text=&#34;&#34;, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;))
+        self.label_digital_signature_verification.pack(pady=10, padx=20)
+
+        help = &#34;&#34;&#34;
+1. Introduction
+  The &#34;Mon-Amour Messaging App&#34; is a secure messaging app that allows you to send and receive encrypted messages.
+  The AES-128 algorithm in CTR mode is used to encrypt the messages you send and in order to decrypt, the recipient must answer correctly to the sender&#39;s question.
+
+
+2. User Guide
+  2.1. When you first open the application, you will be met with a login screen. Insert your credentials, if you are already registered, or create a new account by choosing an untaken username and a secure password.
+The &#34;Help&#34; button, when clicked, displays the user manual, which contains all the instructions you need in order to use the program correctly.
+
+  2.2  After a successful login, two tabs will be shown: &#34;Send&#34; and &#34;Receive&#34;.
+    1. Send: Selecting this option will redirect you to a new window, where you can send a message to another user. In this window, there are three text fields;
+    1.1 Recipient: Type the username of the person you want to send the message to;
+    1.2 Question: Enter a personal question that only the recipient can answer (e.g., &#34;Which are my favorite cereals?&#34;);
+    1.3 Answer: Type the correct answer to the question above in this text box (e.g., &#34;Chocapic&#34;);
+    1.4 Message: Include the message you want to send encrypted in this text box;
+    1.5 Your message will encrypted and then sent after you press the &#34;Send&#34; button;
+    1.6 If you changed your mind and do not want to send the message anymore, you can close the program or change to the &#34;Receive&#34; tab. 
+
+    2. Receive: Selecting this option will redirect you to a new window, where you can decrypt a message sent to you from another user. In this window, there are two text fields;
+    2.1 Answer: Type the correct answer to the question you received in order to decrypt the message;
+    2.2 If the answer is correct, the message will be decrypted and displayed alongside the HMAC and digital signature verification results;
+        &#34;&#34;&#34;
+
+        # Add widgets to Help tab
+        scrollable_frame = CTkScrollableFrame(self.tab(&#34;Help&#34;))
+        scrollable_frame.pack(expand=True, fill=&#34;both&#34;)
+        self.label_help = CTkLabel(scrollable_frame, text=help, wraplength=320, font=(&#34;Poppins&#34;, 12), justify=&#34;left&#34;)
+        self.label_help.grid(row=0, column=0, padx=20)
+
+    def cipher(self, username, password, question, secret_key, message, recipient):
+        &#34;&#34;&#34;This function is called when the user clicks on the &#34;Send&#34; button. It reads the values from the GUI - question,
+        secret key and message to send.
+        First, the secret key created by the user is encrypted with the public key of the receiver, using RSA. The encrypted
+        secret key is written to a file.
+        Then, the message is encrypted using AES. The iter_counter, question, salt, ciphertext and hmac are written to a
+        file.
+        It is needed to generate a digital signature of the message, so the message is signed with the private key of the
+        sender. The signature is written to a file.
+        :return: None&#34;&#34;&#34;
+        sk: str = secret_key.lower()
+
+        if not am.check_if_keys_exist(recipient):
+            print(&#34;Recipient does not exist&#34;)
+            return
+
+        iter_counter, salt, ciphertext_sent = ef.encrypt_message(message, sk)
+        hmac_value = mf.calculate_hmac(ciphertext_sent, sk)
+        signature = ds.generate_signature(message, username, password)
+        fm.write_file(iter_counter, question, salt, ciphertext_sent, hmac_value, signature, username, recipient)
+
+    def decipher(self, secret_key):
+        &#34;&#34;&#34;This function is called when the user clicks on the &#34;Receive&#34; button. It reads the value from the GUI - secret
+        key.
+        First, the secret key received is decrypted with the private key of the receiver, using RSA.
+        Then, the ciphertext is read from the file and the message is decrypted using AES.
+        The HMAC is calculated and compared with the HMAC received. If they are equal, it is printed &#34;HMAC verified&#34;.
+        It is needed to verify the digital signature of the message, so the signature is read from the file and verified. If
+        the signature is valid, it is printed &#34;Signature verified&#34;. If not, it is printed &#34;Signature not verified&#34;.
+        :return: None&#34;&#34;&#34;
+
+        sender_username = dbm.get_username_by_id(sender_id)
+        signature = ciphertext[4]
+
+        sk = secret_key.lower()
+
+        decrypted_message, hmac_validity = ef.decrypt_message(sk, ciphertext)
+        print(decrypted_message)
+
+        if decrypted_message is None:
+            self.label_message_received.configure(text=&#34;Answer incorrect&#34;, text_color=&#34;red&#34;)
+        else:
+            digital_signature_verification = ds.verify_signature(decrypted_message, bytes.fromhex(signature), sender_username)
+
+            self.label_message_received.configure(text=&#34;Message: &#34; + decrypted_message, text_color=&#34;white&#34;)
+            self.label_hmac_verification.configure(text=&#34;HMAC verified&#34;, text_color=&#34;green&#34;)
+
+            if hmac_validity:
+                self.label_hmac_verification.configure(text=&#34;HMAC verified: Authentic message recieved.&#34;, text_color=&#34;green&#34;)
+            else:
+                self.label_hmac_verification.configure(text=&#34;HMAC not verified: The message recieved is not authentic!!&#34;, text_color=&#34;red&#34;)
+
+            if digital_signature_verification:
+                self.label_digital_signature_verification.configure(text=&#34;Signature verified &#34;, text_color=&#34;green&#34;)
+            else:
+                self.label_digital_signature_verification.configure(text=&#34;Signature not verified &#34;, text_color=&#34;red&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>customtkinter.windows.widgets.ctk_tabview.CTkTabview</li>
+<li>customtkinter.windows.widgets.core_widget_classes.ctk_base_class.CTkBaseClass</li>
+<li>tkinter.Frame</li>
+<li>tkinter.Widget</li>
+<li>tkinter.BaseWidget</li>
+<li>tkinter.Misc</li>
+<li>tkinter.Pack</li>
+<li>tkinter.Place</li>
+<li>tkinter.Grid</li>
+<li>customtkinter.windows.widgets.appearance_mode.appearance_mode_base_class.CTkAppearanceModeBaseClass</li>
+<li>customtkinter.windows.widgets.scaling.scaling_base_class.CTkScalingBaseClass</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="Mon-Amour.gui.CustomTabView.cipher"><code class="name flex">
+<span>def <span class="ident">cipher</span></span>(<span>self, username, password, question, secret_key, message, recipient)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function is called when the user clicks on the "Send" button. It reads the values from the GUI - question,
+secret key and message to send.
+First, the secret key created by the user is encrypted with the public key of the receiver, using RSA. The encrypted
+secret key is written to a file.
+Then, the message is encrypted using AES. The iter_counter, question, salt, ciphertext and hmac are written to a
+file.
+It is needed to generate a digital signature of the message, so the message is signed with the private key of the
+sender. The signature is written to a file.
+:return: None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cipher(self, username, password, question, secret_key, message, recipient):
+    &#34;&#34;&#34;This function is called when the user clicks on the &#34;Send&#34; button. It reads the values from the GUI - question,
+    secret key and message to send.
+    First, the secret key created by the user is encrypted with the public key of the receiver, using RSA. The encrypted
+    secret key is written to a file.
+    Then, the message is encrypted using AES. The iter_counter, question, salt, ciphertext and hmac are written to a
+    file.
+    It is needed to generate a digital signature of the message, so the message is signed with the private key of the
+    sender. The signature is written to a file.
+    :return: None&#34;&#34;&#34;
+    sk: str = secret_key.lower()
+
+    if not am.check_if_keys_exist(recipient):
+        print(&#34;Recipient does not exist&#34;)
+        return
+
+    iter_counter, salt, ciphertext_sent = ef.encrypt_message(message, sk)
+    hmac_value = mf.calculate_hmac(ciphertext_sent, sk)
+    signature = ds.generate_signature(message, username, password)
+    fm.write_file(iter_counter, question, salt, ciphertext_sent, hmac_value, signature, username, recipient)</code></pre>
+</details>
+</dd>
+<dt id="Mon-Amour.gui.CustomTabView.decipher"><code class="name flex">
+<span>def <span class="ident">decipher</span></span>(<span>self, secret_key)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function is called when the user clicks on the "Receive" button. It reads the value from the GUI - secret
+key.
+First, the secret key received is decrypted with the private key of the receiver, using RSA.
+Then, the ciphertext is read from the file and the message is decrypted using AES.
+The HMAC is calculated and compared with the HMAC received. If they are equal, it is printed "HMAC verified".
+It is needed to verify the digital signature of the message, so the signature is read from the file and verified. If
+the signature is valid, it is printed "Signature verified". If not, it is printed "Signature not verified".
+:return: None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decipher(self, secret_key):
+    &#34;&#34;&#34;This function is called when the user clicks on the &#34;Receive&#34; button. It reads the value from the GUI - secret
+    key.
+    First, the secret key received is decrypted with the private key of the receiver, using RSA.
+    Then, the ciphertext is read from the file and the message is decrypted using AES.
+    The HMAC is calculated and compared with the HMAC received. If they are equal, it is printed &#34;HMAC verified&#34;.
+    It is needed to verify the digital signature of the message, so the signature is read from the file and verified. If
+    the signature is valid, it is printed &#34;Signature verified&#34;. If not, it is printed &#34;Signature not verified&#34;.
+    :return: None&#34;&#34;&#34;
+
+    sender_username = dbm.get_username_by_id(sender_id)
+    signature = ciphertext[4]
+
+    sk = secret_key.lower()
+
+    decrypted_message, hmac_validity = ef.decrypt_message(sk, ciphertext)
+    print(decrypted_message)
+
+    if decrypted_message is None:
+        self.label_message_received.configure(text=&#34;Answer incorrect&#34;, text_color=&#34;red&#34;)
+    else:
+        digital_signature_verification = ds.verify_signature(decrypted_message, bytes.fromhex(signature), sender_username)
+
+        self.label_message_received.configure(text=&#34;Message: &#34; + decrypted_message, text_color=&#34;white&#34;)
+        self.label_hmac_verification.configure(text=&#34;HMAC verified&#34;, text_color=&#34;green&#34;)
+
+        if hmac_validity:
+            self.label_hmac_verification.configure(text=&#34;HMAC verified: Authentic message recieved.&#34;, text_color=&#34;green&#34;)
+        else:
+            self.label_hmac_verification.configure(text=&#34;HMAC not verified: The message recieved is not authentic!!&#34;, text_color=&#34;red&#34;)
+
+        if digital_signature_verification:
+            self.label_digital_signature_verification.configure(text=&#34;Signature verified &#34;, text_color=&#34;green&#34;)
+        else:
+            self.label_digital_signature_verification.configure(text=&#34;Signature not verified &#34;, text_color=&#34;red&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="Mon-Amour.gui.HelpWindow"><code class="flex name class">
+<span>class <span class="ident">HelpWindow</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Main app window with dark titlebar on Windows and macOS.
+For detailed information check out the documentation.</p>
+<p>Return a new Toplevel widget on screen SCREENNAME. A new Tcl interpreter will
+be created. BASENAME will be used for the identification of the profile file (see
+readprofile).
+It is constructed from sys.argv[0] without extensions if None is given. CLASSNAME
+is the name of the widget class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HelpWindow(CTk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.geometry(&#34;400x420&#34;)
+        self.resizable(False, False)
+        self.title(&#34;Help&#34;)
+
+        label = CTkLabel(self, text=&#34;Help&#34;, font=(&#34;Poppins&#34;, 20, &#34;bold&#34;))
+        label.pack(pady=10, padx=10)
+        
+        help = &#34;&#34;&#34;
+        1. Introduction
+          The &#34;Mon-Amour Messaging App&#34; is a secure messaging app that allows you to send and receive encrypted messages.
+          The AES-128 algorithm in CTR mode is used to encrypt the messages you send and in order to decrypt, the recipient must answer correctly to the sender&#39;s question.
+
+
+        2. User Guide
+          2.1. When you first open the application, you will be met with a login screen. Insert your credentials, if you are already registered, or create a new account by choosing an untaken username and a secure password.
+        The &#34;Help&#34; button, when clicked, displays the user manual, which contains all the instructions you need in order to use the program correctly.
+
+          2.2  After a successful login, two tabs will be shown: &#34;Send&#34; and &#34;Receive&#34;.
+            1. Send: Selecting this option will redirect you to a new window, where you can send a message to another user. In this window, there are three text fields;
+            1.1 Recipient: Type the username of the person you want to send the message to;
+            1.2 Question: Enter a personal question that only the recipient can answer (e.g., &#34;Which are my favorite cereals?&#34;);
+            1.3 Answer: Type the correct answer to the question above in this text box (e.g., &#34;Chocapic&#34;);
+            1.4 Message: Include the message you want to send encrypted in this text box;
+            1.5 Your message will encrypted and then sent after you press the &#34;Send&#34; button;
+            1.6 If you changed your mind and do not want to send the message anymore, you can close the program or change to the &#34;Receive&#34; tab. 
+
+            2. Receive: Selecting this option will redirect you to a new window, where you can decrypt a message sent to you from another user. In this window, there are two text fields;
+            2.1 Answer: Type the correct answer to the question you received in order to decrypt the message;
+            2.2 If the answer is correct, the message will be decrypted and displayed alongside the HMAC and digital signature verification results;
+                &#34;&#34;&#34;
+
+        scrollable_frame = CTkScrollableFrame(self)
+        scrollable_frame.pack(expand=True, fill=&#34;both&#34;)
+        self.label_help = CTkLabel(scrollable_frame, text=help, wraplength=320, font=(&#34;Poppins&#34;, 12), justify=&#34;left&#34;)
+        self.label_help.grid(row=0, column=0, padx=20)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>customtkinter.windows.ctk_tk.CTk</li>
+<li>tkinter.Tk</li>
+<li>tkinter.Misc</li>
+<li>tkinter.Wm</li>
+<li>customtkinter.windows.widgets.appearance_mode.appearance_mode_base_class.CTkAppearanceModeBaseClass</li>
+<li>customtkinter.windows.widgets.scaling.scaling_base_class.CTkScalingBaseClass</li>
+</ul>
+</dd>
+<dt id="Mon-Amour.gui.LoginWindow"><code class="flex name class">
+<span>class <span class="ident">LoginWindow</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Main app window with dark titlebar on Windows and macOS.
+For detailed information check out the documentation.</p>
+<p>Return a new Toplevel widget on screen SCREENNAME. A new Tcl interpreter will
+be created. BASENAME will be used for the identification of the profile file (see
+readprofile).
+It is constructed from sys.argv[0] without extensions if None is given. CLASSNAME
+is the name of the widget class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LoginWindow(CTk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.geometry(&#34;380x390&#34;)
+
+        self.title(&#34;Mon-Amour&#34;)
+        self.resizable(False, False)
+        # Login title
+        title = CTkLabel(self, text=&#34;Welcome to Mon-Amour!&#34;, font=(&#34;Poppins&#34;, 16, &#34;bold&#34;))
+        title.pack(pady=20)
+
+        main_frame = CTkFrame(self)
+        main_frame.pack(pady=20, padx=40, expand=True, fill=&#34;both&#34;)
+
+        # Help button
+        help_button = CTkButton(main_frame, text=&#34;?&#34;, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;), command=self.help, width=10, height=10)
+        help_button.pack(anchor=&#34;ne&#34;, padx=10, pady=5)
+
+        label = CTkLabel(main_frame, text=&#34;Login&#34;, font=(&#34;Poppins&#34;, 20, &#34;bold&#34;))
+        label.pack(pady=5, padx=10)
+
+        # Username label
+        user_entry = CTkEntry(main_frame, placeholder_text=&#34;Username&#34;, font=(&#34;Poppins&#34;, 12))
+        user_entry.pack(pady=12, padx=10)
+
+        # Password label
+        password_entry = CTkEntry(main_frame, placeholder_text=&#34;Password&#34;, show=&#34;*&#34;, font=(&#34;Poppins&#34;, 12))
+        password_entry.pack(pady=12, padx=10)
+
+        self.error_label = CTkLabel(main_frame, text=&#34;&#34;, font=(&#34;Poppins&#34;, 12, &#34;bold&#34;))
+        self.error_label.pack(padx=10)
+
+        # Login button
+        login_button = CTkButton(main_frame, text=&#34;Login&#34;, font=(&#34;Poppins&#34;, 15),
+                                 command=lambda: self.login(user_entry.get(), password_entry.get()))
+        login_button.pack(pady=5, padx=10)
+
+    def help(self):
+        window = HelpWindow()
+        window.mainloop()
+
+    def login(self, username, password):
+        dbm.load_database()
+        if dbm.check_if_user_exists(username):
+            hashed_password = dbm.get_user_password(username)
+
+            if dbm.password_checking(password, hashed_password) and password != &#34;&#34;:
+                print(&#34;Login successful&#34;)
+
+                if not am.check_if_keys_exist(username):
+                    print(f&#34;Generating keys for {username}...&#34;)
+                    public_key, encrypted_private_key = rf.generate_key_pair(username, password)
+                    am.store_user_keys(username, public_key, encrypted_private_key)
+                else:
+                    print(f&#34;Keys for {username} already exist&#34;)
+
+                self.withdraw()
+                window = MainWindow(username, password)
+                window.mainloop()
+            else:
+                print(&#34;Wrong password&#34;)
+                self.error_label.configure(text=&#34;Wrong password&#34;, text_color=&#34;red&#34;)
+
+        else:
+            print(&#34;User does not exist. Creating new account...&#34;)
+            dbm.add_user(username, password)
+            print(&#34;Account created successfully&#34;)
+
+            if not am.check_if_keys_exist(username):
+                print(f&#34;Generating keys for {username}...&#34;)
+                public_key, encrypted_private_key = rf.generate_key_pair(username, password)
+                am.store_user_keys(username, public_key, encrypted_private_key)
+            else:
+                print(f&#34;Keys for {username} already exist&#34;)
+
+            self.withdraw()
+            window = MainWindow(username, password)
+            window.mainloop()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>customtkinter.windows.ctk_tk.CTk</li>
+<li>tkinter.Tk</li>
+<li>tkinter.Misc</li>
+<li>tkinter.Wm</li>
+<li>customtkinter.windows.widgets.appearance_mode.appearance_mode_base_class.CTkAppearanceModeBaseClass</li>
+<li>customtkinter.windows.widgets.scaling.scaling_base_class.CTkScalingBaseClass</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="Mon-Amour.gui.LoginWindow.help"><code class="name flex">
+<span>def <span class="ident">help</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def help(self):
+    window = HelpWindow()
+    window.mainloop()</code></pre>
+</details>
+</dd>
+<dt id="Mon-Amour.gui.LoginWindow.login"><code class="name flex">
+<span>def <span class="ident">login</span></span>(<span>self, username, password)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def login(self, username, password):
+    dbm.load_database()
+    if dbm.check_if_user_exists(username):
+        hashed_password = dbm.get_user_password(username)
+
+        if dbm.password_checking(password, hashed_password) and password != &#34;&#34;:
+            print(&#34;Login successful&#34;)
+
+            if not am.check_if_keys_exist(username):
+                print(f&#34;Generating keys for {username}...&#34;)
+                public_key, encrypted_private_key = rf.generate_key_pair(username, password)
+                am.store_user_keys(username, public_key, encrypted_private_key)
+            else:
+                print(f&#34;Keys for {username} already exist&#34;)
+
+            self.withdraw()
+            window = MainWindow(username, password)
+            window.mainloop()
+        else:
+            print(&#34;Wrong password&#34;)
+            self.error_label.configure(text=&#34;Wrong password&#34;, text_color=&#34;red&#34;)
+
+    else:
+        print(&#34;User does not exist. Creating new account...&#34;)
+        dbm.add_user(username, password)
+        print(&#34;Account created successfully&#34;)
+
+        if not am.check_if_keys_exist(username):
+            print(f&#34;Generating keys for {username}...&#34;)
+            public_key, encrypted_private_key = rf.generate_key_pair(username, password)
+            am.store_user_keys(username, public_key, encrypted_private_key)
+        else:
+            print(f&#34;Keys for {username} already exist&#34;)
+
+        self.withdraw()
+        window = MainWindow(username, password)
+        window.mainloop()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="Mon-Amour.gui.MainWindow"><code class="flex name class">
+<span>class <span class="ident">MainWindow</span></span>
+<span>(</span><span>username, password)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Main app window with dark titlebar on Windows and macOS.
+For detailed information check out the documentation.</p>
+<p>Return a new Toplevel widget on screen SCREENNAME. A new Tcl interpreter will
+be created. BASENAME will be used for the identification of the profile file (see
+readprofile).
+It is constructed from sys.argv[0] without extensions if None is given. CLASSNAME
+is the name of the widget class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MainWindow(CTk):
+    def __init__(self, username, password):
+        super().__init__()
+
+        self.username = username
+        self.password = password
+        self.title(&#34;Mon-Amour&#34;)
+
+        self.geometry(&#34;400x420&#34;)
+        self.resizable(False, False)
+
+        self.tab_view = CustomTabView(self, username, password)
+        self.tab_view.pack(fill=&#34;both&#34;, expand=True)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>customtkinter.windows.ctk_tk.CTk</li>
+<li>tkinter.Tk</li>
+<li>tkinter.Misc</li>
+<li>tkinter.Wm</li>
+<li>customtkinter.windows.widgets.appearance_mode.appearance_mode_base_class.CTkAppearanceModeBaseClass</li>
+<li>customtkinter.windows.widgets.scaling.scaling_base_class.CTkScalingBaseClass</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="Mon-Amour" href="index.html">Mon-Amour</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="Mon-Amour.gui.CustomTabView" href="#Mon-Amour.gui.CustomTabView">CustomTabView</a></code></h4>
+<ul class="">
+<li><code><a title="Mon-Amour.gui.CustomTabView.cipher" href="#Mon-Amour.gui.CustomTabView.cipher">cipher</a></code></li>
+<li><code><a title="Mon-Amour.gui.CustomTabView.decipher" href="#Mon-Amour.gui.CustomTabView.decipher">decipher</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Mon-Amour.gui.HelpWindow" href="#Mon-Amour.gui.HelpWindow">HelpWindow</a></code></h4>
+</li>
+<li>
+<h4><code><a title="Mon-Amour.gui.LoginWindow" href="#Mon-Amour.gui.LoginWindow">LoginWindow</a></code></h4>
+<ul class="">
+<li><code><a title="Mon-Amour.gui.LoginWindow.help" href="#Mon-Amour.gui.LoginWindow.help">help</a></code></li>
+<li><code><a title="Mon-Amour.gui.LoginWindow.login" href="#Mon-Amour.gui.LoginWindow.login">login</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Mon-Amour.gui.MainWindow" href="#Mon-Amour.gui.MainWindow">MainWindow</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
