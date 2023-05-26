@@ -178,7 +178,7 @@ class CustomTabView(CTkTabview):
         It is needed to generate a digital signature of the message, so the message is signed with the private key of the
         sender. The signature is written to a file.
         :return: None"""
-        sk = secret_key.lower()
+        sk: str = secret_key.lower()
 
         if not am.check_if_keys_exist(recipient):
             print("Recipient does not exist")
