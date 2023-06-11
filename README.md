@@ -29,6 +29,7 @@ The project can be run by executing the `main.exe` located in the `Mon-Amour/dis
 
 Or alternatively, by executing the `main.py` script located in the root directory.
 
+
 ## Screenshots
 
 | Login  | Send Message | Receive Message | Help | 
@@ -36,15 +37,9 @@ Or alternatively, by executing the `main.py` script located in the root director
 | ![Login](/images/screen-login.png)  | ![Send message](/images/screen-send.png)  | ![Receive message](/images/screen-receive.png) | ![Help](/images/screen-help.png)
 
 
-## Diagrams
-
-### System diagram
+## System diagram
 
 ![System diagram](/images/diagram-system.png)
-
-### Attack diagram
-
-![Attack diagram](/images/diagram-attack.png)
 
 
 ## License
